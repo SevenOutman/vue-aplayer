@@ -52,7 +52,7 @@ Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlay
 | mode | String | 'circulation' | play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | 'auto' | the way to load music, can be 'none' 'metadata' or 'auto' |
 | listmaxheight | String | none | max height of play list |
-| music| Object or Array | `required` | music info, see [Music info]() |
+| music| Object or Array | `required` | music info, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
 
 #### Music info
 
