@@ -9,6 +9,12 @@ Screenshot
 
 ![image](https://i.imgur.com/JDrJXCr.png)
 
+## Install
+
+```
+$ npm install vue-aplayer --save
+```
+
 ## Usage
 
 ```HTML
