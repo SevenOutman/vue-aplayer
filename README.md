@@ -1,2 +1,2 @@
 # vue-aplayer
-Vue component of [APlayer](https://github.com/DIYgod/APlayer).
+A Vue 2.x component of [APlayer](https://github.com/DIYgod/APlayer).

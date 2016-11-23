@@ -3,9 +3,7 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: {
-        main: './src/demo/main.js',
-    },
+    entry: './src/demo/main.js',
     output: {
         path: './demo',
         filename: "main.js",
@@ -44,15 +42,21 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
+    module.exports.entry = './src/vue-aplayer.vue'
+    module.exports.output = {
+        path: './dist',
+        filename: 'vue-aplayer.min.js'
+    }
     module.exports.devtool = '#source-map'
     // http://vuejs.github.io/vue-loader/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat([
+    module.exports.plugins = [
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
             }
         }),
 
-        new webpack.optimize.OccurenceOrderPlugin()
-    ])
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin()
+    ]
 }

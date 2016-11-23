@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <a href="https://github.com/DIYgod/APlayer" target="_blank" class="github-corner">
+        <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank" class="github-corner">
             <svg width="80" height="80" viewBox="0 0 250 250"
-                 style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;">
+                 style="fill:#39AF78; color:#2F4053; position: absolute; top: 0; border: 0; right: 0;">
                 <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
                 <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
                       fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
@@ -11,21 +11,23 @@
             </svg>
         </a>
         <div class="container">
-            <h1>APlayer</h1>
-            <h2>Wow, such a beautiful html5 music player</h2>
-            <p>Made by <a href="https://www.anotherhome.net/" target="_blank">DIYgod</a>. Available on <a
-                    href="https://github.com/DIYgod/APlayer" target="_blank">GitHub</a>. Licensed MIT.</p>
+            <h1>Vue-APlayer</h1>
+            <h2>A Vue 2.x component of <a href="https://github.com/DIYgod/APlayer" target="_blank">APlayer</a></h2>
+            <p><a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
             <hr>
             <h3>Normal</h3>
-            <a-player id="player1" autoplay mutex theme="#e6d0b2" preload="metadata" mode="circulation" :music="{
+            <a-player autoplay mutex theme="#42b983" preload="metadata" mode="circulation"
+                      :music="{
                     title: 'Preparation',
                     author: 'Hans Zimmer/Richard Harvey',
                     url: 'http://devtest.qiniudn.com/Preparation.mp3',
                     pic: 'http://devtest.qiniudn.com/Preparation.jpg'
-                }"></a-player>
+                }">
+            </a-player>
 
             <h3>With lyrics</h3>
-            <a-player id="player3" mutex theme="#615754" :showlrc="3" mode="circulation" :music="{
+            <a-player mutex theme="#615754" :showlrc="3" mode="circulation"
+                      :music="{
                 title: '回レ！雪月花',
                 author: '小倉唯',
                 url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
@@ -33,7 +35,8 @@
                 lrc: './回レ！雪月花.lrc'
             }"></a-player>
             <h3>With playlist</h3>
-            <a-player id="player4" mutex theme="#ad7a86" mode="random" :music="[
+            <a-player mutex theme="#e6d0b2" mode="random"
+                      :music="[
             {
                 title: 'あっちゅ～ま青春!',
                 author: '七森中☆ごらく部',
@@ -53,7 +56,8 @@
                 pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg'
             }]"></a-player>
             <h3>With playlist and lyrics</h3>
-            <a-player id="player5" :showlrc="3" mutex theme="#ad7a86" mode="random" listmaxheight="80px" :music="[
+            <a-player :showlrc="3" mutex theme="#ad7a86" mode="random" listmaxheight="80px"
+                      :music="[
             {
                 title: 'あっちゅ～ま青春!',
                 author: '七森中☆ごらく部',
@@ -76,7 +80,8 @@
                 lrc: '回レ！雪月花.lrc'
             }]"></a-player>
             <h3>Narrow</h3>
-            <a-player id="player2" narrow mutex theme="#e6d0b2" mode="circulation" :music="{
+            <a-player narrow mutex theme="#e6d0b2" mode="circulation"
+                      :music="{
                 title: 'Preparation',
                 author: 'Hans Zimmer/Richard Harvey',
                 url: 'http://devtest.qiniudn.com/Preparation.mp3',
@@ -90,13 +95,13 @@
     export default {
         name: 'App',
         components: {
-            'a-player': VueAplayer
+            'a-player': VueAplayer,
         },
     }
 </script>
 <style>
     body {
-        font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-family: Source Sans Pro, 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .container {
@@ -108,7 +113,7 @@
 
     h1 {
         font-size: 54px;
-        color: #333;
+        color: #42b983;
         margin: 30px 0 10px;
     }
 
@@ -132,7 +137,7 @@
     }
 
     a {
-        color: #08c;
+        color: #42b983;
         text-decoration: none;
     }
 

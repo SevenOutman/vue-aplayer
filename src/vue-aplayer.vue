@@ -34,15 +34,35 @@
                 default: 'auto'
             },
             listmaxheight: String,
-            music: [Object, Array]
+            music: {
+                type: [Object, Array],
+                required: true,
+                validator(value) {
+                    let songs
+                    if (!(value instanceof Array)) {
+                        songs = [value]
+                    } else {
+                        songs = value
+                    }
+                    for (let i = 0; i < songs.length; i++) {
+                        let song = songs[i]
+                        if (!song.url || !song.title || !song.author) {
+                            song.title = song.title || 'Untitled'
+                            song.author = song.author || 'Unknown'
+                            return false
+                        }
+                    }
+                    return true
+                }
+            }
         },
         data() {
             return {
-                player: null
+                control: null
             }
         },
         mounted() {
-            let player = this.player = new APlayer({
+            let player = this.control = new APlayer({
                 element: this.$el,
                 narrow: this.narrow,
                 autoplay: this.autoplay,

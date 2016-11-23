@@ -182,6 +182,11 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
 
 /***/ },
 /* 3 */
@@ -230,17 +235,37 @@
 	            default: 'auto'
 	        },
 	        listmaxheight: String,
-	        music: [Object, Array]
+	        music: {
+	            type: [Object, Array],
+	            required: true,
+	            validator: function validator(value) {
+	                var songs = void 0;
+	                if (!(value instanceof Array)) {
+	                    songs = [value];
+	                } else {
+	                    songs = value;
+	                }
+	                for (var i = 0; i < songs.length; i++) {
+	                    var song = songs[i];
+	                    if (!song.url || !song.title || !song.author) {
+	                        song.title = song.title || 'Untitled';
+	                        song.author = song.author || 'Unknown';
+	                        return false;
+	                    }
+	                }
+	                return true;
+	            }
+	        }
 	    },
 	    data: function data() {
 	        return {
-	            player: null
+	            control: null
 	        };
 	    },
 	    mounted: function mounted() {
 	        var _this = this;
 	
-	        var player = this.player = new _aplayer2.default({
+	        var player = this.control = new _aplayer2.default({
 	            element: this.$el,
 	            narrow: this.narrow,
 	            autoplay: this.autoplay,
@@ -284,7 +309,7 @@
 	
 	
 	// module
-	exports.push([module.id, "\nbody {\n    font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n}\n.container {\n    max-width: 32rem;\n    margin-left: auto;\n    margin-right: auto;\n    margin-bottom: 50px;\n}\nh1 {\n    font-size: 54px;\n    color: #333;\n    margin: 30px 0 10px;\n}\nh2 {\n    font-size: 22px;\n    color: #555;\n}\nh3 {\n    font-size: 24px;\n    color: #555;\n}\nhr {\n    display: block;\n    width: 7rem;\n    height: 1px;\n    margin: 2.5rem 0;\n    background-color: #eee;\n    border: 0;\n}\na {\n    color: #08c;\n    text-decoration: none;\n}\np {\n    font-size: 18px;\n}\n.github-corner:hover .octo-arm {\n    animation: octocat-wave 560ms ease-in-out\n}\n@keyframes octocat-wave {\n0%, 100% {\n        transform: rotate(0deg)\n}\n20%, 60% {\n        transform: rotate(-25deg)\n}\n40%, 80% {\n        transform: rotate(10deg)\n}\n}\n@media (max-width: 500px) {\n.github-corner:hover .octo-arm {\n        animation: none\n}\n.github-corner .octo-arm {\n        animation: octocat-wave 560ms ease-in-out\n}\n}\n", ""]);
+	exports.push([module.id, "\nbody {\n    font-family: Source Sans Pro, 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n}\n.container {\n    max-width: 32rem;\n    margin-left: auto;\n    margin-right: auto;\n    margin-bottom: 50px;\n}\nh1 {\n    font-size: 54px;\n    color: #42b983;\n    margin: 30px 0 10px;\n}\nh2 {\n    font-size: 22px;\n    color: #555;\n}\nh3 {\n    font-size: 24px;\n    color: #555;\n}\nhr {\n    display: block;\n    width: 7rem;\n    height: 1px;\n    margin: 2.5rem 0;\n    background-color: #eee;\n    border: 0;\n}\na {\n    color: #42b983;\n    text-decoration: none;\n}\np {\n    font-size: 18px;\n}\n.github-corner:hover .octo-arm {\n    animation: octocat-wave 560ms ease-in-out\n}\n@keyframes octocat-wave {\n0%, 100% {\n        transform: rotate(0deg)\n}\n20%, 60% {\n        transform: rotate(-25deg)\n}\n40%, 80% {\n        transform: rotate(10deg)\n}\n}\n@media (max-width: 500px) {\n.github-corner:hover .octo-arm {\n        animation: none\n}\n.github-corner .octo-arm {\n        animation: octocat-wave 560ms ease-in-out\n}\n}\n", ""]);
 	
 	// exports
 
@@ -428,13 +453,13 @@
 	  }, [_vm._h('a', {
 	    staticClass: "github-corner",
 	    attrs: {
-	      "href": "https://github.com/DIYgod/APlayer",
+	      "href": "https://github.com/SevenOutman/vue-aplayer",
 	      "target": "_blank"
 	    }
 	  }, [_vm._h('svg', {
 	    staticStyle: {
-	      "fill": "#151513",
-	      "color": "#fff",
+	      "fill": "#39AF78",
+	      "color": "#2F4053",
 	      "position": "absolute",
 	      "top": "0",
 	      "border": "0",
@@ -466,12 +491,11 @@
 	    }
 	  })])]), " ", _vm._h('div', {
 	    staticClass: "container"
-	  }, [_vm._h('h1', ["APlayer"]), " ", _vm._h('h2', ["Wow, such a beautiful html5 music player"]), " ", _vm._m(0), " ", _vm._h('hr'), " ", _vm._h('h3', ["Normal"]), " ", _vm._h('a-player', {
+	  }, [_vm._h('h1', ["Vue-APlayer"]), " ", _vm._m(0), " ", _vm._m(1), " ", _vm._h('hr'), " ", _vm._h('h3', ["Normal"]), " ", _vm._h('a-player', {
 	    attrs: {
-	      "id": "player1",
 	      "autoplay": "",
 	      "mutex": "",
-	      "theme": "#e6d0b2",
+	      "theme": "#42b983",
 	      "preload": "metadata",
 	      "mode": "circulation",
 	      "music": {
@@ -483,7 +507,6 @@
 	    }
 	  }), " ", _vm._h('h3', ["With lyrics"]), " ", _vm._h('a-player', {
 	    attrs: {
-	      "id": "player3",
 	      "mutex": "",
 	      "theme": "#615754",
 	      "showlrc": 3,
@@ -498,9 +521,8 @@
 	    }
 	  }), " ", _vm._h('h3', ["With playlist"]), " ", _vm._h('a-player', {
 	    attrs: {
-	      "id": "player4",
 	      "mutex": "",
-	      "theme": "#ad7a86",
+	      "theme": "#e6d0b2",
 	      "mode": "random",
 	      "music": [{
 	        title: 'あっちゅ～ま青春!',
@@ -521,7 +543,6 @@
 	    }
 	  }), " ", _vm._h('h3', ["With playlist and lyrics"]), " ", _vm._h('a-player', {
 	    attrs: {
-	      "id": "player5",
 	      "showlrc": 3,
 	      "mutex": "",
 	      "theme": "#ad7a86",
@@ -549,7 +570,6 @@
 	    }
 	  }), " ", _vm._h('h3', ["Narrow"]), " ", _vm._h('a-player', {
 	    attrs: {
-	      "id": "player2",
 	      "narrow": "",
 	      "mutex": "",
 	      "theme": "#e6d0b2",
@@ -563,17 +583,19 @@
 	    }
 	  })])])
 	},staticRenderFns: [function (){var _vm=this;
-	  return _vm._h('p', ["Made by ", _vm._h('a', {
-	    attrs: {
-	      "href": "https://www.anotherhome.net/",
-	      "target": "_blank"
-	    }
-	  }, ["DIYgod"]), ". Available on ", _vm._h('a', {
+	  return _vm._h('h2', ["A Vue 2.x component of ", _vm._h('a', {
 	    attrs: {
 	      "href": "https://github.com/DIYgod/APlayer",
 	      "target": "_blank"
 	    }
-	  }, ["GitHub"]), ". Licensed MIT."])
+	  }, ["APlayer"])])
+	},function (){var _vm=this;
+	  return _vm._h('p', [_vm._h('a', {
+	    attrs: {
+	      "href": "https://github.com/SevenOutman/vue-aplayer",
+	      "target": "_blank"
+	    }
+	  }, ["GitHub"])])
 	}]}
 
 /***/ },
