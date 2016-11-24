@@ -1,9 +1,11 @@
 # vue-aplayer
-A Vue 2.x component of [APlayer](https://github.com/DIYgod/APlayer).
+A Vue 2.x component of easy-to-config music players with controls.
 
 ### Introduction
 
 [Demo](https://sevenoutman.github.io/vue-aplayer/demo)
+
+This component is a wrapper for [APlayer](https://github.com/DIYgod/APlayer).
 
 Screenshot
 
