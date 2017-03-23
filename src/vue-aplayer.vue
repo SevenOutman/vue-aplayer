@@ -61,6 +61,16 @@
                 control: null
             }
         },
+        watch: {
+            music(music) {
+                this.control.option.music = music;
+                this.control.setMusic(0);
+                if(this.autoplay) {
+                    this.control.play();
+                }
+                this.$emit('change', music);
+            }
+        },
         mounted() {
             let player = this.control = new APlayer({
                 element: this.$el,

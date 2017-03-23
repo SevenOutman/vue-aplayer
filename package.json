@@ -1,6 +1,6 @@
 {
   "name": "vue-aplayer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue component of APlayer.",
   "main": "src/vue-aplayer.vue",
   "scripts": {
