@@ -1,4 +1,4 @@
-# vue-aplayer
+# vue-aplayer [![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 A Vue 2.x component of easy-to-config music players with controls.
 
 ### Introduction
@@ -55,6 +55,8 @@ Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlay
 | preload | String | 'auto' | the way to load music, can be 'none' 'metadata' or 'auto' |
 | listmaxheight | String | none | max height of play list |
 | music| Object or Array | `required` | music info, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
+
+> If `music` is a single Object, you can assign it to another Object and the player will play the new song.
 
 #### Music info
 

@@ -5,15 +5,20 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: './src/demo/main.js',
     output: {
-        path: './demo',
+        path: path.resolve(__dirname, 'demo'),
         filename: "main.js",
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        js: 'babel-loader?presets[]=es2015'
+                    }
+                }
             },
             {
                 test: /\.js$/,
@@ -41,7 +46,7 @@ module.exports = {
 if (process.env.NODE_ENV === 'production') {
     module.exports.entry = './src/vue-aplayer.vue'
     module.exports.output = {
-        path: './dist',
+        path: path.resolve(__dirname, 'dist'),
         filename: 'vue-aplayer.min.js'
     }
     module.exports.devtool = '#source-map'
@@ -53,7 +58,10 @@ if (process.env.NODE_ENV === 'production') {
             }
         }),
 
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+        })
     ]
 }
