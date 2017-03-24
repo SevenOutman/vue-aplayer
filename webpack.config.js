@@ -9,35 +9,32 @@ module.exports = {
         filename: "main.js",
     },
 
-    resolveLoader: {
-        root: path.join(__dirname, 'node_modules'),
-    },
     module: {
         loaders: [
             {
                 test: /\.vue$/,
-                loader: 'vue'
+                loader: 'vue-loader'
             },
             {
                 test: /\.js$/,
-                loader: 'babel',
-                exclude: /node_modules/
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options: {
+                    presets: ['es2015']
+                }
             },
             {
                 test: /\.html$/,
-                loader: 'vue-html'
+                loader: 'vue-html-loader'
             }
         ]
-    },
-    babel: {
-        presets: ['es2015']
     },
     devtool: '#eval-source-map',
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/demo/index.html'
-        })
+        }),
     ]
 }
 
