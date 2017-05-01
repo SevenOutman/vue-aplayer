@@ -1,0 +1,35 @@
+{
+  "name": "spdy-transport",
+  "version": "2.0.18",
+  "description": "SPDY v2, v3, v3.1 and HTTP2 transport",
+  "license": "MIT",
+  "keywords": [
+    "spdy",
+    "http2",
+    "transport"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/indutny/spdy-transport.git"
+  },
+  "homepage": "https://github.com/indutny/spdy-transport",
+  "author": "Fedor Indutny <fedor@indutny.com>",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "hpack.js": "^2.1.6",
+    "obuf": "^1.1.0",
+    "readable-stream": "^2.0.1",
+    "wbuf": "^1.4.0"
+  },
+  "devDependencies": {
+    "async": "^1.2.1",
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "stream-pair": "^1.0.0"
+  },
+  "scripts": {
+    "test": "jscs lib/**/*.js test/**/*.js && jshint lib/**/*.js && mocha --reporter=spec test/**/*-test.js test/**/**/*-test.js"
+  },
+  "main": "./lib/spdy-transport"
+}
