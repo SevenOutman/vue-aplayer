@@ -1,0 +1,47 @@
+{
+  "name": "spdy",
+  "version": "3.4.4",
+  "description": "Implementation of the SPDY protocol on node.js.",
+  "license": "MIT",
+  "keywords": [
+    "spdy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/indutny/node-spdy.git"
+  },
+  "homepage": "https://github.com/indutny/node-spdy",
+  "bugs": {
+    "email": "node-spdy+bugs@indutny.com",
+    "url": "https://github.com/indutny/node-spdy/issues"
+  },
+  "author": "Fedor Indutny <fedor.indutny@gmail.com>",
+  "contributors": [
+    "Chris Storm <github@eeecooks.com>",
+    "François de Metz <francois@2metz.fr>",
+    "Ilya Grigorik <ilya@igvita.com>",
+    "Roberto Peon",
+    "Tatsuhiro Tsujikawa",
+    "Jesse Cravens <jesse.cravens@gmail.com>"
+  ],
+  "dependencies": {
+    "debug": "^2.2.0",
+    "handle-thing": "^1.2.4",
+    "http-deceiver": "^1.2.4",
+    "select-hose": "^2.0.0",
+    "spdy-transport": "^2.0.15"
+  },
+  "devDependencies": {
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.x"
+  },
+  "scripts": {
+    "test": "jscs lib/**/*.js test/*.js && jshint lib/**/*.js && mocha --reporter=spec test/*-test.js"
+  },
+  "engines": [
+    "node >= 0.7.0"
+  ],
+  "main": "./lib/spdy",
+  "optionalDependencies": {}
+}
