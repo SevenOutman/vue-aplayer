@@ -63,7 +63,8 @@
         },
         watch: {
             music(music) {
-                let player = this.control = new APlayer({
+                this.control.destroy()
+                this.control = new APlayer({
                     element: this.$el,
                     narrow: this.narrow,
                     autoplay: this.autoplay,
