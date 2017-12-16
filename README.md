@@ -1,5 +1,13 @@
-# vue-aplayer [![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
+# vue-aplayer 
+[![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
+[![npm](https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE)
+[![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
+[![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
+
 A Vue 2.x component of easy-to-config music players with controls.
+
+> ### Update
+> This package will be completely rewritten in a short time, make sure to keep an eye on it. :)
 
 ### Introduction
 
