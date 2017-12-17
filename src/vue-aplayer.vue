@@ -63,8 +63,19 @@
         },
         watch: {
             music(music) {
-                this.control.option.music = music;
-                this.control.setMusic(0);
+                this.control.destroy()
+                this.control = new APlayer({
+                    element: this.$el,
+                    narrow: this.narrow,
+                    autoplay: this.autoplay,
+                    showlrc: this.showlrc,
+                    mutex: this.mutex,
+                    theme: this.theme,
+                    preload: this.preload,
+                    mode: this.mode,
+                    listmaxheight: this.listmaxheight,
+                    music
+                })
                 if(this.autoplay) {
                     this.control.play();
                 }
