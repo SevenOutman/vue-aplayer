@@ -7,7 +7,12 @@
 A Vue 2.x component of easy-to-config music players with controls.
 
 > ### Update
-> This package will be completely rewritten in a short time, make sure to keep an eye on it. :)
+> This package will be completely rewritten in a short time.
+>
+> I'm gonna make it an vue implementation of APlayer,
+ not just a wrapper anymore.
+>  
+> Make sure to keep an eye on it. :)
 
 ### Introduction
 
