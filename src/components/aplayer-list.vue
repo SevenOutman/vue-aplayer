@@ -21,7 +21,6 @@
 
 <script>
   export default {
-    name: "aplayer-list",
     props: {
       show: {
         type: Boolean,

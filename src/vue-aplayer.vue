@@ -10,63 +10,28 @@
         <div class="aplayer-lrc-contents"
              style="transform: translateY(0); -webkit-transform: translateY(0);"></div>
       </div>
-      <div class="aplayer-controller">
-        <div class="aplayer-bar-wrap" @click="jump">
-          <div class="aplayer-bar">
-            <div class="aplayer-loaded" :style="{width: `${Math.trunc(loadProgress * 100)}%`}"></div>
-            <div class="aplayer-played"
-                 :style="{width: `${Math.trunc(playProgress * 100)}%`, background: theme}"
-            >
-              <span
-                      class="aplayer-thumb"
-                      :style="{border: '1px solid', borderColor:　theme}">
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="aplayer-time">
-                        <span class="aplayer-time-inner">
-                            - <span class="aplayer-ptime">{{secondToTime(playStat.playedTime)}}</span> / <span
-                                class="aplayer-dtime">{{secondToTime(playStat.duration)}}</span>
-                        </span>
-          <div class="aplayer-volume-wrap">
-            <button
-                    v-if="!isMobile"
-                    type="button"
-                    class="aplayer-icon aplayer-icon-volume-down"
-            >
-              <icon type="volume-down"></icon>
-            </button>
-            <div class="aplayer-volume-bar-wrap">
-              <div class="aplayer-volume-bar">
-                <div class="aplayer-volume"
-                     :style="{height: `${Math.trunc(volume * 100)}%`, background: theme}"></div>
-              </div>
-            </div>
-          </div>
-          <button
-                  type="button"
-                  class="aplayer-icon aplayer-icon-mode"
-          >
-            <icon :type="mode"></icon>
-          </button>
-          <button type="button" class="aplayer-icon aplayer-icon-menu"
-                  @click="showList = !showList"
-          >
-            <icon type="menu"></icon>
-          </button>
-        </div>
-      </div>
+      <controls
+              :mode="mode"
+              :stat="playStat"
+              :volume="volume"
+              :muted="muted"
+              :theme="theme"
+              @togglelist="showList = !showList"
+              @togglemute="toggleMute"
+              @setvolume="setVolume"
+      >
+      </controls>
     </div>
+
     <music-list :show="showList" :music-list="musicList" :play-index="playIndex" :listmaxheight="listmaxheight"
                 :theme="theme" @selectsong="setPlayIndex"></music-list>
     <audio :src="currentMusic.url" ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
-  import AplayerIcon from './components/aplayer-icon.vue'
-  import AplayerThumbnail from './components/aplayer-thumbnail.vue'
-  import AplayerList from './components/aplayer-list.vue'
+  import Thumbnail from './components/aplayer-thumbnail.vue'
+  import MusicList from './components/aplayer-list.vue'
+  import Controls from './components/aplayer-controller.vue'
 
   let mutexAudios = {}
   let instanceId = 1
@@ -75,9 +40,9 @@
   export default {
     name: 'APlayer',
     components: {
-      icon: AplayerIcon,
-      thumbnail: AplayerThumbnail,
-      musicList: AplayerList,
+      Thumbnail,
+      Controls,
+      MusicList,
     },
     props: {
       narrow: {
@@ -143,6 +108,7 @@
           playedTime: 0,
         },
         volume: 0.8,
+        muted: false,
         showList: true,
       }
     },
@@ -181,21 +147,6 @@
       },
     },
     methods: {
-      secondToTime(second) {
-        if (isNaN(second)) {
-          return '00:00';
-        }
-        const pad0 = (num) => {
-          return num < 10 ? '0' + num : '' + num;
-        };
-
-        const min = Math.trunc(second / 60);
-        const sec = Math.trunc(second - min * 60);
-        const hours = Math.trunc(min / 60);
-        const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)));
-        return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec);
-
-      },
       toggle() {
         if (!this.audio.paused) {
           this.pause()
@@ -223,6 +174,20 @@
       jumpToTime(time) {
         this.audio.currentTime = time
       },
+      toggleMute() {
+        this.setMuted(!this.audio.muted)
+      },
+      setMuted(val) {
+        this.audio.muted = val
+        this.muted = this.audio.muted
+      },
+      setVolume(val) {
+        this.audio.volume = val
+        this.volume = this.audio.volume
+        if (val > 0) {
+          this.setMuted(false)
+        }
+      },
 
       onAudioPlay() {
         this.isPlaying = true
@@ -249,6 +214,7 @@
       },
     },
     mounted() {
+      this.muted = this.audio.muted
       this.audio.preload = this.preload
 
       this.audio.addEventListener('play', this.onAudioPlay)

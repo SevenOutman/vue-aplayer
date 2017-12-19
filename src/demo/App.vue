@@ -13,7 +13,7 @@
         <div class="container">
             <h1>Vue-APlayer</h1>
             <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
-            <p><a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
+            <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
             <hr>
             <h3>Normal</h3>
             <a-player autoplay mutex theme="#42b983" preload="metadata" mode="circulation"

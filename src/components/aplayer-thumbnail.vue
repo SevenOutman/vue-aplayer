@@ -4,23 +4,20 @@
           :style="currentPicStyleObj"
   >
     <div class="aplayer-button" :class="playing ? 'aplayer-pause' : 'aplayer-play'">
-      <button
-              type="button"
-              class="aplayer-icon"
+      <icon-button
+              :icon="playing ? 'pause' : 'play'"
               :class="playing ? 'aplayer-icon-pause' : 'aplayer-icon-play'"
-              @click="$emit('toggleplay')"
-      >
-        <icon :type="playing ? 'pause' : 'play'"></icon>
-      </button>
+              @click.native="$emit('toggleplay')"
+      ></icon-button>
     </div>
   </div>
 </template>
 <script>
-  import AplayerIcon from './aplayer-icon.vue'
+  import IconButton from './aplayer-iconbutton.vue'
 
   export default {
     components: {
-      icon: AplayerIcon,
+      IconButton,
     },
     props: {
       pic: String,
@@ -33,9 +30,9 @@
       currentPicStyleObj() {
         if (!this.pic) return {}
         return {
-          backgroundImage: `url(${this.pic})`
+          backgroundImage: `url(${this.pic})`,
         }
-      }
-    }
+      },
+    },
   }
 </script>
