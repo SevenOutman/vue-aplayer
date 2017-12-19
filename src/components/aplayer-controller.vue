@@ -21,7 +21,7 @@
               @togglemute="$emit('togglemute')"
               @setvolume="v => $emit('setvolume', v)"
       ></volume>
-      <icon-button class="aplayer-icon-mode" :icon="mode"></icon-button>
+      <icon-button class="aplayer-icon-mode" :icon="mode" @click.native="$emit('nextmode')"></icon-button>
       <icon-button class="aplayer-icon-menu" icon="menu" @click.native="$emit('togglelist')"></icon-button>
     </div>
   </div>

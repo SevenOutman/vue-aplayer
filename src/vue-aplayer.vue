@@ -11,7 +11,7 @@
              style="transform: translateY(0); -webkit-transform: translateY(0);"></div>
       </div>
       <controls
-              :mode="mode"
+              :mode="playMode"
               :stat="playStat"
               :volume="volume"
               :muted="muted"
@@ -23,6 +23,7 @@
               @dragbegin="onProgressDragBegin"
               @dragend="onProgressDragEnd"
               @dragging="onProgressDragging"
+              @nextmode="setNextMode"
       >
       </controls>
     </div>
@@ -113,6 +114,7 @@
         },
         volume: 0.8,
         muted: false,
+        playMode: this.mode,
         showList: true,
       }
     },
@@ -214,6 +216,25 @@
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
       },
 
+      setNextMode() {
+        if (this.music instanceof Array) {
+          if (this.playMode === 'random') {
+            this.playMode = 'single'
+          } else if (this.playMode === 'single') {
+            this.playMode = 'order'
+          } else if (this.playMode === 'order') {
+            this.playMode = 'circulation'
+          } else if (this.playMode === 'circulation') {
+            this.playMode = 'random'
+          }
+        } else {
+          if (this.playMode === 'circulation') {
+            this.playMode = 'order'
+          } else {
+            this.playMode = 'circulation'
+          }
+        }
+      },
       onAudioPlay() {
         this.isPlaying = true
         this.$emit('play')
