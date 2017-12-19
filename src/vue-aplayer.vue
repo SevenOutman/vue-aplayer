@@ -20,6 +20,9 @@
               @togglemute="toggleMute"
               @setvolume="setVolume"
               @setprogress="setProgress"
+              @dragbegin="onProgressDragBegin"
+              @dragend="onProgressDragEnd"
+              @dragging="onProgressDragging"
       >
       </controls>
     </div>
@@ -196,6 +199,20 @@
           this.playStat.playedTime = this.audio.currentTime
         }
       },
+      onProgressDragBegin() {
+        this.audio.removeEventListener('timeupdate', this.onAudioTimeUpdate)
+      },
+      onProgressDragging(val) {
+        this.playStat.playedTime = this.audio.duration * val
+      },
+      onProgressDragEnd(val) {
+        if (isNaN(this.audio.duration)) {
+          this.playStat.playedTime = 0
+        } else {
+          this.audio.currentTime = this.audio.duration * val
+        }
+        this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
+      },
 
       onAudioPlay() {
         this.isPlaying = true
@@ -222,7 +239,7 @@
       },
       onAudioVolumeChange() {
         this.volume = this.audio.volume
-      }
+      },
     },
     mounted() {
       this.muted = this.audio.muted

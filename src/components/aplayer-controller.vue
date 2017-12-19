@@ -5,6 +5,9 @@
             :playProgress="playProgress"
             :theme="theme"
             @setprogress="val => $emit('setprogress', val)"
+            @dragbegin="$emit('dragbegin')"
+            @dragend="val => $emit('dragend', val)"
+            @dragging="val => $emit('dragging', val)"
     ></v-progress>
     <div class="aplayer-time">
       <span class="aplayer-time-inner">
