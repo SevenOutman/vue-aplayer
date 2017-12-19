@@ -19,6 +19,7 @@
               @togglelist="showList = !showList"
               @togglemute="toggleMute"
               @setvolume="setVolume"
+              @setprogress="setProgress"
       >
       </controls>
     </div>
@@ -183,9 +184,16 @@
       },
       setVolume(val) {
         this.audio.volume = val
-        this.volume = this.audio.volume
         if (val > 0) {
           this.setMuted(false)
+        }
+      },
+      setProgress(val) {
+        if (isNaN(this.audio.duration)) {
+          this.playStat.playedTime = 0
+        } else {
+          this.audio.currentTime = this.audio.duration * val
+          this.playStat.playedTime = this.audio.currentTime
         }
       },
 
@@ -212,6 +220,9 @@
       onAudioTimeUpdate() {
         this.playStat.playedTime = this.audio.currentTime
       },
+      onAudioVolumeChange() {
+        this.volume = this.audio.volume
+      }
     },
     mounted() {
       this.muted = this.audio.muted
@@ -220,18 +231,15 @@
       this.audio.addEventListener('play', this.onAudioPlay)
       this.audio.addEventListener('pause', this.onAudioPause)
       this.audio.addEventListener('abort', this.onAudioPause)
+      this.audio.addEventListener('progress', this.onAudioProgress)
 
       this.audio.addEventListener('durationchange', this.onAudioDurationChange)
       this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
+      this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
 
-      if (this.currentMusic) {
-        // this.audio.src = this.currentMusic.url
-      }
       if (this.mutex) {
         mutexAudios[this.id] = this.audio
       }
-
-      // this.$refs.list.style.height = this.$refs.list.offsetHeight + 'px'
 
       // dont set audio.autoplay directly, we take control
       if (this.autoplay) {

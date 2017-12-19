@@ -1,18 +1,11 @@
 <template>
   <div class="aplayer-controller">
-    <div class="aplayer-bar-wrap" @click="jump">
-      <div class="aplayer-bar">
-        <div class="aplayer-loaded" :style="{width: `${Math.trunc(loadProgress * 100)}%`}"></div>
-        <div class="aplayer-played"
-             :style="{width: `${Math.trunc(playProgress * 100)}%`, background: theme}"
-        >
-              <span
-                      class="aplayer-thumb"
-                      :style="{border: '1px solid', borderColor:　theme}">
-              </span>
-        </div>
-      </div>
-    </div>
+    <v-progress
+            :loadProgress="loadProgress"
+            :playProgress="playProgress"
+            :theme="theme"
+            @setprogress="val => $emit('setprogress', val)"
+    ></v-progress>
     <div class="aplayer-time">
       <span class="aplayer-time-inner">
         - <span class="aplayer-ptime">{{secondToTime(stat.playedTime)}}</span> / <span
@@ -33,11 +26,13 @@
 
 <script>
   import IconButton from './aplayer-iconbutton.vue'
+  import VProgress from './aplayer-controller-progress.vue'
   import Volume from './aplayer-controller-volume.vue'
 
   export default {
     components: {
       IconButton,
+      VProgress,
       Volume,
     },
     props: ['mode', 'stat', 'theme', 'volume', 'muted'],
@@ -65,7 +60,6 @@
         const hours = Math.trunc(min / 60);
         const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)));
         return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec);
-
       },
       jump() {
 
