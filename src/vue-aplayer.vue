@@ -313,6 +313,11 @@
         this.play()
       }
     },
+    beforeDestroy() {
+      if (activeMutex === this) {
+        activeMutex = null
+      }
+    }
   }
 
 
