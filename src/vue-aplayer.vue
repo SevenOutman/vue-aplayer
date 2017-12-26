@@ -1,15 +1,15 @@
 <template>
-  <div class="aplayer" :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array}">
+  <div
+          class="aplayer"
+          :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': showlrc}"
+  >
     <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"></thumbnail>
     <div class="aplayer-info">
       <div class="aplayer-music">
         <span class="aplayer-title">{{ currentMusic.title}}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
-      <div class="aplayer-lrc">
-        <div class="aplayer-lrc-contents"
-             style="transform: translateY(0); -webkit-transform: translateY(0);"></div>
-      </div>
+      <lyrics :current-music="currentMusic" :play-stat="playStat"></lyrics>
       <controls
               :mode="playMode"
               :stat="playStat"
@@ -37,6 +37,7 @@
   import Thumbnail from './components/aplayer-thumbnail.vue'
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
+  import Lyrics from './components/aplayer-lrc.vue'
 
   let activeMutex = null
   let instanceId = 1
@@ -48,6 +49,7 @@
       Thumbnail,
       Controls,
       MusicList,
+      Lyrics,
     },
     props: {
       narrow: {
@@ -317,7 +319,7 @@
       if (activeMutex === this) {
         activeMutex = null
       }
-    }
+    },
   }
 
 
