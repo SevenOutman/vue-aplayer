@@ -38,7 +38,7 @@
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
 
-  let mutexAudios = {}
+  let activeMutex = null
   let instanceId = 1
   // console.log("\n %c APlayer 1.6.1 %c http://aplayer.js.org \n\n", "color: #fadfa3; background: #030307; padding:5px 0;", "background: #fadfa3; padding:5px 0;");
 
@@ -161,10 +161,21 @@
         }
       },
       play() {
+        if (this.mutex) {
+          if (activeMutex) {
+            activeMutex.pause()
+          }
+          activeMutex = this
+        }
         this.audio.play()
       },
       pause() {
         this.audio.pause()
+      },
+      thenPlay() {
+        this.$nextTick(() => {
+          this.play()
+        })
       },
       setPlayIndex(index) {
         if (this.playIndex === index) {
@@ -261,6 +272,26 @@
       onAudioVolumeChange() {
         this.volume = this.audio.volume
       },
+      onAudioEnded() {
+        if (this.mode === 'order') {
+          if (this.playIndex === this.musicList.length - 1) {
+            // do nothing
+          } else if (this.playIndex < this.musicList.length - 1) {
+            this.playIndex++
+            this.thenPlay()
+          }
+        } else if (this.mode === 'single') {
+          this.thenPlay()
+        } else if (this.mode === 'circulation') {
+          this.playIndex = (this.playIndex + 1) % this.musicList.length
+          this.thenPlay()
+        } else if (this.mode === 'random') {
+          this.playIndex = Math.trunc(Math.random() * this.musicList.length)
+          this.thenPlay()
+        }
+
+        this.$emit('ended');
+      },
     },
     mounted() {
       this.muted = this.audio.muted
@@ -275,9 +306,7 @@
       this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
       this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
 
-      if (this.mutex) {
-        mutexAudios[this.id] = this.audio
-      }
+      this.audio.addEventListener('ended', this.onAudioEnded)
 
       // dont set audio.autoplay directly, we take control
       if (this.autoplay) {
