@@ -25,7 +25,9 @@
   },
   "homepage": "https://github.com/SevenOutman/vue-aplayer#readme",
   "dependencies": {
-    "aplayer": "^1.5.8"
+    "aplayer": "^1.6.0",
+    "axios": "^0.17.1",
+    "vue": "^2.5.13"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -36,10 +38,9 @@
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.1",
     "url-loader": "^0.6.2",
-    "vue": "^2.0.8",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^10.0.0",
-    "vue-template-compiler": "^2.0.8",
+    "vue-template-compiler": "^2.5.13",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^1.16.2"
   }
