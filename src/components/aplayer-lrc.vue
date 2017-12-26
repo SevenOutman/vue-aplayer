@@ -1,9 +1,14 @@
 <template>
   <div class="aplayer-lrc">
-    <div class="aplayer-lrc-contents"
-         :style="transformStyle">
-      <p v-for="(line, index) of lrcLines" :class="{ 'aplayer-lrc-current': index === currentLineIndex }">{{ line[1]
-        }}</p>
+    <div
+      class="aplayer-lrc-contents"
+      :style="transformStyle">
+      <p
+        v-for="(line, index) of lrcLines"
+        :class="{ 'aplayer-lrc-current': index === currentLineIndex }"
+      >
+        {{ line[1] }}
+      </p>
     </div>
   </div>
 </template>
@@ -66,8 +71,6 @@
         }
       },
       'playStat.playedTime'(playedTime) {
-        console.log(playedTime)
-        // if (this.lrcIndex > this.lrc.length - 1 || currentTime < this.lrc[this.lrcIndex][0] || (!this.lrc[this.lrcIndex + 1] || currentTime >= this.lrc[this.lrcIndex + 1][0])) {
         for (let i = 0; i < this.lrcLines.length; i++) {
           const line = this.lrcLines[i]
           const nextLine = this.lrcLines[i + 1]
@@ -75,11 +78,7 @@
             this.currentLineIndex = i;
           }
         }
-        // }
       },
-    },
-    mounted() {
-
     },
   }
 </script>

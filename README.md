@@ -61,7 +61,7 @@ Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlay
 | ---- | ---- | ------- | ----------- |
 | narrow | Boolean | false | narrow style |
 | autoplay | Boolean | false | autoplay song(s), not supported by mobile browsers |
-| showlrc | Number | 0 | show lrc, can be 0, 1, 2, see: [With lrc](https://github.com/DIYgod/APlayer#with-lrc) |
+| showlrc | Boolean | false | whether show lyrics or not |
 | mutex | Boolean | false | pause other players when this player playing |
 | theme | String | '#b7daff' | theme color |
 | mode | String | 'circulation' | play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
