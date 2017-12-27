@@ -80,5 +80,13 @@
         }
       },
     },
+    mounted() {
+      this.currentLineIndex = 0
+      if (this.currentMusic.lrc) {
+        this.applyLrc(this.currentMusic.lrc)
+      } else {
+        this.hideLrc()
+      }
+    }
   }
 </script>

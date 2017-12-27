@@ -7,7 +7,7 @@
 A Vue 2.x component of easy-to-config music players with controls.
 
 > ### Note
-> This component is a vue implementation of [APlayer](https://github.com/MoePlayer/APlayer), not just a wrapper.
+> This component is a vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) and keeps updating with it, not just a wrapper.
 
 ### Introduction
 
