@@ -6,19 +6,12 @@
 
 A Vue 2.x component of easy-to-config music players with controls.
 
-> ### Update
-> This package will be completely rewritten in a short time.
->
-> I'm gonna make it an vue implementation of APlayer,
- not just a wrapper anymore.
->  
-> Make sure to keep an eye on it. :)
+> ### Note
+> This component is a vue implementation of [APlayer](https://github.com/MoePlayer/APlayer), not just a wrapper.
 
 ### Introduction
 
 [Demo](https://sevenoutman.github.io/vue-aplayer/demo)
-
-This component is a wrapper for [APlayer](https://github.com/DIYgod/APlayer).
 
 Screenshot
 
@@ -33,22 +26,22 @@ $ npm install vue-aplayer --save
 ## Usage
 
 ```HTML
-<a-player autoplay :music="{
+<aplayer autoplay :music="{
   title: 'Preparation',
   author: 'Hans Zimmer/Richard Harvey',
   url: 'http://devtest.qiniudn.com/Preparation.mp3',
   pic: 'http://devtest.qiniudn.com/Preparation.jpg',
   lrc: '[00:00.00]lrc here\n[00:01.00]aplayer'
-}"></a-player>
+}"></aplayer>
 ```
 
 ```JS
 // ES6
-import VueAplayer from 'vue-aplayer'
+import Aplayer from 'vue-aplayer'
 
 new Vue({
     components: {
-        'a-player': VueAplayer
+        Aplayer
     }
 })
 ```
@@ -61,7 +54,7 @@ Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlay
 | ---- | ---- | ------- | ----------- |
 | narrow | Boolean | false | narrow style |
 | autoplay | Boolean | false | autoplay song(s), not supported by mobile browsers |
-| showlrc | Boolean | false | whether show lyrics or not |
+| showlrc | Boolean | false | whether to show lyrics or not |
 | mutex | Boolean | false | pause other players when this player playing |
 | theme | String | '#b7daff' | theme color |
 | mode | String | 'circulation' | play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
@@ -94,40 +87,6 @@ The `music` props can either be an object containing info of the song to play, o
 | ended | none | Triggered when APlayer ended playing |
 | error | none | Triggered when an error occurs |
 
-#### API
-
-You are allowed to access the APlayer instance wrapped in the component via `control` property, so that you can use its [APIs](https://github.com/DIYgod/APlayer#api).
-
-```HTML
-<a-player :music="songs" ref="player"></a-player>
-```
-
-```JS
-// ES6
-import VueAplayer from 'vue-aplayer'
-
-new Vue({
-    components: {
-        'a-player': VueAplayer
-    },
-    data: {
-        songs: [
-            {
-              title: 'Preparation',
-              author: 'Hans Zimmer/Richard Harvey',
-              url: 'http://devtest.qiniudn.com/Preparation.mp3',
-              pic: 'http://devtest.qiniudn.com/Preparation.jpg',
-              lrc: '[00:00.00]lrc here\n[00:01.00]aplayer'
-            }
-        ]
-    },
-    mounted() {
-        let aplayer = this.$refs.player.control
-        aplayer.play()
-    }
-})
-```
-
 ## LICENSE
 
-[The MIT License](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE)
+MIT Licensed. See [LICENSE](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE).
