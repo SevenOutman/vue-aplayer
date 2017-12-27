@@ -4,7 +4,7 @@
   "description": "Vue component of APlayer.",
   "main": "src/vue-aplayer.vue",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot",
+    "dev": "webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --port 3000",
     "build": "export NODE_ENV=production && webpack --progress --hide-modules"
   },
   "repository": {
