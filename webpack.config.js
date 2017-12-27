@@ -16,7 +16,7 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        js: 'babel-loader?presets[]=es2015'
+                        js: 'babel-loader?presets[]=es2015',
                     }
                 }
             },
@@ -27,6 +27,10 @@ module.exports = {
                 options: {
                     presets: ['es2015']
                 }
+            },
+            {
+              test: /\.(png|jpg)$/,
+              loader: 'url-loader?limit=40000'
             },
             {
                 test: /\.html$/,

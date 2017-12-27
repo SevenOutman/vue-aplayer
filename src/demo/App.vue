@@ -12,16 +12,16 @@
         </a>
         <div class="container">
             <h1>Vue-APlayer</h1>
-            <h2>A Vue 2.x component of <a href="https://github.com/DIYgod/APlayer" target="_blank">APlayer</a></h2>
-            <p><a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
+            <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
+            <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
             <hr>
             <h3>Normal</h3>
             <a-player autoplay mutex theme="#42b983" preload="metadata" mode="circulation"
                       :music="{
                     title: 'Preparation',
                     author: 'Hans Zimmer/Richard Harvey',
-                    url: 'http://devtest.qiniudn.com/Preparation.mp3',
-                    pic: 'http://devtest.qiniudn.com/Preparation.jpg'
+                    url: 'https://moeplayer.b0.upaiyun.com/aplayer/preparation.mp3',
+                    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/preparation.jpg'
                 }">
             </a-player>
 
@@ -30,9 +30,9 @@
                       :music="{
                 title: '回レ！雪月花',
                 author: '小倉唯',
-                url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
-                pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
-                lrc: './回レ！雪月花.lrc'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
+                lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc'
             }"></a-player>
             <h3>With playlist</h3>
             <a-player mutex theme="#e6d0b2" mode="random"
@@ -40,20 +40,20 @@
             {
                 title: 'あっちゅ～ま青春!',
                 author: '七森中☆ごらく部',
-                url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
-                pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg'
             },
             {
                 title: 'secret base~君がくれたもの~',
                 author: '茅野愛衣',
-                url: 'http://devtest.qiniudn.com/secret base~.mp3',
-                pic: 'http://devtest.qiniudn.com/secret base~.jpg'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
             },
             {
                 title: '回レ！雪月花',
                 author: '小倉唯',
-                url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
-                pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg'
             }]"></a-player>
             <h3>With playlist and lyrics</h3>
             <a-player :showlrc="3" mutex theme="#ad7a86" mode="random" listmaxheight="80px"
@@ -61,31 +61,31 @@
             {
                 title: 'あっちゅ～ま青春!',
                 author: '七森中☆ごらく部',
-                url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
-                pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
                 lrc: 'あっちゅ～ま青春!.lrc'
             },
             {
                 title: 'secret base~君がくれたもの~',
                 author: '茅野愛衣',
-                url: 'http://devtest.qiniudn.com/secret base~.mp3',
-                pic: 'http://devtest.qiniudn.com/secret base~.jpg',
-                lrc: 'secret base~君がくれたもの~.lrc'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg',
+                lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.lrc'
             },
             {
                 title: '回レ！雪月花',
                 author: '小倉唯',
-                url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
-                pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
-                lrc: '回レ！雪月花.lrc'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
+                lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc'
             }]"></a-player>
             <h3>Narrow</h3>
             <a-player narrow mutex theme="#e6d0b2" mode="circulation"
                       :music="{
                 title: 'Preparation',
                 author: 'Hans Zimmer/Richard Harvey',
-                url: 'http://devtest.qiniudn.com/Preparation.mp3',
-                pic: 'http://devtest.qiniudn.com/Preparation.jpg'
+                url: 'https://moeplayer.b0.upaiyun.com/aplayer/preparation.mp3',
+                pic: 'https://moeplayer.b0.upaiyun.com/aplayer/preparation.jpg'
             }"></a-player>
         </div>
     </div>
