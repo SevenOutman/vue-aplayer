@@ -3,10 +3,13 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: './src/demo/main.js',
+    entry: {
+      'vue-aplayer.min': './src/vue-aplayer.vue',
+      'demo/main': './src/demo/main.js',
+    },
     output: {
-        path: path.resolve(__dirname, 'demo'),
-        filename: "main.js",
+        path: path.resolve(__dirname, 'dist'),
+        filename: "[name].js",
     },
 
     module: {
@@ -16,8 +19,8 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        js: 'babel-loader?presets[]=es2015',
-                        scss: 'style-loader!css-loader!sass-loader'
+                        js: 'babel-loader?presets[]=env',
+                        scss: 'style-loader!css-loader!postcss-loader!sass-loader'
                     }
                 }
             },
@@ -26,7 +29,13 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 options: {
-                    presets: ['es2015']
+                    presets: [
+                      ["env", {
+                        "targets": {
+                          "browsers": ["last 2 versions", "safari >= 7"]
+                        }
+                      }]
+                    ]
                 }
             },
             {
@@ -49,14 +58,19 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports.entry = './src/vue-aplayer.vue'
-    module.exports.output = {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'vue-aplayer.min.js'
-    }
+    // module.exports.entry = './src/vue-aplayer.vue'
+    // module.exports.output = {
+    //     path: path.resolve(__dirname, 'dist'),
+    //     filename: 'vue-aplayer.min.js'
+    // }
     module.exports.devtool = '#source-map'
     // http://vuejs.github.io/vue-loader/workflow/production.html
     module.exports.plugins = [
+      new HtmlWebpackPlugin({
+        filename: 'demo/index.html',
+        template: 'src/demo/index.html',
+        chunks: ['demo/main']
+      }),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
