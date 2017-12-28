@@ -17,6 +17,7 @@ module.exports = {
                 options: {
                     loaders: {
                         js: 'babel-loader?presets[]=es2015',
+                        scss: 'style-loader!css-loader!sass-loader'
                     }
                 }
             },

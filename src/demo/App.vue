@@ -28,7 +28,7 @@
       </a-player>
 
       <h3>With lyrics</h3>
-      <a-player mutex theme="rgb(173, 122, 134)" :showlrc="3" mode="circulation"
+      <a-player mutex theme="rgb(173, 122, 134)" :showlrc="3" mode="circulation" narrow
                 :music="{
                 title: 'Another Love',
                 author: 'Tom Odell',

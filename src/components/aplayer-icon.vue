@@ -31,3 +31,24 @@
     },
   }
 </script>
+
+<style lang="scss">
+  .aplayer-icon {
+    width: 15px;
+    height: 15px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    opacity: .8;
+    vertical-align: middle;
+    padding: 0;
+    font-size: 12px;
+    margin: 0;
+    display: inline;
+
+    .aplayer-fill {
+      transition: all .2s ease-in-out;
+    }
+  }
+</style>

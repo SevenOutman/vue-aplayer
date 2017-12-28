@@ -1,35 +1,41 @@
 <template>
   <div
-          class="aplayer"
-          :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': showlrc}"
+    class="aplayer"
+    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': showlrc}"
   >
     <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"></thumbnail>
-    <div class="aplayer-info">
+    <div class="aplayer-info" v-show="!narrow">
       <div class="aplayer-music">
         <span class="aplayer-title">{{ currentMusic.title}}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
-      <lyrics :current-music="currentMusic" :play-stat="playStat"></lyrics>
+      <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"></lyrics>
       <controls
-              :mode="playMode"
-              :stat="playStat"
-              :volume="volume"
-              :muted="muted"
-              :theme="theme"
-              @togglelist="showList = !showList"
-              @togglemute="toggleMute"
-              @setvolume="setVolume"
-              @setprogress="setProgress"
-              @dragbegin="onProgressDragBegin"
-              @dragend="onProgressDragEnd"
-              @dragging="onProgressDragging"
-              @nextmode="setNextMode"
+        :mode="playMode"
+        :stat="playStat"
+        :volume="volume"
+        :muted="muted"
+        :theme="theme"
+        @togglelist="showList = !showList"
+        @togglemute="toggleMute"
+        @setvolume="setVolume"
+        @setprogress="setProgress"
+        @dragbegin="onProgressDragBegin"
+        @dragend="onProgressDragEnd"
+        @dragging="onProgressDragging"
+        @nextmode="setNextMode"
       >
       </controls>
     </div>
 
-    <music-list :show="showList" :music-list="musicList" :play-index="playIndex" :listmaxheight="listmaxheight"
-                :theme="theme" @selectsong="setPlayIndex"></music-list>
+    <music-list
+      :show="showList"
+      :music-list="musicList"
+      :play-index="playIndex"
+      :listmaxheight="listmaxheight"
+      :theme="theme"
+      @selectsong="setPlayIndex"
+    ></music-list>
     <audio :src="currentMusic.url" ref="audio"></audio>
   </div>
 </template>
@@ -57,8 +63,8 @@
         default: false,
       },
       autoplay: {
-        type: Boolean,
-        default: false,
+        type: String,
+        default: null,
       },
       showlrc: {
         type: Number,
@@ -184,7 +190,7 @@
           this.toggle()
         } else {
           this.playIndex = index
-          this.$nextTick(this.play)
+          this.thenPlay()
         }
       },
       jump() {
@@ -297,7 +303,9 @@
     },
     mounted() {
       this.muted = this.audio.muted
-      this.audio.preload = this.preload
+
+      // there's no point making preload configurable
+      this.audio.preload = true // this.preload
 
       this.audio.addEventListener('play', this.onAudioPlay)
       this.audio.addEventListener('pause', this.onAudioPause)
@@ -310,9 +318,17 @@
 
       this.audio.addEventListener('ended', this.onAudioEnded)
 
-      // dont set audio.autoplay directly, we take control
-      if (this.autoplay) {
-        this.play()
+      if (this.autoplay !== null) {
+        if (!this.autoplay) {
+          this.playIndex = 0
+          this.thenPlay()
+        } else {
+          let autoplaySong = this.musicList.find(song => song.url === this.autoplay)
+          if (autoplaySong) {
+            this.playIndex = this.musicList.indexOf(autoplaySong)
+            this.thenPlay()
+          }
+        }
       }
     },
     beforeDestroy() {
@@ -325,6 +341,96 @@
 
 </script>
 
-<style lang="sass" rel="stylesheet/scss">
-  @import "~aplayer/src/APlayer.scss"
+<style lang="scss">
+  @import "./scss/variables";
+
+  .aplayer-narrow {
+    width: $aplayer-height;
+  }
+
+  .aplayer-withlrc {
+    &.aplayer-narrow {
+      width: $aplayer-height-lrc;
+    }
+    &.aplayer {
+      .aplayer-pic {
+        height: $aplayer-height-lrc;
+        width: $aplayer-height-lrc;
+      }
+
+      .aplayer-info {
+        margin-left: $aplayer-height-lrc;
+        height: $aplayer-height-lrc;
+      }
+
+      .aplayer-info {
+        padding: 10px 7px 0 7px;
+      }
+    }
+  }
+
+  .aplayer-withlist {
+    &.aplayer {
+      .aplayer-info {
+        border-bottom: 1px solid #e9e9e9;
+      }
+
+      .aplayer-list {
+        display: block;
+      }
+
+      .aplayer-icon-menu {
+        display: inline !important;
+      }
+    }
+  }
+
+  .aplayer {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    border-radius: 2px;
+    overflow: hidden;
+    user-select: none;
+    line-height: initial;
+
+    * {
+      box-sizing: content-box;
+    }
+
+    .aplayer-lrc-content {
+      display: none;
+    }
+
+    .aplayer-info {
+      margin-left: $aplayer-height;
+      padding: 14px 7px 0 10px;
+      height: $aplayer-height;
+      box-sizing: border-box;
+
+      .aplayer-music {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 0 0 13px 5px;
+        user-select: text;
+        cursor: default;
+        padding-bottom: 2px;
+
+        .aplayer-title {
+          font-size: 14px;
+        }
+
+        .aplayer-author {
+          font-size: 12px;
+          color: #666;
+        }
+      }
+    }
+  }
+
+  @keyframes aplayer-roll {
+    0%{left:0}
+    100%{left: -100%}
+  }
 </style>

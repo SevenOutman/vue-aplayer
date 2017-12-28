@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/SevenOutman/vue-aplayer#readme",
   "dependencies": {
-    "aplayer": "^1.6.0",
     "axios": "^0.17.1",
     "vue": "^2.5.13"
   },
@@ -37,6 +36,7 @@
     "html-webpack-plugin": "^2.24.1",
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.1",
+    "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^10.0.0",

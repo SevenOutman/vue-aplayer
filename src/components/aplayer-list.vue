@@ -41,3 +41,85 @@
     },
   }
 </script>
+
+<style lang="scss">
+
+  .aplayer-list {
+    overflow: auto;
+    transition: all 0.5s ease;
+    will-change: height;
+    display: none;
+
+    &.aplayer-list-hide {
+      height: 0 !important;
+    }
+
+    &::-webkit-scrollbar{
+      width: 5px;
+    }
+    &::-webkit-scrollbar-track{
+      background-color: #f9f9f9;
+    }
+    &::-webkit-scrollbar-thumb{
+      border-radius: 3px;
+      background-color: #eee;
+    }
+    &::-webkit-scrollbar-thumb:hover{
+      background-color: #ccc;
+    }
+
+    ol {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        position: relative;
+        height: 32px;
+        line-height: 32px;
+        padding: 0 15px;
+        font-size: 12px;
+        border-top: 1px solid #e9e9e9;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        overflow: hidden;
+
+        &:first-child {
+          border-top: none;
+        }
+
+        &:hover {
+          background: #efefef;
+        }
+
+        &.aplayer-list-light {
+          background: #e9e9e9;
+
+          .aplayer-list-cur {
+            display: inline-block;
+          }
+        }
+
+        .aplayer-list-cur {
+          display: none;
+          width: 3px;
+          height: 22px;
+          position: absolute;
+          left: 0;
+          top: 5px;
+          cursor: pointer;
+        }
+        .aplayer-list-index {
+          color: #666;
+          margin-right: 12px;
+          cursor: pointer;
+        }
+        .aplayer-list-author {
+          color: #666;
+          float: right;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+</style>
