@@ -9,6 +9,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
+        publicPath: 'https://sevenoutman.github.io/vue-aplayer',
         filename: "[name].js",
     },
 
