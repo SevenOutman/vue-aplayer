@@ -46,25 +46,28 @@ new Vue({
 })
 ```
 
-#### Props
+### Props
 
 Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlayer#options).
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | narrow | Boolean | false | narrow style |
-| autoplay | Boolean | false | autoplay song(s), not supported by mobile browsers |
+| autoplay | String | null | which url in `music` is going to be autoplayed, if set to null, player won't auto play |
 | showlrc | Boolean | false | whether to show lyrics or not |
-| mutex | Boolean | false | pause other players when this player playing |
+| mutex | Boolean | false | pause other players when this player is playing |
 | theme | String | '#b7daff' | theme color |
 | mode | String | 'circulation' | play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | 'auto' | the way to load music, can be 'none' 'metadata' or 'auto' |
 | listmaxheight | String | none | max height of play list |
 | music| Object or Array | `required` | music info, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
 
+> `vue-aplayer` component changes `mode` from inside (a "twoWay" props), please refer to [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier)
+to see how to use it correctly.
+
 > If `music` is a single Object, you can assign it to another Object and the player will play the new song.
 
-#### Music info
+### Music info
 
 The `music` props can either be an object containing info of the song to play, or an array of such objects.
 
@@ -76,7 +79,7 @@ The `music` props can either be an object containing info of the song to play, o
 | pic | none | music cover picture |
 | lrc | none | lrc or url to a .lrc file, see: [With lrc](https://github.com/DIYgod/APlayer#with-lrc) |
 
-#### Events
+### Events
 
 | Name | Params | Description |
 | ---- | ------ | ----------- |
@@ -86,6 +89,7 @@ The `music` props can either be an object containing info of the song to play, o
 | playing | none | Triggered periodically when APlayer is playing |
 | ended | none | Triggered when APlayer ended playing |
 | error | none | Triggered when an error occurs |
+| update:mode | none | See
 
 ## LICENSE
 
