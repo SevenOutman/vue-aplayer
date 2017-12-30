@@ -3,10 +3,11 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/vue-aplayer.vue',
+  entry: './src/demo/main.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'vue-aplayer.min.js',
+    path: path.resolve(__dirname, 'demo'),
+    publicPath: 'https://sevenoutman.github.io/vue-aplayer',
+    filename: '[name].js',
   },
 
   module: {
@@ -46,11 +47,22 @@ module.exports = {
     ]
   },
   devtool: '#eval-source-map',
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/demo/index.html'
+    }),
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
   // http://vuejs.github.io/vue-loader/workflow/production.html
   module.exports.plugins = [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/demo/index.html',
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'

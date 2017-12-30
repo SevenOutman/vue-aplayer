@@ -5,13 +5,17 @@
   "main": "src/vue-aplayer.vue",
   "files": [
     "src",
+    "!src/demo/*",
     "dist/*.js"
   ],
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --port 3000",
     "build": "export NODE_ENV=production && webpack --progress --hide-modules",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "build:demo": "export NODE_ENV=production && webpack --progress --hide-modules --config webpack.demo.config.js",
+    "prepublish": "npm run build",
+    "publish": "npm publish",
+    "predeploy": "npm run build:demo",
+    "deploy": "gh-pages -d demo"
   },
   "repository": {
     "type": "git",
@@ -24,7 +28,11 @@
     "music",
     "html5"
   ],
-  "author": "SevenOutman",
+  "author": {
+    "name": "Doma",
+    "email": "leishenghao@126.com",
+    "url": "https://github.com/SevenOutman"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SevenOutman/vue-aplayer/issues"
@@ -41,6 +49,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.18.0",
     "css-loader": "^0.26.0",
+    "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^2.24.1",
     "node-sass": "^4.5.0",
     "postcss-loader": "^2.0.9",
