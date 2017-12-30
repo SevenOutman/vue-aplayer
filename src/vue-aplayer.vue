@@ -300,36 +300,43 @@
 
         this.$emit('ended');
       },
-    },
-    mounted() {
-      this.muted = this.audio.muted
 
-      // there's no point making preload configurable
-      this.audio.preload = true // this.preload
 
-      this.audio.addEventListener('play', this.onAudioPlay)
-      this.audio.addEventListener('pause', this.onAudioPause)
-      this.audio.addEventListener('abort', this.onAudioPause)
-      this.audio.addEventListener('progress', this.onAudioProgress)
+      setupAudio() {
+        this.muted = this.audio.muted
 
-      this.audio.addEventListener('durationchange', this.onAudioDurationChange)
-      this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
-      this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
+        // there's no point making preload configurable
+        this.audio.preload = true // this.preload
 
-      this.audio.addEventListener('ended', this.onAudioEnded)
+        this.audio.addEventListener('play', this.onAudioPlay)
+        this.audio.addEventListener('pause', this.onAudioPause)
+        this.audio.addEventListener('abort', this.onAudioPause)
+        this.audio.addEventListener('progress', this.onAudioProgress)
 
-      if (this.autoplay !== null) {
-        if (!this.autoplay) {
-          this.playIndex = 0
-          this.thenPlay()
-        } else {
-          let autoplaySong = this.musicList.find(song => song.url === this.autoplay)
-          if (autoplaySong) {
-            this.playIndex = this.musicList.indexOf(autoplaySong)
+        this.audio.addEventListener('durationchange', this.onAudioDurationChange)
+        this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
+        this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
+
+        this.audio.addEventListener('ended', this.onAudioEnded)
+      },
+      startAutoplay() {
+        if (this.autoplay !== null) {
+          if (!this.autoplay) {
+            this.playIndex = 0
             this.thenPlay()
+          } else {
+            let autoplaySong = this.musicList.find(song => song.url === this.autoplay)
+            if (autoplaySong) {
+              this.playIndex = this.musicList.indexOf(autoplaySong)
+              this.thenPlay()
+            }
           }
         }
       }
+    },
+    mounted() {
+      this.setupAudio()
+      this.startAutoplay()
     },
     beforeDestroy() {
       if (activeMutex === this) {
