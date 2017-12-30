@@ -11,7 +11,7 @@
       </div>
       <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"></lyrics>
       <controls
-        :mode="playMode"
+        :mode="mode"
         :stat="playStat"
         :volume="volume"
         :muted="muted"
@@ -252,6 +252,7 @@
             this.playMode = 'circulation'
           }
         }
+        this.$emit('update:mode', this.playMode)
       },
       onAudioPlay() {
         this.isPlaying = true
