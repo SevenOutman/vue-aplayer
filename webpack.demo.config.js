@@ -6,8 +6,7 @@ module.exports = {
   entry: './src/demo/main.js',
   output: {
     path: path.resolve(__dirname, 'demo'),
-    publicPath: 'https://sevenoutman.github.io/vue-aplayer',
-    filename: '[name].js',
+    filename: 'demo.js',
   },
 
   module: {
@@ -47,6 +46,11 @@ module.exports = {
     ]
   },
   devtool: '#eval-source-map',
+  devServer: {
+    contentBase: path.resolve(__dirname, 'demo'),
+    compress: true,
+    port: 3000
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -56,6 +60,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
+  module.exports.output.publicPath = 'https://sevenoutman.github.io/vue-aplayer'
   module.exports.devtool = '#source-map'
   // http://vuejs.github.io/vue-loader/workflow/production.html
   module.exports.plugins = [

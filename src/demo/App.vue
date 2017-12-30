@@ -18,18 +18,27 @@
       <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
       <hr>
       <h3>Normal</h3>
-      <a-player autoplay mutex theme="#42b983" preload="metadata" mode="circulation"
-                :music="{
+      <aplayer
+        autoplay
+        mutex
+        theme="#42b983"
+        preload="metadata"
+        mode="circulation"
+        :music="{
                     title: 'secret base~君がくれたもの~',
                     author: 'Silent Siren',
                     url: 'https://m9.music.126.net/20171227155917/356e19d8a0986138f5d2f784f377b72a/ymusic/796b/7307/30e8/0823d9ce21f962f3f01644a7c28b58ca.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
-                }">
-      </a-player>
+                }"
+      ></aplayer>
 
       <h3>With lyrics</h3>
-      <a-player mutex theme="rgb(173, 122, 134)" :showlrc="3" mode="circulation" narrow
-                :music="{
+      <aplayer
+        mutex
+        theme="rgb(173, 122, 134)"
+        showlrc
+        mode="circulation"
+        :music="{
                 title: 'Another Love',
                 author: 'Tom Odell',
                 url: 'https://dl.stream.qqmusic.qq.com/M800000vopkZ0YkCev.mp3?vkey=5238995937439A5AE13EB81E55F7E7D4D97375F9AD0F2B77C1AA5FD033682F57435DBAED8A3212E09946414C83FD95D3B68A23E020F961F2&guid=384494282&uid=0&fromtag=30',
@@ -87,34 +96,43 @@
 '[03:44.200]On another love another love\n'+
 '[03:48.200]All my tears have been used up\n'+
 '[03:51.320]'
-            }"></a-player>
+            }">
+      </aplayer>
       <h3>With playlist</h3>
-      <a-player mutex theme="#e6d0b2" mode="random"
-                :music='[
-                        {"title":"Prelude (VIP Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-                        {"title":"Monody (Radio Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-                        {"title":"Jackpot","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-                        {"title":"Unity","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-                        ]'
-      ></a-player>
+      <aplayer
+        mutex
+        theme="#e6d0b2"
+        mode="random"
+        :music='[
+          {"title":"Prelude (VIP Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
+          {"title":"Monody (Radio Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
+          {"title":"Jackpot","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
+          {"title":"Unity","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
+        ]'
+      ></aplayer>
       <h3>Narrow</h3>
-      <a-player narrow mutex theme="#e6d0b2" mode="circulation"
-                :music="{
+      <aplayer
+        narrow
+        mutex
+        theme="#e6d0b2"
+        mode="circulation"
+        :music="{
                     title: 'secret base~君がくれたもの~',
                     author: 'Silent Siren',
                     url: 'https://m9.music.126.net/20171227155917/356e19d8a0986138f5d2f784f377b72a/ymusic/796b/7307/30e8/0823d9ce21f962f3f01644a7c28b58ca.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
-                }"></a-player>
+                }"
+      ></aplayer>
     </div>
   </div>
 </template>
 <script>
-  import VueAplayer from '../vue-aplayer.vue'
+  import Aplayer from '../vue-aplayer.vue'
 
   export default {
     name: 'App',
     components: {
-      'a-player': VueAplayer,
+      Aplayer,
     }
   }
 </script>
