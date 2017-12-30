@@ -67,8 +67,8 @@
         default: null,
       },
       showlrc: {
-        type: Number,
-        default: 0,
+        type: Boolean,
+        default: false,
       },
       mutex: {
         type: Boolean,
@@ -124,6 +124,8 @@
         muted: false,
         playMode: this.mode,
         showList: true,
+
+        currentMusic: { url: '' },
       }
     },
     computed: {
@@ -139,9 +141,6 @@
           return this.music;
         }
         return [this.music];
-      },
-      currentMusic() {
-        return this.musicList[this.playIndex]
       },
       currentPicStyleObj() {
         if (this.currentMusic && this.currentMusic.pic) {
@@ -281,21 +280,37 @@
         this.volume = this.audio.volume
       },
       onAudioEnded() {
-        if (this.mode === 'order') {
-          if (this.playIndex === this.musicList.length - 1) {
-            // do nothing
-          } else if (this.playIndex < this.musicList.length - 1) {
-            this.playIndex++
+        if (!this.musicList.includes(this.currentMusic)) {
+          // if music list doesn't contain current music (list has been modified)
+          // and should play next song according to `mode`
+          // set playIndex 0
+          // switch (this.mode) {
+          //   case 'order':
+          //   case 'circulation':
+          //   case 'random':
+          //     this.playIndex = 0
+          //     this.thenPlay()
+          //     break;
+          //   default:
+          //     break;
+          // }
+        } else {
+          if (this.mode === 'order') {
+            if (this.playIndex === this.musicList.length - 1) {
+              // do nothing
+            } else if (this.playIndex < this.musicList.length - 1) {
+              this.playIndex++
+              this.thenPlay()
+            }
+          } else if (this.mode === 'single') {
+            this.thenPlay()
+          } else if (this.mode === 'circulation') {
+            this.playIndex = (this.playIndex + 1) % this.musicList.length
+            this.thenPlay()
+          } else if (this.mode === 'random') {
+            this.playIndex = Math.trunc(Math.random() * this.musicList.length)
             this.thenPlay()
           }
-        } else if (this.mode === 'single') {
-          this.thenPlay()
-        } else if (this.mode === 'circulation') {
-          this.playIndex = (this.playIndex + 1) % this.musicList.length
-          this.thenPlay()
-        } else if (this.mode === 'random') {
-          this.playIndex = Math.trunc(Math.random() * this.musicList.length)
-          this.thenPlay()
         }
 
         this.$emit('ended');
@@ -332,6 +347,16 @@
             }
           }
         }
+      }
+    },
+    watch: {
+      playIndex: {
+        handler(val) {
+          this.currentMusic = this.musicList[val]
+        },
+      },
+      autoplay() {
+        this.startAutoplay()
       }
     },
     mounted() {
@@ -437,7 +462,11 @@
   }
 
   @keyframes aplayer-roll {
-    0%{left:0}
-    100%{left: -100%}
+    0% {
+      left: 0
+    }
+    100% {
+      left: -100%
+    }
   }
 </style>

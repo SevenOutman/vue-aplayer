@@ -103,6 +103,7 @@
         mutex
         theme="#e6d0b2"
         mode="random"
+        autoplay="https://p2.music.126.net/Ah9t98gNkEvh_D9_mLwOWw==/2946691245626258.mp3"
         :music='[
           {"title":"Prelude (VIP Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
           {"title":"Monody (Radio Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
