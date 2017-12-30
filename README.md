@@ -89,7 +89,13 @@ The `music` props can either be an object containing info of the song to play, o
 | playing | none | Triggered periodically when APlayer is playing |
 | ended | none | Triggered when APlayer ended playing |
 | error | none | Triggered when an error occurs |
-| update:mode | none | See
+| update:mode | none | See `mode` props|
+
+## Contribute
+
+Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) if you find a bug.
+
+Feature requests and PRs are welcome.
 
 ## LICENSE
 
