@@ -355,6 +355,8 @@
         handler(val) {
           this.currentMusic = this.musicList[val]
         },
+        // otherwise the player displays blank
+        immediate: true
       },
       autoplay() {
         this.startAutoplay()
