@@ -60,7 +60,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.output.publicPath = 'https://sevenoutman.github.io/vue-aplayer'
+  module.exports.output.publicPath = '/'
   module.exports.devtool = '#source-map'
   // http://vuejs.github.io/vue-loader/workflow/production.html
   module.exports.plugins = [
