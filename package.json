@@ -2,7 +2,7 @@
   "name": "vue-aplayer",
   "version": "1.0.1",
   "description": "Vue component of APlayer.",
-  "main": "src/vue-aplayer.vue",
+  "main": "dist/vue-aplayer.min.js",
   "files": [
     "src",
     "!src/demo/*",
