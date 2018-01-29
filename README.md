@@ -11,7 +11,7 @@ A Vue 2.x component of easy-to-config music players with controls.
 
 ### Introduction
 
-[Demo](https://sevenoutman.github.io/vue-aplayer/demo)
+[Demo](https://sevenoutman.github.io/vue-aplayer)
 
 Screenshot
 

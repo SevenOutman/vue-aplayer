@@ -1,8 +1,8 @@
 {
   "name": "vue-aplayer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Vue component of APlayer.",
-  "main": "src/vue-aplayer.vue",
+  "main": "dist/vue-aplayer.min.js",
   "files": [
     "src",
     "!src/demo/*",
@@ -39,7 +39,9 @@
   },
   "homepage": "https://github.com/SevenOutman/vue-aplayer#readme",
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.17.1"
+  },
+  "peerDependencies": {
     "vue": "^2.5.13"
   },
   "devDependencies": {
@@ -47,8 +49,9 @@
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.26.0",
+    "file-loader": "^1.1.6",
     "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^2.24.1",
     "node-sass": "^4.5.0",
@@ -56,10 +59,11 @@
     "sass-loader": "^6.0.1",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",
+    "vue": "^2.5.13",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.6.1",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^2.2.1",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }

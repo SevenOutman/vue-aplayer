@@ -1,7 +1,7 @@
 <template>
   <div
     class="aplayer"
-    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': showlrc}"
+    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': !!$slots.display || showlrc}"
   >
     <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"></thumbnail>
     <div class="aplayer-info" v-show="!narrow">
@@ -9,7 +9,9 @@
         <span class="aplayer-title">{{ currentMusic.title}}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
-      <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"></lyrics>
+      <slot name="display" :current-music="currentMusic" :play-stat="playStat">
+        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"></lyrics>
+      </slot>
       <controls
         :mode="mode"
         :stat="playStat"
@@ -348,7 +350,7 @@
             }
           }
         }
-      }
+      },
     },
     watch: {
       playIndex: {
@@ -356,11 +358,11 @@
           this.currentMusic = this.musicList[val]
         },
         // otherwise the player displays blank
-        immediate: true
+        immediate: true,
       },
       autoplay() {
         this.startAutoplay()
-      }
+      },
     },
     mounted() {
       this.setupAudio()
