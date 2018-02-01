@@ -27,7 +27,7 @@
         :music="{
                     title: 'secret base~君がくれたもの~',
                     author: 'Silent Siren',
-                    url: 'https://m9.music.126.net/20171227155917/356e19d8a0986138f5d2f784f377b72a/ymusic/796b/7307/30e8/0823d9ce21f962f3f01644a7c28b58ca.mp3',
+                    url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
                 }"
       ></aplayer>
@@ -41,7 +41,7 @@
         :music="{
                 title: 'Another Love',
                 author: 'Tom Odell',
-                url: 'https://dl.stream.qqmusic.qq.com/M800000vopkZ0YkCev.mp3?vkey=5238995937439A5AE13EB81E55F7E7D4D97375F9AD0F2B77C1AA5FD033682F57435DBAED8A3212E09946414C83FD95D3B68A23E020F961F2&guid=384494282&uid=0&fromtag=30',
+                url: 'https://storage.googleapis.com/gh-pages-static/anotherlove.mp3',
                 pic: 'https://y.gtimg.cn/music/photo_new/T002R90x90M000002sJhjf0PwjRN.jpg?max_age=2592000',
                 lrc: '[00:00.570]Another Love - Tom Odell\n'+
 '[00:01.760]\n'+
@@ -120,7 +120,7 @@
         :music="{
                     title: 'secret base~君がくれたもの~',
                     author: 'Silent Siren',
-                    url: 'https://m9.music.126.net/20171227155917/356e19d8a0986138f5d2f784f377b72a/ymusic/796b/7307/30e8/0823d9ce21f962f3f01644a7c28b58ca.mp3',
+                    url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
                 }"
       ></aplayer>
