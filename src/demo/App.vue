@@ -30,7 +30,7 @@
                     url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
                 }"
-      ></aplayer>
+      />
 
       <h3>With lyrics</h3>
       <aplayer
@@ -110,7 +110,7 @@
           {"title":"Jackpot","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
           {"title":"Unity","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
         ]'
-      ></aplayer>
+      />
       <h3>Narrow</h3>
       <aplayer
         narrow
@@ -123,7 +123,7 @@
                     url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
                 }"
-      ></aplayer>
+      />
     </div>
   </div>
 </template>

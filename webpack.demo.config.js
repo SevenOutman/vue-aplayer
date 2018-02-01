@@ -25,15 +25,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        options: {
-          presets: [
-            ['env', {
-              'targets': {
-                'browsers': ['last 2 versions', 'safari >= 7']
-              }
-            }]
-          ]
-        }
       },
       {
         test: /\.(png|jpg)$/,
