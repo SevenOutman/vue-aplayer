@@ -14,7 +14,7 @@
     "build:demo": "export NODE_ENV=production && webpack --progress --hide-modules --config webpack.demo.config.js",
     "prepublish": "npm run build",
     "publish": "npm publish",
-    "predeploy": "npm run build:demo",
+    "predeploy": "npm run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
     "deploy": "gh-pages -d demo"
   },
   "repository": {
@@ -47,7 +47,7 @@
   "devDependencies": {
     "autoprefixer": "^7.2.3",
     "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.8",
+    "babel-loader": "^6.4.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.26.0",
@@ -63,7 +63,7 @@
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.6.1",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^3.10.0",
+    "webpack": "^2.7.0",
     "webpack-dev-server": "^2.11.1"
   }
 }
