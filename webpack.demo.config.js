@@ -16,7 +16,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: 'babel-loader?presets[]=env',
+            js: 'babel-loader?babelrc',
             scss: 'style-loader!css-loader!postcss-loader!sass-loader'
           }
         }
@@ -60,7 +60,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.output.publicPath = 'https://sevenoutman.github.io/vue-aplayer'
+  module.exports.output.publicPath = '/'
   module.exports.devtool = '#source-map'
   // http://vuejs.github.io/vue-loader/workflow/production.html
   module.exports.plugins = [

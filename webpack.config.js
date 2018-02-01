@@ -7,6 +7,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'vue-aplayer.min.js',
+    library: 'VueAplayer',
+    libraryTarget: 'umd'
   },
 
   module: {
@@ -16,7 +18,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: 'babel-loader?presets[]=env',
+            js: 'babel-loader?babelrc',
             scss: 'style-loader!css-loader!postcss-loader!sass-loader'
           }
         }
