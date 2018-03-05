@@ -62,7 +62,12 @@
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.7.1",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^2.7.0",
+    "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.2"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
