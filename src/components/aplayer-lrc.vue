@@ -14,28 +14,28 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import { parseLrc } from '../utils';
+  import axios from 'axios'
+  import {parseLrc} from '../utils'
 
   export default {
     props: ['currentMusic', 'playStat'],
-    data() {
+    data () {
       return {
         displayLrc: '',
         currentLineIndex: 0,
       }
     },
     computed: {
-      lrcLines() {
+      lrcLines () {
         return parseLrc(this.displayLrc)
       },
-      currentLine() {
+      currentLine () {
         if (this.currentLineIndex > this.lrcLines.length - 1) {
           return null
         }
         return this.lrcLines[this.currentLineIndex]
       },
-      transformStyle() {
+      transformStyle () {
         // transform: translateY(0); -webkit-transform: translateY(0);
         return {
           transform: `translateY(${-this.currentLineIndex * 16}px)`,
@@ -44,25 +44,25 @@
       },
     },
     methods: {
-      applyLrc(lrc) {
+      applyLrc (lrc) {
         if (/^https?:\/\//.test(lrc)) {
           this.fetchLrc(lrc)
         } else {
           this.displayLrc = lrc
         }
       },
-      fetchLrc(src) {
+      fetchLrc (src) {
         axios(src)
-          .then(({ data }) => {
+          .then(({data}) => {
             this.displayLrc = data
           })
       },
-      hideLrc() {
+      hideLrc () {
         this.displayLrc = ''
       },
     },
     watch: {
-      currentMusic(music) {
+      currentMusic (music) {
         this.currentLineIndex = 0
         if (music.lrc) {
           this.applyLrc(music.lrc)
@@ -70,17 +70,17 @@
           this.hideLrc()
         }
       },
-      'playStat.playedTime'(playedTime) {
+      'playStat.playedTime' (playedTime) {
         for (let i = 0; i < this.lrcLines.length; i++) {
           const line = this.lrcLines[i]
           const nextLine = this.lrcLines[i + 1]
           if (playedTime >= line[0] && (!nextLine || playedTime < nextLine[0])) {
-            this.currentLineIndex = i;
+            this.currentLineIndex = i
           }
         }
       },
     },
-    mounted() {
+    mounted () {
       this.currentLineIndex = 0
       if (this.currentMusic.lrc) {
         this.applyLrc(this.currentMusic.lrc)
@@ -92,6 +92,7 @@
 </script>
 <style lang="scss">
   @import "../scss/variables";
+
   .aplayer-lrc {
     position: relative;
     height: $lrc-height;
@@ -108,10 +109,10 @@
       width: 100%;
       height: 10%;
       content: ' ';
-      background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-      background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
     }
 
     &:after {
@@ -123,10 +124,10 @@
       width: 100%;
       height: 33%;
       content: ' ';
-      background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
-      background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 100%);
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ccffffff',GradientType=0 );
+      background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 100%);
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 100%);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#ccffffff', GradientType=0);
     }
 
     p {

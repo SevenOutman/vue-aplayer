@@ -3,7 +3,7 @@
           type="button"
           class="aplayer-icon"
   >
-    <icon :type="icon"></icon>
+    <icon :type="icon"/>
   </button>
 </template>
 

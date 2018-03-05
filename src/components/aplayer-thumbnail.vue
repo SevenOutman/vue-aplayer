@@ -1,14 +1,14 @@
 <template>
   <div
-          class="aplayer-pic"
-          :style="currentPicStyleObj"
+    class="aplayer-pic"
+    :style="currentPicStyleObj"
   >
     <div class="aplayer-button" :class="playing ? 'aplayer-pause' : 'aplayer-play'">
       <icon-button
-              :icon="playing ? 'pause' : 'play'"
-              :class="playing ? 'aplayer-icon-pause' : 'aplayer-icon-play'"
-              @click.native="$emit('toggleplay')"
-      ></icon-button>
+        :icon="playing ? 'pause' : 'play'"
+        :class="playing ? 'aplayer-icon-pause' : 'aplayer-icon-play'"
+        @click.native="$emit('toggleplay')"
+      />
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@
       },
     },
     computed: {
-      currentPicStyleObj() {
+      currentPicStyleObj () {
         if (!this.pic) return {}
         return {
           backgroundImage: `url(${this.pic})`,

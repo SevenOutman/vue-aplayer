@@ -3,14 +3,14 @@
     class="aplayer"
     :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': !!$slots.display || showlrc}"
   >
-    <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"></thumbnail>
+    <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"/>
     <div class="aplayer-info" v-show="!narrow">
       <div class="aplayer-music">
         <span class="aplayer-title">{{ currentMusic.title}}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
       <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"></lyrics>
+        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"/>
       </slot>
       <controls
         :mode="mode"
@@ -37,7 +37,7 @@
       :listmaxheight="listmaxheight"
       :theme="theme"
       @selectsong="setPlayIndex"
-    ></music-list>
+    />
     <audio :src="currentMusic.url" ref="audio"></audio>
   </div>
 </template>
@@ -92,7 +92,7 @@
       music: {
         type: [Object, Array],
         required: true,
-        validator(value) {
+        validator (value) {
           let songs
           if (!(value instanceof Array)) {
             songs = [value]
@@ -111,7 +111,7 @@
         },
       },
     },
-    data() {
+    data () {
       return {
         id: instanceId++,
         playIndex: 0,
@@ -127,49 +127,49 @@
         playMode: this.mode,
         showList: true,
 
-        currentMusic: { url: '' },
+        currentMusic: {url: ''},
       }
     },
     computed: {
-      audio() {
+      audio () {
         return this.$refs.audio
       },
-      shouldAutoplay() {
+      shouldAutoplay () {
         if (this.isMobile) return false
         return this.autoplay
       },
-      musicList() {
+      musicList () {
         if (this.music instanceof Array) {
-          return this.music;
+          return this.music
         }
-        return [this.music];
+        return [this.music]
       },
-      currentPicStyleObj() {
+      currentPicStyleObj () {
         if (this.currentMusic && this.currentMusic.pic) {
           return {
             backgroundImage: `url(${this.currentMusic.pic})`,
           }
         }
-        return {};
+        return {}
       },
-      loadProgress() {
+      loadProgress () {
         if (this.playStat.duration === 0) return 0
         return this.playStat.loadedTime / this.playStat.duration
       },
-      playProgress() {
+      playProgress () {
         if (this.playStat.duration === 0) return 0
         return this.playStat.playedTime / this.playStat.duration
       },
     },
     methods: {
-      toggle() {
+      toggle () {
         if (!this.audio.paused) {
           this.pause()
         } else {
           this.play()
         }
       },
-      play() {
+      play () {
         if (this.mutex) {
           if (activeMutex) {
             activeMutex.pause()
@@ -178,15 +178,15 @@
         }
         this.audio.play()
       },
-      pause() {
+      pause () {
         this.audio.pause()
       },
-      thenPlay() {
+      thenPlay () {
         this.$nextTick(() => {
           this.play()
         })
       },
-      setPlayIndex(index) {
+      setPlayIndex (index) {
         if (this.playIndex === index) {
           this.toggle()
         } else {
@@ -194,26 +194,26 @@
           this.thenPlay()
         }
       },
-      jump() {
+      jump () {
 
       },
-      jumpToTime(time) {
+      jumpToTime (time) {
         this.audio.currentTime = time
       },
-      toggleMute() {
+      toggleMute () {
         this.setMuted(!this.audio.muted)
       },
-      setMuted(val) {
+      setMuted (val) {
         this.audio.muted = val
         this.muted = this.audio.muted
       },
-      setVolume(val) {
+      setVolume (val) {
         this.audio.volume = val
         if (val > 0) {
           this.setMuted(false)
         }
       },
-      setProgress(val) {
+      setProgress (val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
@@ -221,13 +221,13 @@
           this.playStat.playedTime = this.audio.currentTime
         }
       },
-      onProgressDragBegin() {
+      onProgressDragBegin () {
         this.audio.removeEventListener('timeupdate', this.onAudioTimeUpdate)
       },
-      onProgressDragging(val) {
+      onProgressDragging (val) {
         this.playStat.playedTime = this.audio.duration * val
       },
-      onProgressDragEnd(val) {
+      onProgressDragEnd (val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
@@ -236,7 +236,7 @@
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
       },
 
-      setNextMode() {
+      setNextMode () {
         if (this.music instanceof Array) {
           if (this.playMode === 'random') {
             this.playMode = 'single'
@@ -256,33 +256,33 @@
         }
         this.$emit('update:mode', this.playMode)
       },
-      onAudioPlay() {
+      onAudioPlay () {
         this.isPlaying = true
         this.$emit('play')
       },
-      onAudioPause() {
+      onAudioPause () {
         this.isPlaying = false
         this.$emit('pause')
       },
-      onAudioDurationChange() {
+      onAudioDurationChange () {
         if (this.audio.duration !== 1) {
           this.playStat.duration = this.audio.duration
         }
       },
-      onAudioProgress() {
+      onAudioProgress () {
         if (this.audio.buffered.length) {
           this.playStat.loadedTime = this.audio.buffered.end(this.audio.buffered.length - 1)
         } else {
           this.playStat.loadedTime = 0
         }
       },
-      onAudioTimeUpdate() {
+      onAudioTimeUpdate () {
         this.playStat.playedTime = this.audio.currentTime
       },
-      onAudioVolumeChange() {
+      onAudioVolumeChange () {
         this.volume = this.audio.volume
       },
-      onAudioEnded() {
+      onAudioEnded () {
         if (!this.musicList.includes(this.currentMusic)) {
           // if music list doesn't contain current music (list has been modified)
           // and should play next song according to `mode`
@@ -316,11 +316,10 @@
           }
         }
 
-        this.$emit('ended');
+        this.$emit('ended')
       },
 
-
-      setupAudio() {
+      setupAudio () {
         this.muted = this.audio.muted
 
         // there's no point making preload configurable
@@ -337,7 +336,7 @@
 
         this.audio.addEventListener('ended', this.onAudioEnded)
       },
-      startAutoplay() {
+      startAutoplay () {
         if (this.autoplay !== null) {
           if (!this.autoplay) {
             this.playIndex = 0
@@ -354,21 +353,21 @@
     },
     watch: {
       playIndex: {
-        handler(val) {
+        handler (val) {
           this.currentMusic = this.musicList[val]
         },
         // otherwise the player displays blank
         immediate: true,
       },
-      autoplay() {
+      autoplay () {
         this.startAutoplay()
       },
     },
-    mounted() {
+    mounted () {
       this.setupAudio()
       this.startAutoplay()
     },
-    beforeDestroy() {
+    beforeDestroy () {
       if (activeMutex === this) {
         activeMutex = null
       }
