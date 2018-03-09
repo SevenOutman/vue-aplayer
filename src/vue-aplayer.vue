@@ -13,7 +13,7 @@
         <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"/>
       </slot>
       <controls
-        :mode="mode"
+        :mode="playMode"
         :stat="playStat"
         :volume="volume"
         :muted="muted"
@@ -129,6 +129,7 @@
       return {
         id: instanceId++,
         internalMusic: this.music,
+        internalMode: this.mode,
         isPlaying: false,
         isMobile: /mobile/i.test(window.navigator.userAgent),
         playStat: {
@@ -138,7 +139,6 @@
         },
         volume: 0.8,
         muted: false,
-        playMode: this.mode,
         showList: true,
       }
     },
@@ -151,7 +151,10 @@
         return this.autoplay
       },
       currentMusic () {
-        return canUseSync ? this.music : this.internalMusic
+        return this.internalMusic
+      },
+      playMode() {
+        return this.internalMode
       },
       musicList () {
         return this.list
@@ -186,6 +189,10 @@
         canUseSync && this.$emit('update:music', music)
         this.internalMusic = music
       },
+      setPlayMode(mode) {
+        canUseSync && this.$emit('update:mode', mode)
+        this.internalMode = mode
+      },
       toggle () {
         if (!this.audio.paused) {
           this.pause()
@@ -217,9 +224,6 @@
           this.setCurrentMusic(song)
           this.thenPlay()
         }
-      },
-      jump () {
-
       },
       jumpToTime (time) {
         this.audio.currentTime = time
@@ -261,24 +265,23 @@
       },
 
       setNextMode () {
-        if (this.music instanceof Array) {
+        if (this.musicList.length) {
           if (this.playMode === 'random') {
-            this.playMode = 'single'
+            this.setPlayMode('single')
           } else if (this.playMode === 'single') {
-            this.playMode = 'order'
+            this.setPlayMode('order')
           } else if (this.playMode === 'order') {
-            this.playMode = 'circulation'
+            this.setPlayMode('circulation')
           } else if (this.playMode === 'circulation') {
-            this.playMode = 'random'
+            this.setPlayMode('random')
           }
         } else {
           if (this.playMode === 'circulation') {
-            this.playMode = 'order'
+            this.setPlayMode('order')
           } else {
-            this.playMode = 'circulation'
+            this.setPlayMode('circulation')
           }
         }
-        this.$emit('update:mode', this.playMode)
       },
       onAudioPlay () {
         this.isPlaying = true
