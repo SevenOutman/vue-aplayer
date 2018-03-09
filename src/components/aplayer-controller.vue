@@ -181,17 +181,18 @@
       cursor: pointer !important;
 
       &:hover .aplayer-volume-bar-wrap {
-        display: block;
+        height: 40px;
       }
 
       .aplayer-volume-bar-wrap {
-        display: none;
         position: absolute;
         bottom: 15px;
         right: -3px;
         width: 25px;
-        height: 40px;
+        height: 0;
         z-index: 99;
+        overflow: hidden;
+        transition: all .2s ease;
 
         .aplayer-volume-bar {
           position: absolute;
@@ -200,6 +201,8 @@
           width: 5px;
           height: 40px;
           background: #aaa;
+          border-radius: 2.5px;
+          overflow: hidden;
 
           .aplayer-volume {
             position: absolute;
