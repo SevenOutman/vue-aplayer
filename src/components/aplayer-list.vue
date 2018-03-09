@@ -7,8 +7,8 @@
   >
     <ol>
       <li v-for="(aMusic, index) of musicList"
-          :class="{'aplayer-list-light': index === playIndex}"
-          @click="$emit('selectsong', index)"
+          :class="{'aplayer-list-light': aMusic === currentMusic}"
+          @click="$emit('selectsong', aMusic)"
       >
         <span class="aplayer-list-cur" :style="{background: theme}"></span>
         <span class="aplayer-list-index">{{ index + 1}}</span>
@@ -26,8 +26,12 @@
         type: Boolean,
         default: true,
       },
+      currentMusic: Object,
       musicList: {
         type: Array,
+        default () {
+          return []
+        }
       },
       playIndex: {
         type: Number,

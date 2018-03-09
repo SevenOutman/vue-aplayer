@@ -1,12 +1,12 @@
 <template>
   <div
     class="aplayer"
-    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': !!$slots.display || showlrc}"
+    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : musicList.length > 0, 'aplayer-withlrc': !!$slots.display || showlrc}"
   >
     <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"/>
     <div class="aplayer-info" v-show="!narrow">
       <div class="aplayer-music">
-        <span class="aplayer-title">{{ currentMusic.title}}</span>
+        <span class="aplayer-title">{{ currentMusic.title }}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
       <slot name="display" :current-music="currentMusic" :play-stat="playStat">
@@ -26,26 +26,30 @@
         @dragend="onProgressDragEnd"
         @dragging="onProgressDragging"
         @nextmode="setNextMode"
-      >
-      </controls>
+      />
     </div>
 
     <music-list
       :show="showList"
+      :current-music="currentMusic"
       :music-list="musicList"
       :play-index="playIndex"
       :listmaxheight="listmaxheight"
       :theme="theme"
-      @selectsong="setPlayIndex"
+      @selectsong="onSelectSong"
     />
     <audio :src="currentMusic.url" ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
+  import Vue from 'vue'
   import Thumbnail from './components/aplayer-thumbnail.vue'
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
+  import {versionCompare} from './utils'
+
+  const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
 
   let activeMutex = null
   let instanceId = 1
@@ -90,15 +94,25 @@
       },
       listmaxheight: String,
       music: {
-        type: [Object, Array],
+        type: Object,
         required: true,
         validator (value) {
-          let songs
-          if (!(value instanceof Array)) {
-            songs = [value]
-          } else {
-            songs = value
+          let song = value
+          if (!song.url || !song.title || !song.author) {
+            song.title = song.title || 'Untitled'
+            song.author = song.author || 'Unknown'
+            return false
           }
+          return true
+        },
+      },
+      list: {
+        type: Array,
+        default () {
+          return []
+        },
+        validator (value) {
+          let songs = value
           for (let i = 0; i < songs.length; i++) {
             let song = songs[i]
             if (!song.url || !song.title || !song.author) {
@@ -109,12 +123,12 @@
           }
           return true
         },
-      },
+      }
     },
     data () {
       return {
         id: instanceId++,
-        playIndex: 0,
+        internalMusic: this.music,
         isPlaying: false,
         isMobile: /mobile/i.test(window.navigator.userAgent),
         playStat: {
@@ -126,8 +140,6 @@
         muted: false,
         playMode: this.mode,
         showList: true,
-
-        currentMusic: {url: ''},
       }
     },
     computed: {
@@ -138,11 +150,11 @@
         if (this.isMobile) return false
         return this.autoplay
       },
+      currentMusic () {
+        return canUseSync ? this.music : this.internalMusic
+      },
       musicList () {
-        if (this.music instanceof Array) {
-          return this.music
-        }
-        return [this.music]
+        return this.list
       },
       currentPicStyleObj () {
         if (this.currentMusic && this.currentMusic.pic) {
@@ -160,8 +172,20 @@
         if (this.playStat.duration === 0) return 0
         return this.playStat.playedTime / this.playStat.duration
       },
+      playIndex: {
+        get () {
+          return this.musicList.indexOf(this.currentMusic)
+        },
+        set (val) {
+          this.setCurrentMusic(this.musicList[val])
+        }
+      }
     },
     methods: {
+      setCurrentMusic (music) {
+        canUseSync && this.$emit('update:music', music)
+        this.internalMusic = music
+      },
       toggle () {
         if (!this.audio.paused) {
           this.pause()
@@ -186,11 +210,11 @@
           this.play()
         })
       },
-      setPlayIndex (index) {
-        if (this.playIndex === index) {
+      onSelectSong (song) {
+        if (this.currentMusic === song) {
           this.toggle()
         } else {
-          this.playIndex = index
+          this.setCurrentMusic(song)
           this.thenPlay()
         }
       },
@@ -283,8 +307,9 @@
         this.volume = this.audio.volume
       },
       onAudioEnded () {
-        if (!this.musicList.includes(this.currentMusic)) {
-          // if music list doesn't contain current music (list has been modified)
+        // if (!this.musicList.includes(this.currentMusic)) {
+        if (this.playIndex === -1) {
+          // if music list doesn't contain current music
           // and should play next song according to `mode`
           // set playIndex 0
           // switch (this.mode) {
@@ -352,12 +377,11 @@
       },
     },
     watch: {
-      playIndex: {
-        handler (val) {
-          this.currentMusic = this.musicList[val]
-        },
-        // otherwise the player displays blank
-        immediate: true,
+      internalMusic () {
+        console.log('internalMusic change', this.internalMusic)
+      },
+      music () {
+        this.internalMusic = this.music
       },
       autoplay () {
         this.startAutoplay()

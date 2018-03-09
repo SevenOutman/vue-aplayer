@@ -16,10 +16,14 @@
       <h1>Vue-APlayer</h1>
       <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
       <p>
-        <a href="https://www.npmjs.com/package/vue-aplayer"><img src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square" /></a>
-        <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img src="https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square" /></a>
-        <a href="https://www.npmjs.com/package/vue-aplayer"><img src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square" /></a>
-        <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square" /></a>
+        <a href="https://www.npmjs.com/package/vue-aplayer"><img
+          src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
+        <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img
+          src="https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square"/></a>
+        <a href="https://www.npmjs.com/package/vue-aplayer"><img
+          src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square"/></a>
+        <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
+          src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
       <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
       <hr>
@@ -102,20 +106,14 @@
 '[03:44.200]On another love another love\n'+
 '[03:48.200]All my tears have been used up\n'+
 '[03:51.320]'
-            }">
-      </aplayer>
+            }"/>
       <h3>With playlist</h3>
       <aplayer
         mutex
         theme="#e6d0b2"
         mode="random"
-        autoplay="https://p2.music.126.net/Ah9t98gNkEvh_D9_mLwOWw==/2946691245626258.mp3"
-        :music='[
-          {"title":"Prelude (VIP Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-          {"title":"Monody (Radio Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-          {"title":"Jackpot","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-          {"title":"Unity","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-        ]'
+        :music.sync='music3'
+        :list='list3'
       />
       <h3>Narrow</h3>
       <aplayer
@@ -140,6 +138,40 @@
     name: 'App',
     components: {
       Aplayer,
+    },
+    data () {
+      return {
+        music3: null,
+        list3: [
+          {
+            'title': 'Prelude (VIP Edit)',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+          {
+            'title': 'Monody (Radio Edit)',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+          {
+            'title': 'Jackpot',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+          {
+            'title': 'Unity',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+        ]
+      }
+    },
+    created () {
+      this.music3 = this.list3[0]
     }
   }
 </script>
