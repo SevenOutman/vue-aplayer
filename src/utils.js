@@ -56,3 +56,7 @@ export function versionCompare (semantic1, semantic2) {
   }
   return -1
 }
+
+export function warn (message) {
+  return console.warn(`[vue-aplayer] ${message}`)
+}

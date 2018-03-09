@@ -29,7 +29,7 @@
       <hr>
       <h3>Normal</h3>
       <aplayer
-        autoplay="https://storage.googleapis.com/gh-pages-static/secretbase.mp3"
+        autoplay
         mutex
         theme="#42b983"
         preload="metadata"
@@ -143,6 +143,12 @@
       return {
         music3: null,
         list3: [
+          {
+            title: 'secret base~君がくれたもの~',
+            author: 'Silent Siren',
+            url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
+            pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
+          },
           {
             'title': 'Prelude (VIP Edit)',
             'author': 'TheFatRat',

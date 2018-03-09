@@ -47,9 +47,22 @@
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
-  import {versionCompare} from './utils'
+  import {versionCompare, warn} from './utils'
 
   const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
+
+  /** polyfill for browsers without Promise */
+  /** btw dose vue2 still supports them? */
+  function resolved () {
+    // only used as initial VueAplayer.audioPlayPromise
+    // no need to handle resolve value or catch
+    return Promise ? Promise.resolve() : {
+      then (func) {
+        func()
+        return this
+      }
+    }
+  }
 
   let activeMutex = null
   let instanceId = 1
@@ -69,8 +82,8 @@
         default: false,
       },
       autoplay: {
-        type: String,
-        default: null,
+        type: Boolean,
+        default: false,
       },
       showlrc: {
         type: Boolean,
@@ -140,6 +153,10 @@
         volume: 0.8,
         muted: false,
         showList: true,
+
+        // handle Promise returned from audio.play()
+        // @link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
+        audioPlayPromise: resolved()
       }
     },
     computed: {
@@ -153,7 +170,7 @@
       currentMusic () {
         return this.internalMusic
       },
-      playMode() {
+      playMode () {
         return this.internalMode
       },
       musicList () {
@@ -189,7 +206,7 @@
         canUseSync && this.$emit('update:music', music)
         this.internalMusic = music
       },
-      setPlayMode(mode) {
+      setPlayMode (mode) {
         canUseSync && this.$emit('update:mode', mode)
         this.internalMode = mode
       },
@@ -202,15 +219,21 @@
       },
       play () {
         if (this.mutex) {
-          if (activeMutex) {
+          if (activeMutex && activeMutex !== this) {
             activeMutex.pause()
           }
           activeMutex = this
         }
-        this.audio.play()
+        // handle .play() Promise
+        const audioPlayPromise = this.audio.play()
+        if (audioPlayPromise) {
+          return this.audioPlayPromise = audioPlayPromise.catch(warn)
+        }
       },
       pause () {
-        this.audio.pause()
+        this.audioPlayPromise.then(() => {
+          this.audio.pause()
+        })
       },
       thenPlay () {
         this.$nextTick(() => {
@@ -364,35 +387,15 @@
 
         this.audio.addEventListener('ended', this.onAudioEnded)
       },
-      startAutoplay () {
-        if (this.autoplay !== null) {
-          if (!this.autoplay) {
-            this.playIndex = 0
-            this.thenPlay()
-          } else {
-            let autoplaySong = this.musicList.find(song => song.url === this.autoplay)
-            if (autoplaySong) {
-              this.playIndex = this.musicList.indexOf(autoplaySong)
-              this.thenPlay()
-            }
-          }
-        }
-      },
     },
     watch: {
-      internalMusic () {
-        console.log('internalMusic change', this.internalMusic)
-      },
       music () {
         this.internalMusic = this.music
-      },
-      autoplay () {
-        this.startAutoplay()
-      },
+      }
     },
     mounted () {
       this.setupAudio()
-      this.startAutoplay()
+      if (this.autoplay) this.play()
     },
     beforeDestroy () {
       if (activeMutex === this) {
