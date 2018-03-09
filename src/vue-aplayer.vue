@@ -52,7 +52,7 @@
   const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
 
   /** polyfill for browsers without Promise */
-  /** btw dose vue2 still supports them? */
+  /** btw does vue2 still support them? */
   function resolved () {
     // only used as initial VueAplayer.audioPlayPromise
     // no need to handle resolve value or catch
