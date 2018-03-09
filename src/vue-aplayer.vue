@@ -1,19 +1,19 @@
 <template>
   <div
     class="aplayer"
-    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : music instanceof Array, 'aplayer-withlrc': !!$slots.display || showlrc}"
+    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : musicList.length > 0, 'aplayer-withlrc': !!$slots.display || showlrc}"
   >
-    <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"></thumbnail>
+    <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"/>
     <div class="aplayer-info" v-show="!narrow">
       <div class="aplayer-music">
-        <span class="aplayer-title">{{ currentMusic.title}}</span>
+        <span class="aplayer-title">{{ currentMusic.title }}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
       <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"></lyrics>
+        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"/>
       </slot>
       <controls
-        :mode="mode"
+        :mode="playMode"
         :stat="playStat"
         :volume="volume"
         :muted="muted"
@@ -26,26 +26,43 @@
         @dragend="onProgressDragEnd"
         @dragging="onProgressDragging"
         @nextmode="setNextMode"
-      >
-      </controls>
+      />
     </div>
 
     <music-list
       :show="showList"
+      :current-music="currentMusic"
       :music-list="musicList"
       :play-index="playIndex"
       :listmaxheight="listmaxheight"
       :theme="theme"
-      @selectsong="setPlayIndex"
-    ></music-list>
+      @selectsong="onSelectSong"
+    />
     <audio :src="currentMusic.url" ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
+  import Vue from 'vue'
   import Thumbnail from './components/aplayer-thumbnail.vue'
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
+  import {versionCompare, warn} from './utils'
+
+  const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
+
+  /** polyfill for browsers without Promise */
+  /** btw dose vue2 still supports them? */
+  function resolved () {
+    // only used as initial VueAplayer.audioPlayPromise
+    // no need to handle resolve value or catch
+    return Promise ? Promise.resolve() : {
+      then (func) {
+        func()
+        return this
+      }
+    }
+  }
 
   let activeMutex = null
   let instanceId = 1
@@ -65,8 +82,8 @@
         default: false,
       },
       autoplay: {
-        type: String,
-        default: null,
+        type: Boolean,
+        default: false,
       },
       showlrc: {
         type: Boolean,
@@ -90,15 +107,25 @@
       },
       listmaxheight: String,
       music: {
-        type: [Object, Array],
+        type: Object,
         required: true,
-        validator(value) {
-          let songs
-          if (!(value instanceof Array)) {
-            songs = [value]
-          } else {
-            songs = value
+        validator (value) {
+          let song = value
+          if (!song.url || !song.title || !song.author) {
+            song.title = song.title || 'Untitled'
+            song.author = song.author || 'Unknown'
+            return false
           }
+          return true
+        },
+      },
+      list: {
+        type: Array,
+        default () {
+          return []
+        },
+        validator (value) {
+          let songs = value
           for (let i = 0; i < songs.length; i++) {
             let song = songs[i]
             if (!song.url || !song.title || !song.author) {
@@ -109,12 +136,13 @@
           }
           return true
         },
-      },
+      }
     },
-    data() {
+    data () {
       return {
         id: instanceId++,
-        playIndex: 0,
+        internalMusic: this.music,
+        internalMode: this.mode,
         isPlaying: false,
         isMobile: /mobile/i.test(window.navigator.userAgent),
         playStat: {
@@ -124,96 +152,119 @@
         },
         volume: 0.8,
         muted: false,
-        playMode: this.mode,
         showList: true,
 
-        currentMusic: { url: '' },
+        // handle Promise returned from audio.play()
+        // @link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
+        audioPlayPromise: resolved()
       }
     },
     computed: {
-      audio() {
+      audio () {
         return this.$refs.audio
       },
-      shouldAutoplay() {
+      shouldAutoplay () {
         if (this.isMobile) return false
         return this.autoplay
       },
-      musicList() {
-        if (this.music instanceof Array) {
-          return this.music;
-        }
-        return [this.music];
+      currentMusic () {
+        return this.internalMusic
       },
-      currentPicStyleObj() {
+      playMode () {
+        return this.internalMode
+      },
+      musicList () {
+        return this.list
+      },
+      currentPicStyleObj () {
         if (this.currentMusic && this.currentMusic.pic) {
           return {
             backgroundImage: `url(${this.currentMusic.pic})`,
           }
         }
-        return {};
+        return {}
       },
-      loadProgress() {
+      loadProgress () {
         if (this.playStat.duration === 0) return 0
         return this.playStat.loadedTime / this.playStat.duration
       },
-      playProgress() {
+      playProgress () {
         if (this.playStat.duration === 0) return 0
         return this.playStat.playedTime / this.playStat.duration
       },
+      playIndex: {
+        get () {
+          return this.musicList.indexOf(this.currentMusic)
+        },
+        set (val) {
+          this.setCurrentMusic(this.musicList[val])
+        }
+      }
     },
     methods: {
-      toggle() {
+      setCurrentMusic (music) {
+        canUseSync && this.$emit('update:music', music)
+        this.internalMusic = music
+      },
+      setPlayMode (mode) {
+        canUseSync && this.$emit('update:mode', mode)
+        this.internalMode = mode
+      },
+      toggle () {
         if (!this.audio.paused) {
           this.pause()
         } else {
           this.play()
         }
       },
-      play() {
+      play () {
         if (this.mutex) {
-          if (activeMutex) {
+          if (activeMutex && activeMutex !== this) {
             activeMutex.pause()
           }
           activeMutex = this
         }
-        this.audio.play()
+        // handle .play() Promise
+        const audioPlayPromise = this.audio.play()
+        if (audioPlayPromise) {
+          return this.audioPlayPromise = audioPlayPromise.catch(warn)
+        }
       },
-      pause() {
-        this.audio.pause()
+      pause () {
+        this.audioPlayPromise.then(() => {
+          this.audio.pause()
+        })
       },
-      thenPlay() {
+      thenPlay () {
         this.$nextTick(() => {
           this.play()
         })
       },
-      setPlayIndex(index) {
-        if (this.playIndex === index) {
+      onSelectSong (song) {
+        if (this.currentMusic === song) {
           this.toggle()
         } else {
-          this.playIndex = index
+          this.setCurrentMusic(song)
           this.thenPlay()
         }
       },
-      jump() {
-
-      },
-      jumpToTime(time) {
+      jumpToTime (time) {
         this.audio.currentTime = time
       },
-      toggleMute() {
+      toggleMute () {
         this.setMuted(!this.audio.muted)
       },
-      setMuted(val) {
+      setMuted (val) {
         this.audio.muted = val
         this.muted = this.audio.muted
       },
-      setVolume(val) {
+      setVolume (val) {
         this.audio.volume = val
         if (val > 0) {
           this.setMuted(false)
         }
       },
-      setProgress(val) {
+      setProgress (val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
@@ -221,13 +272,13 @@
           this.playStat.playedTime = this.audio.currentTime
         }
       },
-      onProgressDragBegin() {
+      onProgressDragBegin () {
         this.audio.removeEventListener('timeupdate', this.onAudioTimeUpdate)
       },
-      onProgressDragging(val) {
+      onProgressDragging (val) {
         this.playStat.playedTime = this.audio.duration * val
       },
-      onProgressDragEnd(val) {
+      onProgressDragEnd (val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
@@ -236,55 +287,55 @@
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
       },
 
-      setNextMode() {
-        if (this.music instanceof Array) {
+      setNextMode () {
+        if (this.musicList.length) {
           if (this.playMode === 'random') {
-            this.playMode = 'single'
+            this.setPlayMode('single')
           } else if (this.playMode === 'single') {
-            this.playMode = 'order'
+            this.setPlayMode('order')
           } else if (this.playMode === 'order') {
-            this.playMode = 'circulation'
+            this.setPlayMode('circulation')
           } else if (this.playMode === 'circulation') {
-            this.playMode = 'random'
+            this.setPlayMode('random')
           }
         } else {
           if (this.playMode === 'circulation') {
-            this.playMode = 'order'
+            this.setPlayMode('order')
           } else {
-            this.playMode = 'circulation'
+            this.setPlayMode('circulation')
           }
         }
-        this.$emit('update:mode', this.playMode)
       },
-      onAudioPlay() {
+      onAudioPlay () {
         this.isPlaying = true
         this.$emit('play')
       },
-      onAudioPause() {
+      onAudioPause () {
         this.isPlaying = false
         this.$emit('pause')
       },
-      onAudioDurationChange() {
+      onAudioDurationChange () {
         if (this.audio.duration !== 1) {
           this.playStat.duration = this.audio.duration
         }
       },
-      onAudioProgress() {
+      onAudioProgress () {
         if (this.audio.buffered.length) {
           this.playStat.loadedTime = this.audio.buffered.end(this.audio.buffered.length - 1)
         } else {
           this.playStat.loadedTime = 0
         }
       },
-      onAudioTimeUpdate() {
+      onAudioTimeUpdate () {
         this.playStat.playedTime = this.audio.currentTime
       },
-      onAudioVolumeChange() {
+      onAudioVolumeChange () {
         this.volume = this.audio.volume
       },
-      onAudioEnded() {
-        if (!this.musicList.includes(this.currentMusic)) {
-          // if music list doesn't contain current music (list has been modified)
+      onAudioEnded () {
+        // if (!this.musicList.includes(this.currentMusic)) {
+        if (this.playIndex === -1) {
+          // if music list doesn't contain current music
           // and should play next song according to `mode`
           // set playIndex 0
           // switch (this.mode) {
@@ -316,11 +367,10 @@
           }
         }
 
-        this.$emit('ended');
+        this.$emit('ended')
       },
 
-
-      setupAudio() {
+      setupAudio () {
         this.muted = this.audio.muted
 
         // there's no point making preload configurable
@@ -337,38 +387,17 @@
 
         this.audio.addEventListener('ended', this.onAudioEnded)
       },
-      startAutoplay() {
-        if (this.autoplay !== null) {
-          if (!this.autoplay) {
-            this.playIndex = 0
-            this.thenPlay()
-          } else {
-            let autoplaySong = this.musicList.find(song => song.url === this.autoplay)
-            if (autoplaySong) {
-              this.playIndex = this.musicList.indexOf(autoplaySong)
-              this.thenPlay()
-            }
-          }
-        }
-      },
     },
     watch: {
-      playIndex: {
-        handler(val) {
-          this.currentMusic = this.musicList[val]
-        },
-        // otherwise the player displays blank
-        immediate: true,
-      },
-      autoplay() {
-        this.startAutoplay()
-      },
+      music () {
+        this.internalMusic = this.music
+      }
     },
-    mounted() {
+    mounted () {
       this.setupAudio()
-      this.startAutoplay()
+      if (this.autoplay) this.play()
     },
-    beforeDestroy() {
+    beforeDestroy () {
       if (activeMutex === this) {
         activeMutex = null
       }
@@ -425,7 +454,7 @@
   .aplayer {
     font-family: Arial, Helvetica, sans-serif;
     margin: 5px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     overflow: hidden;
     user-select: none;

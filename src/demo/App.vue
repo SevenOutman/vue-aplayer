@@ -15,6 +15,16 @@
     <div class="container">
       <h1>Vue-APlayer</h1>
       <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
+      <p>
+        <a href="https://www.npmjs.com/package/vue-aplayer"><img
+          src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
+        <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img
+          src="https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square"/></a>
+        <a href="https://www.npmjs.com/package/vue-aplayer"><img
+          src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square"/></a>
+        <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
+          src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
+      </p>
       <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
       <hr>
       <h3>Normal</h3>
@@ -27,10 +37,10 @@
         :music="{
                     title: 'secret base~君がくれたもの~',
                     author: 'Silent Siren',
-                    url: 'https://m9.music.126.net/20171227155917/356e19d8a0986138f5d2f784f377b72a/ymusic/796b/7307/30e8/0823d9ce21f962f3f01644a7c28b58ca.mp3',
+                    url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
                 }"
-      ></aplayer>
+      />
 
       <h3>With lyrics</h3>
       <aplayer
@@ -41,7 +51,7 @@
         :music="{
                 title: 'Another Love',
                 author: 'Tom Odell',
-                url: 'https://dl.stream.qqmusic.qq.com/M800000vopkZ0YkCev.mp3?vkey=5238995937439A5AE13EB81E55F7E7D4D97375F9AD0F2B77C1AA5FD033682F57435DBAED8A3212E09946414C83FD95D3B68A23E020F961F2&guid=384494282&uid=0&fromtag=30',
+                url: 'https://storage.googleapis.com/gh-pages-static/anotherlove.mp3',
                 pic: 'https://y.gtimg.cn/music/photo_new/T002R90x90M000002sJhjf0PwjRN.jpg?max_age=2592000',
                 lrc: '[00:00.570]Another Love - Tom Odell\n'+
 '[00:01.760]\n'+
@@ -96,21 +106,15 @@
 '[03:44.200]On another love another love\n'+
 '[03:48.200]All my tears have been used up\n'+
 '[03:51.320]'
-            }">
-      </aplayer>
+            }"/>
       <h3>With playlist</h3>
       <aplayer
         mutex
         theme="#e6d0b2"
         mode="random"
-        autoplay="https://p2.music.126.net/Ah9t98gNkEvh_D9_mLwOWw==/2946691245626258.mp3"
-        :music='[
-          {"title":"Prelude (VIP Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-          {"title":"Monody (Radio Edit)","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-          {"title":"Jackpot","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-          {"title":"Unity","author":"TheFatRat","url":"https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3","pic":"https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130"},
-        ]'
-      ></aplayer>
+        :music.sync='music3'
+        :list='list3'
+      />
       <h3>Narrow</h3>
       <aplayer
         narrow
@@ -120,10 +124,10 @@
         :music="{
                     title: 'secret base~君がくれたもの~',
                     author: 'Silent Siren',
-                    url: 'https://m9.music.126.net/20171227155917/356e19d8a0986138f5d2f784f377b72a/ymusic/796b/7307/30e8/0823d9ce21f962f3f01644a7c28b58ca.mp3',
+                    url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
                     pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
                 }"
-      ></aplayer>
+      />
     </div>
   </div>
 </template>
@@ -134,6 +138,46 @@
     name: 'App',
     components: {
       Aplayer,
+    },
+    data () {
+      return {
+        music3: null,
+        list3: [
+          {
+            title: 'secret base~君がくれたもの~',
+            author: 'Silent Siren',
+            url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
+            pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
+          },
+          {
+            'title': 'Prelude (VIP Edit)',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+          {
+            'title': 'Monody (Radio Edit)',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+          {
+            'title': 'Jackpot',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+          {
+            'title': 'Unity',
+            'author': 'TheFatRat',
+            'url': 'https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3',
+            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+          },
+        ]
+      }
+    },
+    created () {
+      this.music3 = this.list3[0]
     }
   }
 </script>

@@ -1,28 +1,28 @@
 <template>
   <div class="aplayer-controller">
     <v-progress
-            :loadProgress="loadProgress"
-            :playProgress="playProgress"
-            :theme="theme"
-            @setprogress="val => $emit('setprogress', val)"
-            @dragbegin="$emit('dragbegin')"
-            @dragend="val => $emit('dragend', val)"
-            @dragging="val => $emit('dragging', val)"
-    ></v-progress>
+      :loadProgress="loadProgress"
+      :playProgress="playProgress"
+      :theme="theme"
+      @setprogress="val => $emit('setprogress', val)"
+      @dragbegin="$emit('dragbegin')"
+      @dragend="val => $emit('dragend', val)"
+      @dragging="val => $emit('dragging', val)"
+    />
     <div class="aplayer-time">
       <span class="aplayer-time-inner">
         - <span class="aplayer-ptime">{{secondToTime(stat.playedTime)}}</span> / <span
-              class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
+        class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
       </span>
       <volume
-              :volume="volume"
-              :theme="theme"
-              :muted="muted"
-              @togglemute="$emit('togglemute')"
-              @setvolume="v => $emit('setvolume', v)"
-      ></volume>
-      <icon-button class="aplayer-icon-mode" :icon="mode" @click.native="$emit('nextmode')"></icon-button>
-      <icon-button class="aplayer-icon-menu" icon="menu" @click.native="$emit('togglelist')"></icon-button>
+        :volume="volume"
+        :theme="theme"
+        :muted="muted"
+        @togglemute="$emit('togglemute')"
+        @setvolume="v => $emit('setvolume', v)"
+      />
+      <icon-button class="aplayer-icon-mode" :icon="mode" @click.native="$emit('nextmode')"/>
+      <icon-button class="aplayer-icon-menu" icon="menu" @click.native="$emit('togglelist')"/>
     </div>
   </div>
 </template>
@@ -40,31 +40,31 @@
     },
     props: ['mode', 'stat', 'theme', 'volume', 'muted'],
     computed: {
-      loadProgress() {
+      loadProgress () {
         if (this.stat.duration === 0) return 0
         return this.stat.loadedTime / this.stat.duration
       },
-      playProgress() {
+      playProgress () {
         if (this.stat.duration === 0) return 0
         return this.stat.playedTime / this.stat.duration
       },
     },
     methods: {
-      secondToTime(second) {
+      secondToTime (second) {
         if (isNaN(second)) {
-          return '00:00';
+          return '00:00'
         }
         const pad0 = (num) => {
-          return num < 10 ? '0' + num : '' + num;
-        };
+          return num < 10 ? '0' + num : '' + num
+        }
 
-        const min = Math.trunc(second / 60);
-        const sec = Math.trunc(second - min * 60);
-        const hours = Math.trunc(min / 60);
-        const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)));
-        return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec);
+        const min = Math.trunc(second / 60)
+        const sec = Math.trunc(second - min * 60)
+        const hours = Math.trunc(min / 60)
+        const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)))
+        return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec)
       },
-      jump() {
+      jump () {
 
       },
     },
@@ -112,11 +112,16 @@
             right: 5px;
             margin-top: -4px;
             margin-right: -10px;
-            height: 8px;
-            width: 8px;
+            width: 10px;
+            height: 10px;
+            transform: scale(.8);
+            transition: transform 300ms;
             border-radius: 50%;
             background: #fff;
             cursor: pointer !important;
+            &:hover {
+              transform: scale(1);
+            }
           }
         }
       }
@@ -176,25 +181,28 @@
       cursor: pointer !important;
 
       &:hover .aplayer-volume-bar-wrap {
-        display: block;
+        height: 40px;
       }
 
       .aplayer-volume-bar-wrap {
-        display: none;
         position: absolute;
         bottom: 15px;
         right: -3px;
         width: 25px;
-        height: 40px;
+        height: 0;
         z-index: 99;
+        overflow: hidden;
+        transition: all .2s ease;
 
         .aplayer-volume-bar {
           position: absolute;
           bottom: 0;
           right: 10px;
           width: 5px;
-          height: 35px;
+          height: 40px;
           background: #aaa;
+          border-radius: 2.5px;
+          overflow: hidden;
 
           .aplayer-volume {
             position: absolute;

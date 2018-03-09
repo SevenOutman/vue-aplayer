@@ -1,14 +1,14 @@
 <template>
   <div
-          class="aplayer-list"
-          :class="{'aplayer-list-hide': !show}"
-          :style="{maxHeight: listmaxheight || ''}"
-          ref="list"
+    class="aplayer-list"
+    :class="{'aplayer-list-hide': !show}"
+    :style="{maxHeight: listmaxheight || ''}"
+    ref="list"
   >
     <ol>
       <li v-for="(aMusic, index) of musicList"
-          :class="{'aplayer-list-light': index === playIndex}"
-          @click="$emit('selectsong', index)"
+          :class="{'aplayer-list-light': aMusic === currentMusic}"
+          @click="$emit('selectsong', aMusic)"
       >
         <span class="aplayer-list-cur" :style="{background: theme}"></span>
         <span class="aplayer-list-index">{{ index + 1}}</span>
@@ -26,8 +26,12 @@
         type: Boolean,
         default: true,
       },
+      currentMusic: Object,
       musicList: {
         type: Array,
+        default () {
+          return []
+        }
       },
       playIndex: {
         type: Number,
@@ -36,7 +40,7 @@
       theme: String,
       listmaxheight: String,
     },
-    mounted() {
+    mounted () {
       this.$el.style.height = `${this.$el.offsetHeight}px`
     },
   }
@@ -54,17 +58,17 @@
       height: 0 !important;
     }
 
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
       width: 5px;
     }
-    &::-webkit-scrollbar-track{
+    &::-webkit-scrollbar-track {
       background-color: #f9f9f9;
     }
-    &::-webkit-scrollbar-thumb{
+    &::-webkit-scrollbar-thumb {
       border-radius: 3px;
       background-color: #eee;
     }
-    &::-webkit-scrollbar-thumb:hover{
+    &::-webkit-scrollbar-thumb:hover {
       background-color: #ccc;
     }
 

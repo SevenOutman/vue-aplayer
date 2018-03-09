@@ -18,7 +18,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: 'babel-loader?babelrc',
+            js: 'babel-loader',
             scss: 'style-loader!css-loader!postcss-loader!sass-loader'
           }
         }
@@ -27,15 +27,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        options: {
-          presets: [
-            ['env', {
-              'targets': {
-                'browsers': ['last 2 versions', 'safari >= 7']
-              }
-            }]
-          ]
-        }
       },
       {
         test: /\.(png|jpg)$/,
@@ -55,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: 'production'
       }
     }),
 

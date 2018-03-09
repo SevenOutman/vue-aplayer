@@ -1,17 +1,20 @@
 <template>
   <div class="aplayer-volume-wrap">
     <icon-button
-            v-if="!$parent.$parent.isMobile"
-            :class="`aplayer-icon-${volumeIcon}`"
-            :icon="volumeIcon"
-            @click.native="$emit('togglemute')"
+      v-if="!$parent.$parent.isMobile"
+      :class="`aplayer-icon-${volumeIcon}`"
+      :icon="volumeIcon"
+      @click.native="$emit('togglemute')"
+    />
+    <div
+      class="aplayer-volume-bar-wrap"
+      @mousedown="onBarMouseDown"
+      @touchstart="onBarTouchStart"
     >
-    </icon-button>
-    <div class="aplayer-volume-bar-wrap" @click="adjustVolume">
-      <div class="aplayer-volume-bar" ref="volumeBarWrap">
+      <div class="aplayer-volume-bar" ref="bar">
         <div
-                class="aplayer-volume"
-                :style="{
+          class="aplayer-volume"
+          :style="{
                   height: muted ? 0 : `${Math.trunc(volume * 100)}%`,
                   background: theme
                 }">
@@ -24,38 +27,82 @@
 <script>
   import IconButton from './aplayer-iconbutton.vue'
 
-  function getElementViewTop(element) {
-    let actualTop = element.offsetTop;
-    let current = element.offsetParent;
-    let elementScrollTop;
+  const barHeight = 40
+
+  function getElementViewTop (element) {
+    let actualTop = element.offsetTop
+    let current = element.offsetParent
+    let elementScrollTop
     while (current !== null) {
-      actualTop += current.offsetTop;
-      current = current.offsetParent;
+      actualTop += current.offsetTop
+      current = current.offsetParent
     }
-    elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop;
-    return actualTop - elementScrollTop;
+    elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop
+    return actualTop - elementScrollTop
   }
+
   export default {
     components: {
       IconButton,
     },
     props: ['volume', 'muted', 'theme'],
     computed: {
-      volumeIcon() {
+      volumeIcon () {
         if (this.muted || this.volume <= 0) return 'volume-off'
         if (this.volume >= 1) return 'volume-up'
         return 'volume-down'
       },
     },
     methods: {
-      adjustVolume(e) {
-        const barHeight = 35
+      adjustVolume (e) {
 
-        let percentage = (barHeight - e.clientY + getElementViewTop(this.$refs.volumeBarWrap)) / barHeight;
-        percentage = percentage > 0 ? percentage : 0;
-        percentage = percentage < 1 ? percentage : 1;
+        let percentage = (barHeight - e.clientY + getElementViewTop(this.$refs.bar)) / barHeight
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
         this.$emit('setvolume', percentage)
-      }
+      },
+      onBarMouseDown () {
+        document.addEventListener('mousemove', this.onDocumentMouseMove)
+        document.addEventListener('mouseup', this.onDocumentMouseUp)
+      },
+      onDocumentMouseMove (e) {
+        let percentage = (barHeight - e.clientY + getElementViewTop(this.$refs.bar)) / barHeight
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+        this.$emit('setvolume', percentage)
+      },
+      onDocumentMouseUp (e) {
+        document.removeEventListener('mouseup', this.onDocumentMouseUp)
+        document.removeEventListener('mousemove', this.onDocumentMouseMove)
+
+        let percentage = (barHeight - e.clientY + getElementViewTop(this.$refs.bar)) / barHeight
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+        this.$emit('setvolume', percentage)
+      },
+      onBarTouchStart () {
+        this.$emit('dragbegin')
+        document.addEventListener('touchmove', this.onDocumentTouchMove)
+        document.addEventListener('touchend', this.onDocumentTouchEnd)
+      },
+      onDocumentTouchMove (e) {
+        const touch = e.changedTouches[0]
+
+        let percentage = (barHeight - touch.clientY + getElementViewTop(this.$refs.bar)) / barHeight
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+        this.$emit('setvolume', percentage)
+      },
+      onDocumentTouchEnd (e) {
+        document.removeEventListener('touchend', this.onDocumentTouchEnd)
+        document.removeEventListener('touchmove', this.onDocumentTouchMove)
+
+        const touch = e.changedTouches[0]
+        let percentage = (barHeight - touch.clientY + getElementViewTop(this.$refs.bar)) / barHeight
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+        this.$emit('setvolume', percentage)
+      },
     }
   }
 </script>

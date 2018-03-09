@@ -1,14 +1,14 @@
 <template>
   <div
-          class="aplayer-pic"
-          :style="currentPicStyleObj"
+    class="aplayer-pic"
+    :style="currentPicStyleObj"
+    @click="$emit('toggleplay')"
   >
     <div class="aplayer-button" :class="playing ? 'aplayer-pause' : 'aplayer-play'">
       <icon-button
-              :icon="playing ? 'pause' : 'play'"
-              :class="playing ? 'aplayer-icon-pause' : 'aplayer-icon-play'"
-              @click.native="$emit('toggleplay')"
-      ></icon-button>
+        :icon="playing ? 'pause' : 'play'"
+        :class="playing ? 'aplayer-icon-pause' : 'aplayer-icon-play'"
+      />
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@
       },
     },
     computed: {
-      currentPicStyleObj() {
+      currentPicStyleObj () {
         if (!this.pic) return {}
         return {
           backgroundImage: `url(${this.pic})`,
@@ -48,19 +48,20 @@
     background-image: url(../default.jpg);
     background-size: cover;
     transition: all 0.3s ease;
-
+    cursor: pointer;
+    &:hover {
+      .aplayer-button {
+        opacity: 1;
+      }
+    }
     .aplayer-button {
       position: absolute;
       border-radius: 50%;
       opacity: 0.8;
-      cursor: pointer;
       text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
       background: rgba(0, 0, 0, 0.2);
       transition: all 0.1s ease;
-      &:hover {
-        opacity: 1;
-      }
 
       .aplayer-fill {
         fill: #fff;
