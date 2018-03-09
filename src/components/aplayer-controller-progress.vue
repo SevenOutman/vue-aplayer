@@ -15,6 +15,7 @@
           @mouseover="thumbHovered = true"
           @mouseout="thumbHovered = false"
           @mousedown="onThumbMouseDown"
+          @touchstart="onThumbTouchStart"
           class="aplayer-thumb"
           :style="{border: '1px solid', borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
         >
@@ -73,6 +74,33 @@
 
         const barWidth = this.$refs.barWrap.clientWidth
         let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+        this.$emit('dragend', percentage)
+      },
+      onThumbTouchStart () {
+        this.$emit('dragbegin')
+        document.addEventListener('touchmove', this.onDocumentTouchMove)
+        document.addEventListener('touchend', this.onDocumentTouchEnd)
+      },
+      onDocumentTouchMove (e) {
+        const touch = e.changedTouches[0]
+        const barWidth = this.$refs.barWrap.clientWidth
+        let percentage = (touch.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+        // if (this.option.showlrc) {
+        //   this.updateLrc(parseFloat(bar.playedBar.style.width) / 100 * this.audio.duration);
+        // }
+        this.$emit('dragging', percentage)
+      },
+      onDocumentTouchEnd (e) {
+        document.removeEventListener('touchend', this.onDocumentTouchEnd)
+        document.removeEventListener('touchmove', this.onDocumentTouchMove)
+
+        const touch = e.changedTouches[0]
+        const barWidth = this.$refs.barWrap.clientWidth
+        let percentage = (touch.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
         this.$emit('dragend', percentage)
