@@ -52,20 +52,18 @@ Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlay
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| narrow | Boolean | false | narrow style |
-| autoplay | String | null | which url in `music` is going to be autoplayed, if set to null, player won't auto play |
-| showlrc | Boolean | false | whether to show lyrics or not |
-| mutex | Boolean | false | pause other players when this player is playing |
-| theme | String | '#b7daff' | theme color |
-| mode | String | 'circulation' | play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
-| preload | String | 'auto' | the way to load music, can be 'none' 'metadata' or 'auto' |
-| listmaxheight | String | none | max height of play list |
-| music| Object or Array | `required` | music info, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
+| music| Object | `required` | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
+| list | Array | [] | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
+| narrow | Boolean | false | Narrow style |
+| autoplay | Boolean | false | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
+| showlrc | Boolean | false | Whether to show lyrics or not |
+| mutex | Boolean | false | Pause other players when this player is playing |
+| theme | String | '#b7daff' | Theme color |
+| mode | String | 'circulation' | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
+| preload | String | 'auto' | The way to load music, can be 'none' 'metadata' or 'auto' |
+| listmaxheight | String | none | Max height of play list |
 
-> `vue-aplayer` component changes `mode` from inside (a "twoWay" props), please refer to [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier)
-to see how to use it correctly.
-
-> If `music` is a single Object, you can assign it to another Object and the player will play the new song.
+> If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` prop.
 
 ### Music info
 
@@ -89,7 +87,14 @@ The `music` props can either be an object containing info of the song to play, o
 | playing | none | Triggered periodically when APlayer is playing |
 | ended | none | Triggered when APlayer ended playing |
 | error | none | Triggered when an error occurs |
-| update:mode | none | See `mode` props|
+
+### Slots
+
+- `slot="display"`
+
+This slot represents the content displayed on the music info panel, which by default is the lyric scroll.
+
+The component in this slot will receive two props: `currentMusic` and `playStat`.
 
 ## Contribute
 

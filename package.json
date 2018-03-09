@@ -1,6 +1,6 @@
 {
   "name": "vue-aplayer",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A Vue 2.x component of easy-to-config music players with controls.",
   "main": "dist/vue-aplayer.min.js",
   "files": [
