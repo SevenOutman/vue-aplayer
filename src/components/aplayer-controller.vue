@@ -198,7 +198,7 @@
           bottom: 0;
           right: 10px;
           width: 5px;
-          height: 35px;
+          height: 40px;
           background: #aaa;
 
           .aplayer-volume {
