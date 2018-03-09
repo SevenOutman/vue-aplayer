@@ -12,7 +12,7 @@
     <div class="aplayer-time">
       <span class="aplayer-time-inner">
         - <span class="aplayer-ptime">{{secondToTime(stat.playedTime)}}</span> / <span
-              class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
+        class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
       </span>
       <volume
         :volume="volume"
@@ -40,31 +40,31 @@
     },
     props: ['mode', 'stat', 'theme', 'volume', 'muted'],
     computed: {
-      loadProgress() {
+      loadProgress () {
         if (this.stat.duration === 0) return 0
         return this.stat.loadedTime / this.stat.duration
       },
-      playProgress() {
+      playProgress () {
         if (this.stat.duration === 0) return 0
         return this.stat.playedTime / this.stat.duration
       },
     },
     methods: {
-      secondToTime(second) {
+      secondToTime (second) {
         if (isNaN(second)) {
-          return '00:00';
+          return '00:00'
         }
         const pad0 = (num) => {
-          return num < 10 ? '0' + num : '' + num;
-        };
+          return num < 10 ? '0' + num : '' + num
+        }
 
-        const min = Math.trunc(second / 60);
-        const sec = Math.trunc(second - min * 60);
-        const hours = Math.trunc(min / 60);
-        const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)));
-        return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec);
+        const min = Math.trunc(second / 60)
+        const sec = Math.trunc(second - min * 60)
+        const hours = Math.trunc(min / 60)
+        const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)))
+        return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec)
       },
-      jump() {
+      jump () {
 
       },
     },
@@ -112,11 +112,16 @@
             right: 5px;
             margin-top: -4px;
             margin-right: -10px;
-            height: 8px;
-            width: 8px;
+            width: 10px;
+            height: 10px;
+            transform: scale(.8);
+            transition: transform 300ms;
             border-radius: 50%;
             background: #fff;
             cursor: pointer !important;
+            &:hover {
+              transform: scale(1);
+            }
           }
         }
       }
