@@ -15,11 +15,17 @@
     <div class="container">
       <h1>Vue-APlayer</h1>
       <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
+      <p>
+        <a href="https://www.npmjs.com/package/vue-aplayer"><img src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square" /></a>
+        <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img src="https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square" /></a>
+        <a href="https://www.npmjs.com/package/vue-aplayer"><img src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square" /></a>
+        <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square" /></a>
+      </p>
       <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
       <hr>
       <h3>Normal</h3>
       <aplayer
-        autoplay
+        autoplay="https://storage.googleapis.com/gh-pages-static/secretbase.mp3"
         mutex
         theme="#42b983"
         preload="metadata"
