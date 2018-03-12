@@ -54,7 +54,8 @@ Props are mostly the same as [Aplayer's options](https://github.com/DIYgod/APlay
 | ---- | ---- | ------- | ----------- |
 | music| Object | `required` | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
 | list | Array | [] | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
-| narrow | Boolean | false | Narrow style |
+| narrow | Boolean | false | DEPRECATED, use `mini` instead |
+| mini | Boolean | false | Mini mode |
 | autoplay | Boolean | false | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
 | showlrc | Boolean | false | Whether to show lyrics or not |
 | mutex | Boolean | false | Pause other players when this player is playing |

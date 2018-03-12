@@ -117,7 +117,7 @@
       />
       <h3>Narrow</h3>
       <aplayer
-        narrow
+        mini
         mutex
         theme="#e6d0b2"
         mode="circulation"

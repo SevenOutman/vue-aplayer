@@ -1,16 +1,16 @@
 <template>
   <div
     class="aplayer"
-    :class="{'aplayer-narrow': narrow, 'aplayer-withlist' : musicList.length > 0, 'aplayer-withlrc': !!$slots.display || showlrc}"
+    :class="{'aplayer-narrow': narrow || mini, 'aplayer-withlist' : musicList.length > 0, 'aplayer-withlrc': !!$slots.display || showlrc}"
   >
-    <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle"/>
-    <div class="aplayer-info" v-show="!narrow">
+    <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle" />
+    <div class="aplayer-info" v-show="!narrow && !mini">
       <div class="aplayer-music">
         <span class="aplayer-title">{{ currentMusic.title }}</span>
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
       <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"/>
+        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc" />
       </slot>
       <controls
         :mode="playMode"
@@ -47,17 +47,17 @@
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
-  import {versionCompare, warn} from './utils'
+  import { deprecatedProp, versionCompare, warn } from './utils'
 
   const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
 
   /** polyfill for browsers without Promise */
   /** btw does vue2 still support them? */
-  function resolved () {
+  function resolved() {
     // only used as initial VueAplayer.audioPlayPromise
     // no need to handle resolve value or catch
     return Promise ? Promise.resolve() : {
-      then (func) {
+      then(func) {
         func()
         return this
       }
@@ -77,9 +77,20 @@
       Lyrics,
     },
     props: {
+      // @deprecated, use mini instead
       narrow: {
         type: Boolean,
         default: false,
+        validator(value) {
+          if (value) {
+            deprecatedProp('narrow', '1.1.2', 'mini')
+          }
+          return true
+        }
+      },
+      mini: {
+        type: Boolean,
+        default: false
       },
       autoplay: {
         type: Boolean,
@@ -109,7 +120,7 @@
       music: {
         type: Object,
         required: true,
-        validator (value) {
+        validator(value) {
           let song = value
           if (!song.url || !song.title || !song.author) {
             song.title = song.title || 'Untitled'
@@ -121,10 +132,10 @@
       },
       list: {
         type: Array,
-        default () {
+        default() {
           return []
         },
-        validator (value) {
+        validator(value) {
           let songs = value
           for (let i = 0; i < songs.length; i++) {
             let song = songs[i]
@@ -138,7 +149,7 @@
         },
       }
     },
-    data () {
+    data() {
       return {
         id: instanceId++,
         internalMusic: this.music,
@@ -160,23 +171,23 @@
       }
     },
     computed: {
-      audio () {
+      audio() {
         return this.$refs.audio
       },
-      shouldAutoplay () {
+      shouldAutoplay() {
         if (this.isMobile) return false
         return this.autoplay
       },
-      currentMusic () {
+      currentMusic() {
         return this.internalMusic
       },
-      playMode () {
+      playMode() {
         return this.internalMode
       },
-      musicList () {
+      musicList() {
         return this.list
       },
-      currentPicStyleObj () {
+      currentPicStyleObj() {
         if (this.currentMusic && this.currentMusic.pic) {
           return {
             backgroundImage: `url(${this.currentMusic.pic})`,
@@ -184,40 +195,40 @@
         }
         return {}
       },
-      loadProgress () {
+      loadProgress() {
         if (this.playStat.duration === 0) return 0
         return this.playStat.loadedTime / this.playStat.duration
       },
-      playProgress () {
+      playProgress() {
         if (this.playStat.duration === 0) return 0
         return this.playStat.playedTime / this.playStat.duration
       },
       playIndex: {
-        get () {
+        get() {
           return this.musicList.indexOf(this.currentMusic)
         },
-        set (val) {
+        set(val) {
           this.setCurrentMusic(this.musicList[val])
         }
       }
     },
     methods: {
-      setCurrentMusic (music) {
+      setCurrentMusic(music) {
         canUseSync && this.$emit('update:music', music)
         this.internalMusic = music
       },
-      setPlayMode (mode) {
+      setPlayMode(mode) {
         canUseSync && this.$emit('update:mode', mode)
         this.internalMode = mode
       },
-      toggle () {
+      toggle() {
         if (!this.audio.paused) {
           this.pause()
         } else {
           this.play()
         }
       },
-      play () {
+      play() {
         if (this.mutex) {
           if (activeMutex && activeMutex !== this) {
             activeMutex.pause()
@@ -230,17 +241,17 @@
           return this.audioPlayPromise = audioPlayPromise.catch(warn)
         }
       },
-      pause () {
+      pause() {
         this.audioPlayPromise.then(() => {
           this.audio.pause()
         })
       },
-      thenPlay () {
+      thenPlay() {
         this.$nextTick(() => {
           this.play()
         })
       },
-      onSelectSong (song) {
+      onSelectSong(song) {
         if (this.currentMusic === song) {
           this.toggle()
         } else {
@@ -248,23 +259,23 @@
           this.thenPlay()
         }
       },
-      jumpToTime (time) {
+      jumpToTime(time) {
         this.audio.currentTime = time
       },
-      toggleMute () {
+      toggleMute() {
         this.setMuted(!this.audio.muted)
       },
-      setMuted (val) {
+      setMuted(val) {
         this.audio.muted = val
         this.muted = this.audio.muted
       },
-      setVolume (val) {
+      setVolume(val) {
         this.audio.volume = val
         if (val > 0) {
           this.setMuted(false)
         }
       },
-      setProgress (val) {
+      setProgress(val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
@@ -272,13 +283,13 @@
           this.playStat.playedTime = this.audio.currentTime
         }
       },
-      onProgressDragBegin () {
+      onProgressDragBegin() {
         this.audio.removeEventListener('timeupdate', this.onAudioTimeUpdate)
       },
-      onProgressDragging (val) {
+      onProgressDragging(val) {
         this.playStat.playedTime = this.audio.duration * val
       },
-      onProgressDragEnd (val) {
+      onProgressDragEnd(val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
@@ -287,7 +298,7 @@
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
       },
 
-      setNextMode () {
+      setNextMode() {
         if (this.musicList.length) {
           if (this.playMode === 'random') {
             this.setPlayMode('single')
@@ -306,33 +317,33 @@
           }
         }
       },
-      onAudioPlay () {
+      onAudioPlay() {
         this.isPlaying = true
         this.$emit('play')
       },
-      onAudioPause () {
+      onAudioPause() {
         this.isPlaying = false
         this.$emit('pause')
       },
-      onAudioDurationChange () {
+      onAudioDurationChange() {
         if (this.audio.duration !== 1) {
           this.playStat.duration = this.audio.duration
         }
       },
-      onAudioProgress () {
+      onAudioProgress() {
         if (this.audio.buffered.length) {
           this.playStat.loadedTime = this.audio.buffered.end(this.audio.buffered.length - 1)
         } else {
           this.playStat.loadedTime = 0
         }
       },
-      onAudioTimeUpdate () {
+      onAudioTimeUpdate() {
         this.playStat.playedTime = this.audio.currentTime
       },
-      onAudioVolumeChange () {
+      onAudioVolumeChange() {
         this.volume = this.audio.volume
       },
-      onAudioEnded () {
+      onAudioEnded() {
         // if (!this.musicList.includes(this.currentMusic)) {
         if (this.playIndex === -1) {
           // if music list doesn't contain current music
@@ -370,7 +381,7 @@
         this.$emit('ended')
       },
 
-      setupAudio () {
+      setupAudio() {
         this.muted = this.audio.muted
 
         // there's no point making preload configurable
@@ -389,15 +400,15 @@
       },
     },
     watch: {
-      music () {
+      music() {
         this.internalMusic = this.music
       }
     },
-    mounted () {
+    mounted() {
       this.setupAudio()
       if (this.autoplay) this.play()
     },
-    beforeDestroy () {
+    beforeDestroy() {
       if (activeMutex === this) {
         activeMutex = null
       }

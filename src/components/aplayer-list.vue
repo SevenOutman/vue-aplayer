@@ -87,6 +87,7 @@
         cursor: pointer;
         transition: all 0.2s ease;
         overflow: hidden;
+        margin: 0;
 
         &:first-child {
           border-top: none;
