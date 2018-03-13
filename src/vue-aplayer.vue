@@ -34,7 +34,7 @@
       :current-music="currentMusic"
       :music-list="musicList"
       :play-index="playIndex"
-      :listmaxheight="listmaxheight"
+      :listmaxheight="listmaxheight || listMaxHeight"
       :theme="theme"
       @selectsong="onSelectSong"
     />
@@ -116,7 +116,16 @@
         type: String,
         default: 'auto',
       },
-      listmaxheight: String,
+      listmaxheight: {
+        type: String,
+        validator (value) {
+          if (value) {
+            deprecatedProp('listmaxheight', '1.1.2', 'listMaxHeight')
+          }
+          return true
+        }
+      },
+      listMaxHeight: String,
       music: {
         type: Object,
         required: true,

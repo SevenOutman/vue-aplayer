@@ -63,7 +63,8 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | theme | String | '#b7daff' | Theme color |
 | mode | String | 'circulation' | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | 'auto' | The way to load music, can be 'none' 'metadata' or 'auto' |
-| listmaxheight | String | none | Max height of play list |
+| listMaxHeight | String | none | Max height of play list |
+| listmaxheight | String | none | DEPRECATED, use `listMaxHeight` instead |
 | narrow | Boolean | false | DEPRECATED, use `mini` instead |
 
 > If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` prop.
