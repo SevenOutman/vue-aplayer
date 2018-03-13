@@ -37,9 +37,7 @@
     "url": "https://github.com/SevenOutman/vue-aplayer/issues"
   },
   "homepage": "https://github.com/SevenOutman/vue-aplayer#readme",
-  "dependencies": {
-    "axios": "^0.18.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "vue": "^2.5.13"
   },
