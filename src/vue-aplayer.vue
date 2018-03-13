@@ -30,7 +30,7 @@
     </div>
 
     <music-list
-      :show="showList"
+      :show="showList && !mini && !narrow"
       :current-music="currentMusic"
       :music-list="musicList"
       :play-index="playIndex"
