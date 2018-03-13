@@ -114,10 +114,11 @@
         mode="random"
         :music.sync='music3'
         :list='list3'
+        list-max-height="80px"
       />
-      <h3>Narrow</h3>
+      <h3>Mini Mode</h3>
       <aplayer
-        narrow
+        mini
         mutex
         theme="#e6d0b2"
         mode="circulation"
