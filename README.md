@@ -4,16 +4,8 @@
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![npm](https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE)
 
-A Vue 2.x component of easy-to-config music players with controls.
-
-> ### Note
-> This component is a vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) and keeps updating with it, not just a wrapper.
-
-### Introduction
-
+Easy-to-config music player for Vue 2.x
 [**Demo**](https://sevenoutman.github.io/vue-aplayer)
-
-Screenshot
 
 ![image](https://i.loli.net/2018/03/13/5aa6bd4562f39.png)
 
@@ -54,18 +46,18 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| music| Object | `required` | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
-| list | Array | [] | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
-| mini | Boolean | false | Mini mode |
-| autoplay | Boolean | false | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
-| showlrc | Boolean | false | Whether to show lyrics or not |
-| mutex | Boolean | false | Pause other players when this player is playing |
-| theme | String | '#b7daff' | Theme color |
-| mode | String | 'circulation' | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
-| preload | String | 'auto' | The way to load music, can be 'none' 'metadata' or 'auto' |
-| listMaxHeight | String | none | Max height of play list |
-| listmaxheight | String | none | DEPRECATED, use `listMaxHeight` instead |
-| narrow | Boolean | false | DEPRECATED, use `mini` instead |
+| music| Object | *required* | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
+| list | Array | `[]` | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
+| mini | Boolean | `false` | Mini mode |
+| autoplay | Boolean | `false` | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
+| showlrc | Boolean | `false` | Whether to show lyrics or not |
+| mutex | Boolean | `false` | Pause other players when this player is playing |
+| theme | String | `'#b7daff'` | Theme color |
+| mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
+| preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
+| listMaxHeight | String | *none* | Max height of play list |
+| narrow | Boolean | `false` | DEPRECATED, use `mini` instead |
+| listmaxheight | String | *none* | DEPRECATED, use `listMaxHeight` instead |
 
 > If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` prop.
 
@@ -75,11 +67,11 @@ The `music` props can either be an object containing info of the song to play, o
 
 | Property | Default | Description |
 | -------- | ------- | ----------- |
-| title | 'Untitled' | music title |
-| author | 'Unknown' | music author |
-| url | `required` | music url |
-| pic | none | music cover picture |
-| lrc | none | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
+| url | *required* | music url |
+| title | `'Untitled'` | music title |
+| author | `'Unknown'` | music author |
+| pic | *none* | music cover picture |
+| lrc | *none* | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
 
 ### Events
 
@@ -105,6 +97,9 @@ The component in this slot will receive two props: `currentMusic` and `playStat`
 Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) if you find a bug.
 
 Feature requests and PRs are welcome.
+
+## Thanks
+[APlayer](https://github.com/MoePlayer/APlayer), for appearance&api design inspiration and prototyping.
 
 ## LICENSE
 
