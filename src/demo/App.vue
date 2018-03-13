@@ -114,6 +114,7 @@
         mode="random"
         :music.sync='music3'
         :list='list3'
+        listmaxheight="80px"
       />
       <h3>Narrow</h3>
       <aplayer

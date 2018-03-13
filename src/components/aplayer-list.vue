@@ -5,7 +5,10 @@
     :style="{maxHeight: listmaxheight || ''}"
     ref="list"
   >
-    <ol>
+    <ol
+      ref="ol"
+      :style="{maxHeight: listmaxheight || ''}"
+    >
       <li v-for="(aMusic, index) of musicList"
           :class="{'aplayer-list-light': aMusic === currentMusic}"
           @click="$emit('selectsong', aMusic)"
@@ -42,6 +45,7 @@
     },
     mounted () {
       this.$el.style.height = `${this.$el.offsetHeight}px`
+      this.$refs.ol.style.height = `${this.$el.offsetHeight}px`
     },
   }
 </script>
@@ -49,34 +53,35 @@
 <style lang="scss">
 
   .aplayer-list {
-    overflow: auto;
     transition: all 0.5s ease;
     will-change: height;
     display: none;
+    overflow: hidden;
 
     &.aplayer-list-hide {
       height: 0 !important;
     }
 
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #f9f9f9;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #eee;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: #ccc;
-    }
 
     ol {
       list-style-type: none;
       margin: 0;
       padding: 0;
+      overflow-y: auto;
 
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #f9f9f9;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: #eee;
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: #ccc;
+      }
       li {
         position: relative;
         height: 32px;
