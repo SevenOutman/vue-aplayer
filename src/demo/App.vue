@@ -116,7 +116,7 @@
         :list='list3'
         list-max-height="80px"
       />
-      <h3>Narrow</h3>
+      <h3>Mini Mode</h3>
       <aplayer
         mini
         mutex

@@ -1,7 +1,7 @@
 <template>
   <div
     class="aplayer"
-    :class="{'aplayer-narrow': narrow || mini, 'aplayer-withlist' : musicList.length > 0, 'aplayer-withlrc': !!$slots.display || showlrc}"
+    :class="{'aplayer-narrow': isMiniMode, 'aplayer-withlist' : musicList.length > 0, 'aplayer-withlrc': !!$slots.display || showlrc}"
   >
     <thumbnail :pic="currentMusic.pic" :playing="isPlaying" @toggleplay="toggle" />
     <div class="aplayer-info" v-show="!narrow && !mini">
@@ -30,7 +30,7 @@
     </div>
 
     <music-list
-      :show="showList && !mini && !narrow"
+      :show="showList && !isMiniMode"
       :current-music="currentMusic"
       :music-list="musicList"
       :play-index="playIndex"
@@ -180,6 +180,10 @@
       }
     },
     computed: {
+      // for deprecated `narrow`
+      isMiniMode() {
+        return this.mini || this.narrow
+      },
       audio() {
         return this.$refs.audio
       },
