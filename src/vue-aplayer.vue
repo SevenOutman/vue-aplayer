@@ -202,7 +202,7 @@
       }
     },
     computed: {
-      enableFloat() {
+      enableFloat () {
         return this.float && !this.isMobile
       },
       floatStyleObj () {

@@ -5,6 +5,7 @@
       :style="transformStyle">
       <p
         v-for="(line, index) of lrcLines"
+        :key="index"
         :class="{ 'aplayer-lrc-current': index === currentLineIndex }"
       >
         {{ line[1] }}
@@ -17,7 +18,16 @@
   import {parseLrc} from '../utils'
 
   export default {
-    props: ['currentMusic', 'playStat'],
+    props: {
+      currentMusic: {
+        type: Object,
+        required: true
+      },
+      playStat: {
+        type: Object,
+        required: true
+      }
+    },
     data () {
       return {
         displayLrc: '',

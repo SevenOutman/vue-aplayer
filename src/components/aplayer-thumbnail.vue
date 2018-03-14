@@ -68,7 +68,7 @@
 
         this.$emit('dragend')
       },
-      onClick() {
+      onClick () {
         if (!this.hasMovedSinceMouseDown) {
           this.$emit('toggleplay')
         }

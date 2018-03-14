@@ -61,9 +61,10 @@ export function warn (message) {
   return console.warn(`[vue-aplayer] ${message}`)
 }
 
-export function deprecatedProp(name, sinceVersion, alternative) {
+export function deprecatedProp (name, sinceVersion, alternative) {
   return warn(`'${name}' is deprecated since v${sinceVersion}, and will be removed in future releases, use '${alternative}' instead`)
 }
+
 export function getElementViewLeft (element) {
   let actualLeft = element.offsetLeft
   let current = element.offsetParent
@@ -75,6 +76,7 @@ export function getElementViewLeft (element) {
   elementScrollLeft = document.body.scrollLeft + document.documentElement.scrollLeft
   return actualLeft - elementScrollLeft
 }
+
 export function getElementViewTop (element) {
   let actualTop = element.offsetTop
   let current = element.offsetParent

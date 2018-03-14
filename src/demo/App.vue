@@ -35,11 +35,11 @@
         preload="metadata"
         mode="circulation"
         :music="{
-                    title: 'secret base~君がくれたもの~',
-                    author: 'Silent Siren',
-                    url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
-                    pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
-                }"
+          title: 'secret base~君がくれたもの~',
+          author: 'Silent Siren',
+          url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
+          pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
+        }"
       />
 
       <h3>With lyrics</h3>
@@ -49,12 +49,13 @@
         showlrc
         mode="circulation"
         :music="{
-                title: 'Another Love',
-                author: 'Tom Odell',
-                url: 'https://storage.googleapis.com/gh-pages-static/anotherlove.mp3',
-                pic: 'https://y.gtimg.cn/music/photo_new/T002R90x90M000002sJhjf0PwjRN.jpg?max_age=2592000',
-                lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
-            }"/>
+          title: 'Another Love',
+          author: 'Tom Odell',
+          url: 'https://storage.googleapis.com/gh-pages-static/anotherlove.mp3',
+          pic: 'https://y.gtimg.cn/music/photo_new/T002R90x90M000002sJhjf0PwjRN.jpg?max_age=2592000',
+          lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
+        }"
+      />
       <h3>With playlist</h3>
       <aplayer
         mutex
@@ -72,11 +73,11 @@
         theme="#e6d0b2"
         mode="circulation"
         :music="{
-                    title: 'secret base~君がくれたもの~',
-                    author: 'Silent Siren',
-                    url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
-                    pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
-                }"
+          title: 'secret base~君がくれたもの~',
+          author: 'Silent Siren',
+          url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
+          pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
+        }"
       />
     </div>
   </div>
