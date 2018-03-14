@@ -53,7 +53,7 @@
                 author: 'Tom Odell',
                 url: 'https://storage.googleapis.com/gh-pages-static/anotherlove.mp3',
                 pic: 'https://y.gtimg.cn/music/photo_new/T002R90x90M000002sJhjf0PwjRN.jpg?max_age=2592000',
-                lrc: 'https://storage.googleapis.com/gh-pages-static/anotherlove.lrc'
+                lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
             }"/>
       <h3>With playlist</h3>
       <aplayer

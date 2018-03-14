@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![npm](https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE)
 
-Easy-to-config music player for Vue 2.x
+Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
 [**Demo**](https://sevenoutman.github.io/vue-aplayer)
 
 ![image](https://i.loli.net/2018/03/13/5aa6bd4562f39.png)
@@ -72,6 +72,9 @@ The `music` props can either be an object containing info of the song to play, o
 | author | `'Unknown'` | music author |
 | pic | *none* | music cover picture |
 | lrc | *none* | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
+
+> vue-aplayer uses [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to load your lrc when it's a url.
+> If your browser doesn't support fetch by default, please use polyfills like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
 
 ### Events
 

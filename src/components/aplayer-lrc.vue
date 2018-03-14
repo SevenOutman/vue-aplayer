@@ -51,10 +51,8 @@
         }
       },
       fetchLrc (src) {
-        fetch(src, {mode: 'no-cors'})
-          .then((response) => {
-            return response.text()
-          })
+        fetch(src)
+          .then(response => response.text())
           .then((lrc) => {
             this.displayLrc = lrc
           })
