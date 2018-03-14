@@ -49,6 +49,7 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | music| Object | *required* | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
 | list | Array | `[]` | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
 | mini | Boolean | `false` | Mini mode |
+| float | Boolean | `false` | Float mode, in which you can drag the player around and leave it anywhere on your page |
 | autoplay | Boolean | `false` | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
 | showlrc | Boolean | `false` | Whether to show lyrics or not |
 | mutex | Boolean | `false` | Pause other players when this player is playing |

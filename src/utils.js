@@ -64,3 +64,25 @@ export function warn (message) {
 export function deprecatedProp(name, sinceVersion, alternative) {
   return warn(`'${name}' is deprecated since v${sinceVersion}, and will be removed in future releases, use '${alternative}' instead`)
 }
+export function getElementViewLeft (element) {
+  let actualLeft = element.offsetLeft
+  let current = element.offsetParent
+  let elementScrollLeft
+  while (current !== null) {
+    actualLeft += current.offsetLeft
+    current = current.offsetParent
+  }
+  elementScrollLeft = document.body.scrollLeft + document.documentElement.scrollLeft
+  return actualLeft - elementScrollLeft
+}
+export function getElementViewTop (element) {
+  let actualTop = element.offsetTop
+  let current = element.offsetParent
+  let elementScrollTop
+  while (current !== null) {
+    actualTop += current.offsetTop
+    current = current.offsetParent
+  }
+  elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop
+  return actualTop - elementScrollTop
+}

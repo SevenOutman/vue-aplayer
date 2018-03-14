@@ -64,9 +64,10 @@
         :list='list3'
         list-max-height="80px"
       />
-      <h3>Mini Mode</h3>
+      <h3>Mini mode and float mode (try drag it around)</h3>
       <aplayer
         mini
+        float
         mutex
         theme="#e6d0b2"
         mode="circulation"
