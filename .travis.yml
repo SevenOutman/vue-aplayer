@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "lts/*"
+
+script: npm run lint
+
+cache:
+  directories:
+    - "node_modules"
+
+# GitHub Pages deploy
+before_deploy:
+  - npm run predeploy
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  on:
+    branch: develop
+  local-dir: demo
