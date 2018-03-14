@@ -144,7 +144,7 @@
         required: true,
         validator (value) {
           let song = value
-          if (!song.url || !song.title || !song.author) {
+          if (!song.url|| song.title === "undefined" || song.author === "undefined") {
             song.title = song.title || 'Untitled'
             song.author = song.author || 'Unknown'
             return false
@@ -161,7 +161,7 @@
           let songs = value
           for (let i = 0; i < songs.length; i++) {
             let song = songs[i]
-            if (!song.url || !song.title || !song.author) {
+            if (!song.url|| song.title === "undefined" || song.author === "undefined") {
               song.title = song.title || 'Untitled'
               song.author = song.author || 'Unknown'
               return false
