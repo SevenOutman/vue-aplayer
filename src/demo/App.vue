@@ -53,59 +53,7 @@
                 author: 'Tom Odell',
                 url: 'https://storage.googleapis.com/gh-pages-static/anotherlove.mp3',
                 pic: 'https://y.gtimg.cn/music/photo_new/T002R90x90M000002sJhjf0PwjRN.jpg?max_age=2592000',
-                lrc: '[00:00.570]Another Love - Tom Odell\n'+
-'[00:01.760]\n'+
-'[00:04.630]\n'+
-'[00:05.380]\n'+
-'[00:21.470]I wanna take you somewhere so you know I care (想带你远走高飞 让你知道我的心意)\n'+
-'[00:25.840]But it\'s so cold and I don\'t know where (但是天寒地冻 我也不知道该去什么地方)\n'+
-'[00:29.830]I brought you daffodils in a pretty string (于是送你一个美丽的水仙花花环)\n'+
-'[00:33.950]But they won\'t flower like they did last spring (但是他们不能像往常一样绽放)\n'+
-'[00:39.510]\n'+
-'[00:41.880]And I wanna kiss you make you feel alright (想给你一个吻 让你感觉好一点)\n'+
-'[00:46.370]I\'m just so tired to share my nights (我却疲惫的无法与你共度良宵)\n'+
-'[00:50.490]I wanna cry and I wanna love (想要感伤 想要去爱)\n'+
-'[00:54.420]But all my tears have been used up (但泪已用尽 爱已无踪)\n'+
-'[00:58.790]\n'+
-'[00:59.970]\n'+
-'[01:00.470]\n'+
-'[01:02.660]On another love another love (那前情旧事)\n'+
-'[01:06.840]All my tears have been used up (已让我的眼泪流干)\n'+
-'[01:10.770]On another love another love (那前情旧事)\n'+
-'[01:14.950]All my tears have been used up (已让我的眼泪流干)\n'+
-'[01:18.940]On another love another love (那前情旧事)\n'+
-'[01:23.250]All my tears have been used up (已让我的眼泪流干)\n'+
-'[01:26.230]\n'+
-'[01:26.730]\n'+
-'[01:55.050]And if somebody hurts you I wanna fight (如果有人伤害你 我会奋力维护)\n'+
-'[01:58.920]But my hands been broken one too many times (但是我的手已经伤痕累累)\n'+
-'[02:02.790]So I\'ll use my voice I\'ll be so f*cking rude (于是我用我的声音 不管是多么粗鲁)\n'+
-'[02:06.780]Words they always win but I know I\'ll lose (但我又不善言辞 注定败下阵来)\n'+
-'[02:10.400]\n'+
-'[02:10.710]And I\'d sing a song that\'d be just ours (于是我纵情歌唱 唱只属于我们的那首歌)\n'+
-'[02:14.770]But I sang \'em all to another heart (但却言不由衷)\n'+
-'[02:18.390]And I wanna cry I wanna learn to love (想要感伤 要想继续去爱)\n'+
-'[02:22.630]But all my tears have been used up (但泪已尽 爱已无踪)\n'+
-'[02:26.120]\n'+
-'[02:26.500]On another love another love (那前情旧事)\n'+
-'[02:30.180]All my tears have been used up (已让我的眼泪流干)\n'+
-'[02:34.360]On another love another love (那前情旧事)\n'+
-'[02:38.230]All my tears have been used up (已让我疲惫不堪)\n'+
-'[02:41.910]On another love another love (那前情旧事)\n'+
-'[02:45.840]All my tears have been used up (让我的爱用尽)\n'+
-'[02:49.590]\n'+
-'[03:13.630]I wanna sing a song that\'d be just ours\n'+
-'[03:17.000]But I sang \'em all to another heart\n'+
-'[03:20.680]And I wanna cry I wanna fall in love\n'+
-'[03:24.480]But all my tears have been used up\n'+
-'[03:28.040]\n'+
-'[03:28.730]On another love another love\n'+
-'[03:32.600]All my tears have been used up\n'+
-'[03:36.470]On another love another love\n'+
-'[03:40.270]All my tears have been used up\n'+
-'[03:44.200]On another love another love\n'+
-'[03:48.200]All my tears have been used up\n'+
-'[03:51.320]'
+                lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
             }"/>
       <h3>With playlist</h3>
       <aplayer
@@ -116,9 +64,10 @@
         :list='list3'
         list-max-height="80px"
       />
-      <h3>Mini Mode</h3>
+      <h3>Mini mode and float mode (try drag it around)</h3>
       <aplayer
         mini
+        float
         mutex
         theme="#e6d0b2"
         mode="circulation"

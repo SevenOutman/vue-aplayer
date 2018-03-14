@@ -26,20 +26,9 @@
 
 <script>
   import IconButton from './aplayer-iconbutton.vue'
+  import {getElementViewTop} from '../utils'
 
   const barHeight = 40
-
-  function getElementViewTop (element) {
-    let actualTop = element.offsetTop
-    let current = element.offsetParent
-    let elementScrollTop
-    while (current !== null) {
-      actualTop += current.offsetTop
-      current = current.offsetParent
-    }
-    elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop
-    return actualTop - elementScrollTop
-  }
 
   export default {
     components: {

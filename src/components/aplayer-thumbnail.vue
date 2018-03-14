@@ -2,7 +2,8 @@
   <div
     class="aplayer-pic"
     :style="currentPicStyleObj"
-    @click="$emit('toggleplay')"
+    @mousedown="onDragBegin"
+    @click="onClick"
   >
     <div class="aplayer-button" :class="playing ? 'aplayer-pause' : 'aplayer-play'">
       <icon-button
@@ -14,6 +15,7 @@
 </template>
 <script>
   import IconButton from './aplayer-iconbutton.vue'
+  import {getElementViewLeft, getElementViewTop} from '../utils'
 
   export default {
     components: {
@@ -25,6 +27,17 @@
         type: Boolean,
         default: false,
       },
+      enableDrag: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data () {
+      return {
+        hasMovedSinceMouseDown: false,
+        dragStartX: 0,
+        dragStartY: 0
+      }
     },
     computed: {
       currentPicStyleObj () {
@@ -34,11 +47,44 @@
         }
       },
     },
+    methods: {
+      onDragBegin (e) {
+        if (this.enableDrag) {
+          this.hasMovedSinceMouseDown = false
+          this.$emit('dragbegin')
+          this.dragStartX = e.clientX
+          this.dragStartY = e.clientY
+          document.addEventListener('mousemove', this.onDocumentMouseMove)
+          document.addEventListener('mouseup', this.onDocumentMouseUp)
+        }
+      },
+      onDocumentMouseMove (e) {
+        this.hasMovedSinceMouseDown = true
+        this.$emit('dragging', {offsetLeft: e.clientX - this.dragStartX, offsetTop: e.clientY - this.dragStartY})
+      },
+      onDocumentMouseUp (e) {
+        document.removeEventListener('mouseup', this.onDocumentMouseUp)
+        document.removeEventListener('mousemove', this.onDocumentMouseMove)
+
+        this.$emit('dragend')
+      },
+      onClick() {
+        if (!this.hasMovedSinceMouseDown) {
+          this.$emit('toggleplay')
+        }
+      }
+    }
   }
 </script>
 
 <style lang="scss">
   @import "../scss/variables";
+
+  .aplayer-float {
+    .aplayer-pic:active {
+      cursor: move;
+    }
+  }
 
   .aplayer-pic {
     position: relative;

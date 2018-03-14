@@ -14,7 +14,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import {parseLrc} from '../utils'
 
   export default {
@@ -52,9 +51,10 @@
         }
       },
       fetchLrc (src) {
-        axios(src)
-          .then(({data}) => {
-            this.displayLrc = data
+        fetch(src)
+          .then(response => response.text())
+          .then((lrc) => {
+            this.displayLrc = lrc
           })
       },
       hideLrc () {

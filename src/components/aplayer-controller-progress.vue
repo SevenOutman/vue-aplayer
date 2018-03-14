@@ -26,17 +26,9 @@
 </template>
 
 <script>
-  function getElementViewLeft (element) {
-    let actualLeft = element.offsetLeft
-    let current = element.offsetParent
-    let elementScrollLeft
-    while (current !== null) {
-      actualLeft += current.offsetLeft
-      current = current.offsetParent
-    }
-    elementScrollLeft = document.body.scrollLeft + document.documentElement.scrollLeft
-    return actualLeft - elementScrollLeft
-  }
+
+
+  import {getElementViewLeft} from '../utils'
 
   export default {
     props: ['loadProgress', 'playProgress', 'theme'],
