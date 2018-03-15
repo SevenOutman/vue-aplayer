@@ -44,6 +44,7 @@
 
       <h3>With lyrics</h3>
       <aplayer
+        float
         mutex
         theme="rgb(173, 122, 134)"
         showlrc

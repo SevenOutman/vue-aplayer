@@ -524,6 +524,12 @@
     user-select: none;
     line-height: initial;
 
+    /* floating player on top */
+    position: relative;
+    &.aplayer-float {
+      z-index: 1;
+    }
+
     * {
       box-sizing: content-box;
     }
@@ -537,6 +543,7 @@
       padding: 14px 7px 0 10px;
       height: $aplayer-height;
       box-sizing: border-box;
+      background: #fff;
 
       .aplayer-music {
         overflow: hidden;
