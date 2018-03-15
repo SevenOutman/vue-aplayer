@@ -1,16 +1,17 @@
-# vue-aplayer 
+<h1 align="center">vue-aplayer</h1>
+
+> Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
+[**Demo**](https://sevenoutman.github.io/vue-aplayer)
+
+
 [![Travis](https://img.shields.io/travis/SevenOutman/vue-aplayer.svg?style=flat-square)](https://travis-ci.org/SevenOutman/vue-aplayer)
 [![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
-[![npm](https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE)
-
-Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
-[**Demo**](https://sevenoutman.github.io/vue-aplayer)
 
 ![image](https://i.loli.net/2018/03/13/5aa6bd4562f39.png)
 
-## Install
+## Installation
 
 ```
 $ npm install vue-aplayer --save
@@ -19,7 +20,7 @@ $ npm install vue-aplayer --save
 ## Usage
 
 ```HTML
-<aplayer autoplay 
+<aplayer autoplay
   :music="{
     title: 'Preparation',
     author: 'Hans Zimmer/Richard Harvey',
@@ -106,6 +107,7 @@ Feature requests and PRs are welcome.
 ## Thanks
 [APlayer](https://github.com/MoePlayer/APlayer), for appearance&api design inspiration and prototyping.
 
-## LICENSE
+## License
 
-MIT Licensed. See [LICENSE](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE).
+[MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). Copyright (c) 2016-present Shenghao "Doma" Lei
+
