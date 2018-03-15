@@ -77,10 +77,11 @@
     }
   }
 
+  export const version = VERSION
+
   let activeMutex = null
   let instanceId = 1
-  // console.log("\n %c APlayer 1.6.1 %c http://aplayer.js.org \n\n", "color: #fadfa3; background: #030307; padding:5px 0;", "background: #fadfa3; padding:5px 0;");
-
+  console.log(`\n %c Vue-APlayer ${version} %c https://vue-aplayer.js.org \n\n`, "color: #fff; background:#41b883; padding:5px 0;", "color: #fff; background: #35495e; padding:5px 0;");
   export default {
     name: 'APlayer',
     components: {

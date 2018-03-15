@@ -41,7 +41,7 @@
         }"
       />
 
-      <h3>With lyrics</h3>
+      <h3>Lyrics scroll</h3>
       <aplayer
         float
         mutex
@@ -56,7 +56,7 @@
           lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
         }"
       />
-      <h3>Playlist and HLS support</h3>
+      <h3>Playlist / HLS support / Per-song theme</h3>
       <aplayer
         autoplay
         mutex
@@ -66,7 +66,7 @@
         :list='list3'
         list-max-height="80px"
       />
-      <h3>Mini mode and float mode (try drag it around)</h3>
+      <h3>Mini mode / Float mode (try dragging it around)</h3>
       <aplayer
         mini
         float

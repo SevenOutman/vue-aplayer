@@ -49,6 +49,11 @@ module.exports = {
     ]
   },
   devtool: '#eval-source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(require("package.json").version)
+    }),
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -57,7 +62,8 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
-      }
+      },
+      VERSION: JSON.stringify(require("package.json").version)
     }),
 
     new webpack.optimize.UglifyJsPlugin({
