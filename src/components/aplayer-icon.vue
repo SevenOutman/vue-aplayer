@@ -22,10 +22,10 @@
   export default {
     props: ['type'],
     computed: {
-      viewBox() {
+      viewBox () {
         return SVG[this.type][0]
       },
-      d() {
+      d () {
         return SVG[this.type][1]
       },
     },

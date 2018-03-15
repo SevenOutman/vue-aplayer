@@ -9,9 +9,11 @@
       ref="ol"
       :style="{maxHeight: listmaxheight || ''}"
     >
-      <li v-for="(aMusic, index) of musicList"
-          :class="{'aplayer-list-light': aMusic === currentMusic}"
-          @click="$emit('selectsong', aMusic)"
+      <li
+        v-for="(aMusic, index) of musicList"
+        :key="index"
+        :class="{'aplayer-list-light': aMusic === currentMusic}"
+        @click="$emit('selectsong', aMusic)"
       >
         <span class="aplayer-list-cur" :style="{background: theme}"></span>
         <span class="aplayer-list-index">{{ index + 1}}</span>
@@ -61,7 +63,6 @@
     &.aplayer-list-hide {
       height: 0 !important;
     }
-
 
     ol {
       list-style-type: none;

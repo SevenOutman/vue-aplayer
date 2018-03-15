@@ -1,6 +1,6 @@
 {
   "name": "vue-aplayer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Easy-to-config music player for Vue 2.x",
   "main": "dist/vue-aplayer.min.js",
   "files": [
@@ -12,9 +12,10 @@
     "dev": "webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --port 3000 --config webpack.demo.config.js",
     "build": "export NODE_ENV=production && webpack --progress --hide-modules",
     "build:demo": "export NODE_ENV=production && webpack --progress --hide-modules --config webpack.demo.config.js",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "predeploy": "npm run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
-    "deploy": "gh-pages -d demo"
+    "deploy": "gh-pages -d demo",
+    "lint": "eslint --ext .js,.vue src"
   },
   "repository": {
     "type": "git",
@@ -44,10 +45,15 @@
   "devDependencies": {
     "autoprefixer": "^8.1.0",
     "babel-core": "^6.18.2",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.10",
+    "eslint": "^4.18.2",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-vue": "^4.3.0",
     "file-loader": "^1.1.11",
     "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^3.0.6",
