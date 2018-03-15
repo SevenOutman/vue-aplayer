@@ -30,7 +30,7 @@
         :stat="playStat"
         :volume="volume"
         :muted="muted"
-        :theme="theme"
+        :theme="currentTheme"
         @togglelist="showList = !showList"
         @togglemute="toggleMute"
         @setvolume="setVolume"
@@ -48,7 +48,7 @@
       :music-list="musicList"
       :play-index="playIndex"
       :listmaxheight="listmaxheight || listMaxHeight"
-      :theme="theme"
+      :theme="currentTheme"
       @selectsong="onSelectSong"
     />
     <audio ref="audio"></audio>
@@ -202,6 +202,9 @@
       }
     },
     computed: {
+      currentTheme() {
+        return this.currentMusic.theme || this.theme
+      },
       enableFloat () {
         return this.float && !this.isMobile
       },

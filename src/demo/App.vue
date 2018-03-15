@@ -100,6 +100,7 @@
             author: 'RADWIMPS',
             url: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
+            theme: '#505d6b'
           },
           {
             title: '光るなら(HLS)',
@@ -112,6 +113,7 @@
             author: 'XX:me',
             url: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
+            theme: '#46718b'
           },
         ]
       }

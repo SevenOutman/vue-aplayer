@@ -12,6 +12,7 @@
 ![image](https://i.loli.net/2018/03/13/5aa6bd4562f39.png)
 
 ### Features
+- Clean and simple UI
 - Playlist
 - Lyrics scroll
 - Custom theme color
@@ -62,7 +63,7 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | autoplay | Boolean | `false` | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
 | showlrc | Boolean | `false` | Whether to show lyrics or not |
 | mutex | Boolean | `false` | Pause other players when this player is playing |
-| theme | String | `'#b7daff'` | Theme color |
+| theme | String | `'#b7daff'` | Theme color, will be overridden by current `music`'s theme if set |
 | mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
 | listMaxHeight | String | *none* | Max height of play list |
@@ -77,10 +78,11 @@ The `music` props can either be an object containing info of the song to play, o
 
 | Property | Default | Description |
 | -------- | ------- | ----------- |
-| url | *required* | music url |
-| title | `'Untitled'` | music title |
-| author | `'Unknown'` | music author |
-| pic | *none* | music cover picture |
+| url | *required* | Music source url |
+| title | `'Untitled'` | Music title |
+| author | `'Unknown'` | Music author |
+| pic | *none* | Music cover picture |
+| theme | *none* | Song-specific theme color |
 | lrc | *none* | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
 
 > vue-aplayer uses [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to load your lrc when it's a url.
