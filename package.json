@@ -14,7 +14,6 @@
     "build:demo": "export NODE_ENV=production && webpack --progress --hide-modules --config webpack.demo.config.js",
     "prepublishOnly": "npm run build",
     "predeploy": "npm run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
-    "deploy": "gh-pages -d demo",
     "lint": "eslint --ext .js,.vue src"
   },
   "repository": {
@@ -40,7 +39,7 @@
   "homepage": "https://github.com/SevenOutman/vue-aplayer#readme",
   "dependencies": {},
   "peerDependencies": {
-    "vue": "^2.5.13"
+    "vue": "^2.5.16"
   },
   "devDependencies": {
     "autoprefixer": "^8.1.0",
@@ -55,14 +54,13 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-vue": "^4.3.0",
     "file-loader": "^1.1.11",
-    "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^3.0.6",
     "node-sass": "^4.5.0",
     "postcss-loader": "^2.1.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "url-loader": "^1.0.1",
-    "vue": "^2.5.13",
+    "vue": "^2.5.16",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^14.2.1",
     "vue-template-compiler": "^2.5.13",

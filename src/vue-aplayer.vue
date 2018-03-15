@@ -202,7 +202,7 @@
       }
     },
     computed: {
-      currentTheme() {
+      currentTheme () {
         return this.currentMusic.theme || this.theme
       },
       enableFloat () {
