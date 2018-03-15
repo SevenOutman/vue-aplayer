@@ -12,7 +12,7 @@
     "dev": "webpack-dev-server --inline --hot --progress --colors --host 0.0.0.0 --port 3000 --config webpack.demo.config.js",
     "build": "export NODE_ENV=production && webpack --progress --hide-modules",
     "build:demo": "export NODE_ENV=production && webpack --progress --hide-modules --config webpack.demo.config.js",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "predeploy": "npm run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
     "deploy": "gh-pages -d demo",
     "lint": "eslint --ext .js,.vue src"
