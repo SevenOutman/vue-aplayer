@@ -51,7 +51,7 @@
       :theme="theme"
       @selectsong="onSelectSong"
     />
-    <audio :src="currentMusic.url" ref="audio"></audio>
+    <audio ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
@@ -192,7 +192,7 @@
         showList: true,
 
         // handle Promise returned from audio.play()
-        // @link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
+        // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
         audioPlayPromise: resolved(),
 
         floatOriginX: 0,
@@ -450,11 +450,42 @@
         this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
 
         this.audio.addEventListener('ended', this.onAudioEnded)
+
+        if (this.currentMusic) {
+          this.audio.src = this.currentMusic.url
+        }
       },
     },
     watch: {
-      music () {
-        this.internalMusic = this.music
+      music (music) {
+        this.internalMusic = music
+      },
+      currentMusic: {
+        handler (music) {
+          // HLS support
+          if (/\.m3u8(?=(#|\?|$))/.test(music.url)) {
+            if (this.audio.canPlayType('application/x-mpegURL') || this.audio.canPlayType('application/vnd.apple.mpegURL')) {
+              this.audio.src = music.url;
+            } else {
+              try {
+                const Hls = require('hls.js')
+                if (Hls.isSupported()) {
+                  if (!this.hls) {
+                    this.hls = new Hls()
+                  }
+                  this.hls.loadSource(music.url)
+                  this.hls.attachMedia(this.audio)
+                } else {
+                  warn('HLS is not supported on your browser');
+                }
+              } catch (e) {
+                warn('hls.js is required to support m3u8')
+              }
+            }
+          } else {
+            this.audio.src = music.url
+          }
+        }
       }
     },
     mounted () {
@@ -464,6 +495,9 @@
     beforeDestroy () {
       if (activeMutex === this) {
         activeMutex = null
+      }
+      if (this.hls) {
+        this.hls.destroy()
       }
     },
   }

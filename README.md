@@ -11,6 +11,13 @@
 
 ![image](https://i.loli.net/2018/03/13/5aa6bd4562f39.png)
 
+### Features
+- Playlist
+- Lyrics scroll
+- Custom theme color
+- Mutex play
+- HLS support
+
 ## Installation
 
 ```
@@ -78,6 +85,9 @@ The `music` props can either be an object containing info of the song to play, o
 
 > vue-aplayer uses [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to load your lrc when it's a url.
 > If your browser doesn't support fetch by default, please use polyfills like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
+
+### HLS support
+Simply install [hls.js](https://github.com/video-dev/hls.js) into your project. `vue-aplayer` detects `*.m3u8` sources and handles the rest.
 
 ### Events
 

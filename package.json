@@ -73,5 +73,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "optionalDependencies": {
+    "hls.js": "^0.8.9"
+  }
 }
