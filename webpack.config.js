@@ -51,25 +51,21 @@ module.exports = {
   devtool: '#eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      VERSION: JSON.stringify(require("package.json").version)
+      'process.env': {
+        NODE_ENV: `"${process.env.NODE_ENV}"`
+      },
+      VERSION: JSON.stringify(require('./package.json').version)
     }),
   ]
 }
 
 if (process.env.NODE_ENV === 'production') {
   // http://vuejs.github.io/vue-loader/workflow/production.html
-  module.exports.plugins = [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      },
-      VERSION: JSON.stringify(require("package.json").version)
-    }),
-
+  module.exports.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       },
     })
-  ]
+  )
 }

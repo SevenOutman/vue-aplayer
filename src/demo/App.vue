@@ -14,7 +14,6 @@
     </a>
     <div class="container">
       <h1>Vue-APlayer</h1>
-      <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
       <p>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
@@ -25,7 +24,6 @@
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
           src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
-      <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
       <hr>
       <h3>Normal</h3>
       <aplayer
@@ -64,7 +62,6 @@
         mode="random"
         :music.sync='music3'
         :list='list3'
-        list-max-height="80px"
       />
       <h3>Mini mode / Float mode (try dragging it around)</h3>
       <aplayer
@@ -103,7 +100,7 @@
             theme: '#505d6b'
           },
           {
-            title: '光るなら(HLS)',
+            title: '光るなら.m3u8',
             author: 'Goose house',
             url: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',

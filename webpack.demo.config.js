@@ -58,6 +58,9 @@ module.exports = {
       template: 'src/demo/index.html'
     }),
     new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: `"${process.env.NODE_ENV}"`
+      },
       VERSION: JSON.stringify(require("./package.json").version)
     }),
   ]
@@ -67,22 +70,11 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.output.publicPath = '/'
   module.exports.devtool = '#source-map'
   // http://vuejs.github.io/vue-loader/workflow/production.html
-  module.exports.plugins = [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'src/demo/index.html',
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      },
-      VERSION: JSON.stringify(require("./package.json").version)
-    }),
-
+  module.exports.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       },
     })
-  ]
+  )
 }

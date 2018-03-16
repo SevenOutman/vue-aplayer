@@ -62,6 +62,9 @@
   import Lyrics from './components/aplayer-lrc.vue'
   import {deprecatedProp, versionCompare, warn} from './utils'
 
+  // version badge
+  console.log(`\n\n %c Vue-APlayer ${VERSION} %c https://vue-aplayer.js.org \n\n`, "color: #fff; background:#41b883; padding:5px 0;", "color: #fff; background: #35495e; padding:5px 0;");
+
   const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
 
   /** polyfill for browsers without Promise */
@@ -77,11 +80,8 @@
     }
   }
 
-  export const version = VERSION
-
   let activeMutex = null
   let instanceId = 1
-  console.log(`\n %c Vue-APlayer ${version} %c https://vue-aplayer.js.org \n\n`, "color: #fff; background:#41b883; padding:5px 0;", "color: #fff; background: #35495e; padding:5px 0;");
   export default {
     name: 'APlayer',
     components: {
