@@ -61,10 +61,14 @@ The `music` props can either be an object containing info of the song to play, o
 | title | `'Untitled'` | Music title |
 | author | `'Unknown'` | Music author |
 | pic | *none* | Music cover picture |
+| theme | *none* | Song-specific theme color |
 | lrc | *none* | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
 
 > vue-aplayer uses [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to load your lrc when it's a url.
 > If your browser doesn't support fetch by default, please use polyfills like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
+
+### HLS support
+Simply install [hls.js](https://github.com/video-dev/hls.js) into your project. `vue-aplayer` detects `*.m3u8` sources and handles the rest.
 
 ### Events
 
