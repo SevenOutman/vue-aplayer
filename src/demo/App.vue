@@ -47,7 +47,7 @@
         float
         mutex
         theme="rgb(173, 122, 134)"
-        showlrc
+        show-lrc
         mode="circulation"
         :music="{
           title: 'Another Love',

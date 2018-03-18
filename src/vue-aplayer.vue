@@ -109,7 +109,18 @@
         type: Boolean,
         default: false,
       },
+      // @deprecated since 1.2.2
       showlrc: {
+        type: Boolean,
+        default: false,
+        validator (value) {
+          if (value) {
+            deprecatedProp('showlrc', '1.2.2', 'showLrc')
+          }
+          return true
+        }
+      },
+      showLrc: {
         type: Boolean,
         default: false,
       },
