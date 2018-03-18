@@ -19,10 +19,7 @@
 - Mutex play
 - HLS support (upcoming)
 
-## Requirements
-
-- Promise
-- fetch
+Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman/vue-aplayer/issues/26)
 
 ## Usage
 
