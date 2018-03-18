@@ -110,7 +110,18 @@
         type: Boolean,
         default: false,
       },
+      // @deprecated since 1.2.2
       showlrc: {
+        type: Boolean,
+        default: false,
+        validator (value) {
+          if (value) {
+            deprecatedProp('showlrc', '1.2.2', 'showLrc')
+          }
+          return true
+        }
+      },
+      showLrc: {
         type: Boolean,
         default: false,
       },
@@ -295,13 +306,31 @@
         // handle .play() Promise
         const audioPlayPromise = this.audio.play()
         if (audioPlayPromise) {
-          return this.audioPlayPromise = audioPlayPromise.catch(warn)
+          return this.audioPlayPromise = new Promise((resolve, reject) => {
+            // rejectPlayPromise is to force reject audioPlayPromise if it's still pending when pause() is called
+            this.rejectPlayPromise = reject
+            audioPlayPromise.then((res) => {
+              this.rejectPlayPromise = null
+              resolve(res)
+            }).catch(warn)
+          })
         }
       },
       pause () {
-        this.audioPlayPromise.then(() => {
-          this.audio.pause()
-        })
+        this.audioPlayPromise
+        // Avoid force rejection throws Uncaught
+          .catch(() => {
+          })
+          .finally(() => {
+            this.audio.pause()
+          })
+
+        // audioPlayPromise is still pending
+        if (this.rejectPlayPromise) {
+          // force reject playPromise
+          this.rejectPlayPromise()
+          this.rejectPlayPromise = null
+        }
       },
       thenPlay () {
         this.$nextTick(() => {

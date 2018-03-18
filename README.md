@@ -19,6 +19,11 @@
 - Mutex play
 - HLS support (upcoming)
 
+## Requirements
+
+- Promise
+- fetch
+
 ## Usage
 
 ```HTML
