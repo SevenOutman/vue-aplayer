@@ -15,6 +15,11 @@ Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
 $ npm install vue-aplayer --save
 ```
 
+## Requirements
+
+- Promise
+- fetch
+
 ## Usage
 
 ```HTML
@@ -40,6 +45,7 @@ new Vue({
 })
 ```
 
+
 ### Props
 
 Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?id=options).
@@ -52,7 +58,7 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | float | Boolean | `false` | Float mode, in which you can drag the player around and leave it anywhere on your page |
 | autoplay | Boolean | `false` | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
 | showlrc | Boolean | `false` | Whether to show lyrics or not |
-| mutex | Boolean | `false` | Pause other players when this player is playing |
+| mutex | Boolean | `true` | Pause other players when this player is playing |
 | theme | String | `'#b7daff'` | Theme color |
 | mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
