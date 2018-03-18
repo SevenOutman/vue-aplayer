@@ -15,6 +15,11 @@ Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
 $ npm install vue-aplayer --save
 ```
 
+## Requirements
+
+- Promise
+- fetch
+
 ## Usage
 
 ```HTML
@@ -39,6 +44,7 @@ new Vue({
     }
 })
 ```
+
 
 ### Props
 
