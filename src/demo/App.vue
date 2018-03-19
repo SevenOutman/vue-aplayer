@@ -27,7 +27,6 @@
       <hr>
       <h3>Normal</h3>
       <aplayer
-        mutex
         theme="#42b983"
         preload="metadata"
         mode="circulation"
@@ -42,9 +41,8 @@
       <h3>Lyrics scroll</h3>
       <aplayer
         float
-        mutex
         theme="rgb(173, 122, 134)"
-        showlrc
+        show-lrc
         mode="circulation"
         :music="{
           title: 'Another Love',
@@ -57,7 +55,6 @@
       <h3>Playlist / HLS support / Per-song theme</h3>
       <aplayer
         autoplay
-        mutex
         theme="#e6d0b2"
         mode="random"
         :music.sync='music3'
@@ -67,7 +64,6 @@
       <aplayer
         mini
         float
-        mutex
         theme="#e6d0b2"
         mode="circulation"
         :music="{

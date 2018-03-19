@@ -4,6 +4,11 @@
 $ npm install vue-aplayer --save
 ```
 
+## Requirements
+
+- Promise
+- fetch
+
 ## Usage
 
 ```HTML
@@ -40,14 +45,15 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | mini | Boolean | `false` | Mini mode |
 | float | Boolean | `false` | Float mode, in which you can drag the player around and leave it anywhere on your page |
 | autoplay | Boolean | `false` | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
-| showlrc | Boolean | `false` | Whether to show lyrics or not |
-| mutex | Boolean | `false` | Pause other players when this player is playing |
+| showLrc | Boolean | `false` | Whether to show lyrics or not |
+| mutex | Boolean | `true` | Pause other players when this player is playing |
 | theme | String | `'#b7daff'` | Theme color, will be overridden by current `music`'s theme if set |
 | mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
 | listMaxHeight | String | *none* | Max height of play list |
 | narrow | Boolean | `false` | DEPRECATED, use `mini` instead |
 | listmaxheight | String | *none* | DEPRECATED, use `listMaxHeight` instead |
+| showlrc | Boolean | `false` | DEPRECATED, use `showLrc` instead |
 
 > If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` prop.
 
