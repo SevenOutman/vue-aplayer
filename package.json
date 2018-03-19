@@ -13,7 +13,7 @@
     "build": "export NODE_ENV=production && webpack --progress --hide-modules",
     "build:demo": "export NODE_ENV=production && webpack --progress --hide-modules --config webpack.demo.config.js",
     "prepublishOnly": "npm run build",
-    "predeploy": "npm run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
+    "predeploy": "yarn add hls.js && npm run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
     "lint": "eslint --ext .js,.vue src"
   },
   "repository": {
