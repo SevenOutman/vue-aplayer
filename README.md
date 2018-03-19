@@ -16,6 +16,7 @@
 - Playlist
 - Lyrics scroll
 - Custom theme color / Self-adapting theme color
+- Drag and place anywhere
 - Mutex play
 - HLS support
 
@@ -44,7 +45,7 @@ Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) 
 
 ## Thanks
 [APlayer](https://github.com/MoePlayer/APlayer), for appearance&api design inspiration and prototyping.
-
+[@DIYgod](https://github.com/DIYgod), for creating APlayer and sharing cloud storage for hosting my demo page media resources.
 ## License
 
 [MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). Copyright (c) 2016-present Shenghao "Doma" Lei
