@@ -4,7 +4,7 @@
     :class="{
       'aplayer-narrow': isMiniMode,
       'aplayer-withlist' : musicList.length > 0,
-      'aplayer-withlrc': !!$slots.display || showlrc,
+      'aplayer-withlrc': !!$slots.display || (showlrc || showLrc),
       'aplayer-float': enableFloat
     }"
     :style="floatStyleObj"
@@ -23,14 +23,14 @@
         <span class="aplayer-author">{{ currentMusic.author }}</span>
       </div>
       <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc"/>
+        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc || showLrc"/>
       </slot>
       <controls
         :mode="playMode"
         :stat="playStat"
         :volume="volume"
         :muted="muted"
-        :theme="theme"
+        :theme="currentTheme"
         @togglelist="showList = !showList"
         @togglemute="toggleMute"
         @setvolume="setVolume"
@@ -48,10 +48,10 @@
       :music-list="musicList"
       :play-index="playIndex"
       :listmaxheight="listmaxheight || listMaxHeight"
-      :theme="theme"
+      :theme="currentTheme"
       @selectsong="onSelectSong"
     />
-    <audio :src="currentMusic.url" ref="audio"></audio>
+    <audio ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
@@ -61,6 +61,9 @@
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
   import {deprecatedProp, versionCompare, warn} from './utils'
+
+  // version badge
+  console.log(`\n\n %c Vue-APlayer ${VERSION} %c vue-aplayer.js.org \n`, 'color: #fff; background:#41b883; padding:5px 0;', 'color: #fff; background: #35495e; padding:5px 0;')
 
   const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
 
@@ -77,10 +80,14 @@
     }
   }
 
+  /**
+   * memorize self-adapting theme for cover image urls
+   * @type {Object.<url, rgb()>}
+   */
+  const picThemeCache = {}
+
   let activeMutex = null
   let instanceId = 1
-  // console.log("\n %c APlayer 1.6.1 %c http://aplayer.js.org \n\n", "color: #fadfa3; background: #030307; padding:5px 0;", "background: #fadfa3; padding:5px 0;");
-
   export default {
     name: 'APlayer',
     components: {
@@ -203,16 +210,21 @@
         showList: true,
 
         // handle Promise returned from audio.play()
-        // @link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
+        // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
         audioPlayPromise: resolved(),
 
         floatOriginX: 0,
         floatOriginY: 0,
         floatOffsetLeft: 0,
-        floatOffsetTop: 0
+        floatOffsetTop: 0,
+
+        selfAdaptingTheme: null
       }
     },
     computed: {
+      currentTheme () {
+        return this.selfAdaptingTheme || this.currentMusic.theme || this.theme
+      },
       enableFloat () {
         return this.float && !this.isMobile
       },
@@ -479,20 +491,79 @@
         this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
 
         this.audio.addEventListener('ended', this.onAudioEnded)
+
+        if (this.currentMusic) {
+          this.audio.src = this.currentMusic.url
+        }
       },
+
+      setSelfAdaptingTheme () {
+        // auto theme according to current music cover image
+        if ((this.currentMusic.theme || this.theme) === 'pic') {
+          const pic = this.currentMusic.pic
+          // use cache
+          if (picThemeCache[pic]) {
+            this.selfAdaptingTheme = picThemeCache[pic]
+          } else {
+            try {
+              new ColorThief().getColorAsync(pic, ([r, g, b]) => {
+                picThemeCache[pic] = `rgb(${r}, ${g}, ${b})`
+                this.selfAdaptingTheme = `rgb(${r}, ${g}, ${b})`
+              })
+            } catch (e) {
+              warn('color-thief is required to support self-adapting theme')
+            }
+          }
+        } else {
+          this.selfAdaptingTheme = null
+        }
+      }
     },
     watch: {
-      music () {
-        this.internalMusic = this.music
+      music (music) {
+        this.internalMusic = music
+      },
+      currentMusic: {
+        handler (music) {
+          // HLS support
+          if (/\.m3u8(?=(#|\?|$))/.test(music.url)) {
+            if (this.audio.canPlayType('application/x-mpegURL') || this.audio.canPlayType('application/vnd.apple.mpegURL')) {
+              this.audio.src = music.url
+            } else {
+              try {
+                const Hls = require('hls.js')
+                if (Hls.isSupported()) {
+                  if (!this.hls) {
+                    this.hls = new Hls()
+                  }
+                  this.hls.loadSource(music.url)
+                  this.hls.attachMedia(this.audio)
+                } else {
+                  warn('HLS is not supported on your browser')
+                }
+              } catch (e) {
+                warn('hls.js is required to support m3u8')
+              }
+            }
+          } else {
+            this.audio.src = music.url
+          }
+          // self-adapting theme color
+          this.setSelfAdaptingTheme()
+        },
       }
     },
     mounted () {
       this.setupAudio()
+      this.setSelfAdaptingTheme()
       if (this.autoplay) this.play()
     },
     beforeDestroy () {
       if (activeMutex === this) {
         activeMutex = null
+      }
+      if (this.hls) {
+        this.hls.destroy()
       }
     },
   }

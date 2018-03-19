@@ -1,29 +1,30 @@
-# vue-aplayer 
+<h1 align="center">Vue-APlayer</h1>
+
+> Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
+[**Demo**](https://sevenoutman.github.io/vue-aplayer)
+
+
+[![Travis](https://img.shields.io/travis/SevenOutman/vue-aplayer.svg?style=flat-square)](https://travis-ci.org/SevenOutman/vue-aplayer)
 [![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
-[![npm](https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE)
 
-Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
-[**Demo**](https://sevenoutman.github.io/vue-aplayer)
+![vue-aplayer](https://i.loli.net/2018/03/16/5aab3da0746e7.png)
 
-![image](https://i.loli.net/2018/03/13/5aa6bd4562f39.png)
+### Features
+- Clean and simple UI
+- Playlist
+- Lyrics scroll
+- Custom theme color / Self-adapting theme color
+- Mutex play
+- HLS support
 
-## Install
-
-```
-$ npm install vue-aplayer --save
-```
-
-## Requirements
-
-- Promise
-- fetch
+Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman/vue-aplayer/issues/26)
 
 ## Usage
 
 ```HTML
-<aplayer autoplay 
+<aplayer autoplay
   :music="{
     title: 'Preparation',
     author: 'Hans Zimmer/Richard Harvey',
@@ -33,84 +34,18 @@ $ npm install vue-aplayer --save
   }"
 />
 ```
-
-```JS
-// ES6
-import Aplayer from 'vue-aplayer'
-
-new Vue({
-    components: {
-        Aplayer
-    }
-})
-```
-
-
-### Props
-
-Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?id=options).
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| music| Object | *required* | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
-| list | Array | `[]` | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
-| mini | Boolean | `false` | Mini mode |
-| float | Boolean | `false` | Float mode, in which you can drag the player around and leave it anywhere on your page |
-| autoplay | Boolean | `false` | Whether to autoplay. If more than one mutex player are set autoplay, only the first one will play. |
-| showlrc | Boolean | `false` | Whether to show lyrics or not |
-| mutex | Boolean | `true` | Pause other players when this player is playing |
-| theme | String | `'#b7daff'` | Theme color |
-| mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
-| preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
-| listMaxHeight | String | *none* | Max height of play list |
-| narrow | Boolean | `false` | DEPRECATED, use `mini` instead |
-| listmaxheight | String | *none* | DEPRECATED, use `listMaxHeight` instead |
-
-> If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` prop.
-
-### Music info
-
-The `music` props can either be an object containing info of the song to play, or an array of such objects.
-
-| Property | Default | Description |
-| -------- | ------- | ----------- |
-| url | *required* | music url |
-| title | `'Untitled'` | music title |
-| author | `'Unknown'` | music author |
-| pic | *none* | music cover picture |
-| lrc | *none* | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
-
-> vue-aplayer uses [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to load your lrc when it's a url.
-> If your browser doesn't support fetch by default, please use polyfills like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
-
-### Events
-
-| Name | Params | Description |
-| ---- | ------ | ----------- |
-| play | none | Triggered when APlayer start play |
-| pause | none | Triggered when APlayer paused |
-| canplay | none | Triggered when enough data is available that APlayer can play |
-| playing | none | Triggered periodically when APlayer is playing |
-| ended | none | Triggered when APlayer ended playing |
-| error | none | Triggered when an error occurs |
-
-### Slots
-
-- `slot="display"`
-
-This slot represents the content displayed on the music info panel, which by default is the lyric scroll.
-
-The component in this slot will receive two props: `currentMusic` and `playStat`.
+ [**Full documentation**](https://github.com/SevenOutman/vue-aplayer/blob/master/docs)
 
 ## Contribute
 
-Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) if you find a bug.
+Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) if you find a bug or have a nice idea.
 
-Feature requests and PRs are welcome.
+[PRs are welcome](https://github.com/SevenOutman/vue-aplayer/blob/master/docs/README.md#contribute).
 
 ## Thanks
 [APlayer](https://github.com/MoePlayer/APlayer), for appearance&api design inspiration and prototyping.
 
-## LICENSE
+## License
 
-MIT Licensed. See [LICENSE](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE).
+[MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). Copyright (c) 2016-present Shenghao "Doma" Lei
+

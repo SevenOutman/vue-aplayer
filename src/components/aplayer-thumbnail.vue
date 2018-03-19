@@ -15,7 +15,6 @@
 </template>
 <script>
   import IconButton from './aplayer-iconbutton.vue'
-  import {getElementViewLeft, getElementViewTop} from '../utils'
 
   export default {
     components: {

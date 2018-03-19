@@ -14,7 +14,6 @@
     </a>
     <div class="container">
       <h1>Vue-APlayer</h1>
-      <h2>A Vue 2.x implementation of <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a></h2>
       <p>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
@@ -25,11 +24,9 @@
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
           src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
-      <p>View on <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank">GitHub</a></p>
       <hr>
       <h3>Normal</h3>
       <aplayer
-        autoplay
         theme="#42b983"
         preload="metadata"
         mode="circulation"
@@ -41,7 +38,7 @@
         }"
       />
 
-      <h3>With lyrics</h3>
+      <h3>Lyrics scroll</h3>
       <aplayer
         float
         theme="rgb(173, 122, 134)"
@@ -55,15 +52,15 @@
           lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
         }"
       />
-      <h3>With playlist</h3>
+      <h3>Playlist / HLS support / Per-song theme (self-adapting theme)</h3>
       <aplayer
-        theme="#e6d0b2"
+        autoplay
+        theme="pic"
         mode="random"
         :music.sync='music3'
         :list='list3'
-        list-max-height="80px"
       />
-      <h3>Mini mode and float mode (try drag it around)</h3>
+      <h3>Mini mode / Float mode (try dragging it around)</h3>
       <aplayer
         mini
         float
@@ -92,34 +89,22 @@
         music3: null,
         list3: [
           {
-            title: 'secret base~君がくれたもの~',
-            author: 'Silent Siren',
-            url: 'https://storage.googleapis.com/gh-pages-static/secretbase.mp3',
-            pic: 'https://p3.music.126.net/HJYMPi7BLKFfSvA2T3OUmg==/3316127069531628.jpg?param=90y90'
+            title: '前前前世',
+            author: 'RADWIMPS',
+            url: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
+            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
           },
           {
-            'title': 'Prelude (VIP Edit)',
-            'author': 'TheFatRat',
-            'url': 'https:\/\/p2.music.126.net\/76dIbScfeWMw_HFlsV0-vQ==\/18678503534751351.mp3',
-            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+            title: '光るなら.m3u8',
+            author: 'Goose house',
+            url: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
+            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
           },
           {
-            'title': 'Monody (Radio Edit)',
-            'author': 'TheFatRat',
-            'url': 'https:\/\/p2.music.126.net\/aNplYKQGtlWgDIgqU1KI6Q==\/18738976673665483.mp3',
-            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
-          },
-          {
-            'title': 'Jackpot',
-            'author': 'TheFatRat',
-            'url': 'https:\/\/p2.music.126.net\/Ah9t98gNkEvh_D9_mLwOWw==\/2946691245626258.mp3',
-            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
-          },
-          {
-            'title': 'Unity',
-            'author': 'TheFatRat',
-            'url': 'https:\/\/p2.music.126.net\/Nqpswgs943Uf8RKxe6QFow==\/6642149744285980.mp3',
-            'pic': 'https:\/\/p3.music.126.net\/2G40ihs8ysucvUI2GkeTlQ==\/3262251007253950.jpg?param=130y130'
+            title: 'トリカゴ',
+            author: 'XX:me',
+            url: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
+            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
           },
         ]
       }
