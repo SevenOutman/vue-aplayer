@@ -51,9 +51,9 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
 | listMaxHeight | String | *none* | Max height of play list |
-| narrow | Boolean | `false` | DEPRECATED, use `mini` instead |
-| listmaxheight | String | *none* | DEPRECATED, use `listMaxHeight` instead |
-| showlrc | Boolean | `false` | DEPRECATED, use `showLrc` instead |
+| narrow |  | | DEPRECATED, use `mini` instead |
+| listmaxheight |  |  | DEPRECATED, use `listMaxHeight` instead |
+| showlrc |  |  | DEPRECATED, use `showLrc` instead |
 
 > If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` prop.
 
@@ -73,9 +73,6 @@ The `music` props can either be an object containing info of the song to play, o
 > vue-aplayer uses [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to load your lrc when it's a url.
 > If your browser doesn't support fetch by default, please use polyfills like [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
 
-### HLS support
-Simply install [hls.js](https://github.com/video-dev/hls.js) into your project. `vue-aplayer` detects `*.m3u8` sources and handles the rest.
-
 ### Events
 
 | Name | Params | Description |
@@ -86,6 +83,23 @@ Simply install [hls.js](https://github.com/video-dev/hls.js) into your project. 
 | playing | none | Triggered periodically when APlayer is playing |
 | ended | none | Triggered when APlayer ended playing |
 | error | none | Triggered when an error occurs |
+
+## Advanced
+
+### Self-adapting theme color
+Since `v1.3.0`, if you set a **Music Object**'s `theme` property to `'pic'`, Vue-APlayer will pick color from the songs cover image as theme color.
+Also, you can set player's `theme` prop to `'pic'`, it will apply to every song.
+
+All you need to do is adding [color-thief](https://github.com/lokesh/color-thief) to your page.
+> Note that color-thief is **NOT module compatible**
+
+```
+<!-- or other CDNs you prefer -->
+<script src="https://cdn.jsdelivr.net/npm/colorthief@2.0.2/src/color-thief.js"></script>
+```
+
+### HLS support
+Since `v1.3.0`, Vue-APlayer supports `*.m3u8` media as an optional functionality. Simply install [hls.js](https://github.com/video-dev/hls.js) into your project, and Vue-APlayer handles the rest.
 
 ### Slots
 

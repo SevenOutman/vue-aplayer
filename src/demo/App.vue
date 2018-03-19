@@ -52,10 +52,10 @@
           lrc: 'https://storage.googleapis.com/gh-pages-static/another-love.lrc'
         }"
       />
-      <h3>Playlist / HLS support / Per-song theme</h3>
+      <h3>Playlist / HLS support / Per-song theme (self-adapting theme)</h3>
       <aplayer
         autoplay
-        theme="#e6d0b2"
+        theme="pic"
         mode="random"
         :music.sync='music3'
         :list='list3'
@@ -93,7 +93,6 @@
             author: 'RADWIMPS',
             url: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
-            theme: '#505d6b'
           },
           {
             title: '光るなら.m3u8',
@@ -106,7 +105,6 @@
             author: 'XX:me',
             url: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
-            theme: '#46718b'
           },
         ]
       }
