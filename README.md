@@ -15,9 +15,9 @@
 - Clean and simple UI
 - Playlist
 - Lyrics scroll
-- Custom theme color
+- Custom theme color / Self-adapting theme color
 - Mutex play
-- HLS support (upcoming)
+- HLS support
 
 Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman/vue-aplayer/issues/26)
 
