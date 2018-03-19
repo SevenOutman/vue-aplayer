@@ -105,6 +105,7 @@
           top: 0;
           bottom: 0;
           height: 2px;
+          transition: background-color .3s;
 
           .aplayer-thumb {
             position: absolute;
@@ -115,10 +116,11 @@
             width: 10px;
             height: 10px;
             transform: scale(.8);
-            transition: transform 300ms;
+            transition: transform 300ms, background-color .3s, border-color .3s;
             border-radius: 50%;
             background: #fff;
             cursor: pointer !important;
+
             &:hover {
               transform: scale(1);
             }
@@ -209,7 +211,7 @@
             bottom: 0;
             right: 0;
             width: 5px;
-            transition: all 0.1s ease;
+            transition: all 0.1s ease, background-color .3s;
           }
         }
       }
