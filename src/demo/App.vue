@@ -25,6 +25,7 @@
           src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
       <hr>
+      <p>Demo resources are hosted on Google Cloud Storage</p>
       <h3>Normal</h3>
       <aplayer
         theme="#42b983"
@@ -57,6 +58,7 @@
         autoplay
         theme="pic"
         mode="random"
+        show-lrc
         :music.sync='music3'
         :list='list3'
       />
@@ -91,20 +93,23 @@
           {
             title: '前前前世',
             author: 'RADWIMPS',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
+            url: 'https://storage.googleapis.com/gh-pages-static/yourname.mp3',
+            pic: 'https://storage.googleapis.com/gh-pages-static/yourname.jpg',
+            lrc: 'https://storage.googleapis.com/gh-pages-static/yourname.lrc',
           },
           {
             title: '光るなら.m3u8',
             author: 'Goose house',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
+            url: 'https://storage.googleapis.com/gh-pages-static/hikarunara.m3u8',
+            pic: 'https://storage.googleapis.com/gh-pages-static/hikarunara.jpg',
+            lrc: 'https://storage.googleapis.com/gh-pages-static/hikarunara.lrc',
           },
           {
             title: 'トリカゴ',
             author: 'XX:me',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
+            url: 'https://storage.googleapis.com/gh-pages-static/darling.mp3',
+            pic: 'https://storage.googleapis.com/gh-pages-static/darling.jpg',
+            lrc: 'https://storage.googleapis.com/gh-pages-static/darling.lrc',
           },
         ]
       }
