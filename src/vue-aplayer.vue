@@ -540,9 +540,11 @@
                   this.hls.attachMedia(this.audio)
                 } else {
                   warn('HLS is not supported on your browser')
+                  this.audio.src = music.url
                 }
               } catch (e) {
                 warn('hls.js is required to support m3u8')
+                this.audio.src = music.url
               }
             }
           } else {
