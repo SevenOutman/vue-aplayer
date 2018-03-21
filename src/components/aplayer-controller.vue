@@ -9,10 +9,10 @@
       @dragging="val => $emit('dragging', val)"
     />
     <div class="aplayer-time">
-      <span class="aplayer-time-inner">
+      <div class="aplayer-time-inner">
         - <span class="aplayer-ptime">{{secondToTime(stat.playedTime)}}</span> / <span
         class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
-      </span>
+      </div>
       <volume
         :volume="volume"
         :theme="theme"
@@ -70,75 +70,23 @@
 <style lang="scss">
 
   .aplayer-controller {
-    position: relative;
     display: flex;
+    align-items: center;
 
-    .aplayer-bar-wrap {
-      margin: 0 0 0 5px;
-      padding: 4px 0;
-      cursor: pointer !important;
-      flex: 1;
+    position: relative;
 
-      .aplayer-bar {
-        position: relative;
-        height: 2px;
-        width: 100%;
-        background: #cdcdcd;
-
-        .aplayer-loaded {
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          background: #aaa;
-          height: 2px;
-          transition: all 0.5s ease;
-
-          will-change: width;
-        }
-
-        .aplayer-played {
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          height: 2px;
-          transition: background-color .3s;
-          will-change: width;
-
-          .aplayer-thumb {
-            position: absolute;
-            top: 0;
-            right: 5px;
-            margin-top: -4px;
-            margin-right: -10px;
-            width: 10px;
-            height: 10px;
-            transform: scale(.8);
-            transition: transform 300ms, background-color .3s, border-color .3s;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer !important;
-
-            &:hover {
-              transform: scale(1);
-            }
-          }
-        }
-      }
-    }
 
     .aplayer-time {
+      display: flex;
+      align-items: center;
+
       position: relative;
-      right: 0;
-      bottom: 3px;
       height: 17px;
       color: #999;
       font-size: 11px;
       padding-left: 7px;
 
       .aplayer-time-inner {
-        vertical-align: middle;
       }
 
       .aplayer-icon {
@@ -177,7 +125,6 @@
 
     .aplayer-volume-wrap {
       position: relative;
-      display: inline-block;
       margin-left: 3px;
       cursor: pointer !important;
 

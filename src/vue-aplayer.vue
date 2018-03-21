@@ -630,6 +630,7 @@
   @import "./scss/variables";
 
   .aplayer {
+
     font-family: Arial, Helvetica, sans-serif;
     margin: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
@@ -637,57 +638,6 @@
     overflow: hidden;
     user-select: none;
     line-height: initial;
-
-    // Mini mode
-    &.aplayer-narrow {
-      width: $aplayer-height;
-
-      // never this case
-      // &.aplayer-withlrc {
-      //  width: $aplayer-height-lrc;
-      // }
-    }
-
-    &.aplayer-withlrc {
-      .aplayer-body {
-        .aplayer-pic {
-          height: $aplayer-height-lrc;
-          width: $aplayer-height-lrc;
-        }
-
-        .aplayer-info {
-          margin-left: $aplayer-height-lrc;
-          height: $aplayer-height-lrc;
-        }
-
-        .aplayer-info {
-          padding: 10px 7px 0 7px;
-        }
-      }
-    }
-
-    &.aplayer-withlist {
-      .aplayer-body {
-        .aplayer-info {
-          border-bottom: 1px solid #e9e9e9;
-        }
-
-        .aplayer-icon-menu {
-          display: inline !important;
-        }
-      }
-
-      // never useful in vue
-      /*.aplayer-list {*/
-      /*display: block;*/
-      /*}*/
-    }
-
-    /* floating player on top */
-    position: relative;
-    &.aplayer-float {
-      z-index: 1;
-    }
 
     * {
       box-sizing: content-box;
@@ -697,19 +647,26 @@
       display: none;
     }
     .aplayer-body {
+      display: flex;
+
       position: relative;
       .aplayer-info {
-        margin-left: $aplayer-height;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
         padding: 14px 7px 0 10px;
         height: $aplayer-height;
         box-sizing: border-box;
         background: #fff;
 
         .aplayer-music {
+          flex-grow: 1;
+
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          margin: 0 0 13px 5px;
+          margin-left: 5px;
           user-select: text;
           cursor: default;
           padding-bottom: 2px;
@@ -729,6 +686,56 @@
     audio[controls] {
       display: block;
       width: 100%;
+    }
+
+    // Mini mode
+    &.aplayer-narrow {
+      width: $aplayer-height;
+
+      // never this case
+      // &.aplayer-withlrc {
+      //  width: $aplayer-height-lrc;
+      // }
+    }
+
+    &.aplayer-withlrc {
+      .aplayer-body {
+        .aplayer-pic {
+          height: $aplayer-height-lrc;
+          width: $aplayer-height-lrc;
+        }
+
+        .aplayer-info {
+          height: $aplayer-height-lrc;
+        }
+
+        .aplayer-info {
+          padding: 10px 7px 0 7px;
+        }
+      }
+    }
+
+    &.aplayer-withlist {
+      .aplayer-body {
+        .aplayer-info {
+          border-bottom: 1px solid #e9e9e9;
+        }
+
+        .aplayer-icon-menu {
+          display: block !important;
+        }
+      }
+
+      // never useful in vue
+      /*.aplayer-list {*/
+      /*display: block;*/
+      /*}*/
+    }
+
+    /* floating player on top */
+    position: relative;
+    &.aplayer-float {
+      z-index: 1;
     }
   }
 

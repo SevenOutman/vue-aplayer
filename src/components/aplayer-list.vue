@@ -121,7 +121,6 @@
           top: 5px;
           cursor: pointer;
           transition: background-color .3s;
-
         }
         .aplayer-list-index {
           color: #666;

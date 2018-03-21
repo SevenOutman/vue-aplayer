@@ -19,7 +19,7 @@
           @mouseover="thumbHovered = true"
           @mouseout="thumbHovered = false"
           class="aplayer-thumb"
-          :style="{border: '1px solid', borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
+          :style="{borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
         >
         </span>
       </div>
@@ -99,3 +99,62 @@
     },
   }
 </script>
+<style lang="scss">
+
+  .aplayer-bar-wrap {
+    margin: 0 0 0 5px;
+    padding: 4px 0;
+    cursor: pointer !important;
+    flex: 1;
+
+    .aplayer-bar {
+      position: relative;
+      height: 2px;
+      width: 100%;
+      background: #cdcdcd;
+
+      .aplayer-loaded {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background: #aaa;
+        height: 2px;
+        transition: all 0.5s ease;
+
+        will-change: width;
+      }
+
+      .aplayer-played {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 2px;
+        transition: background-color .3s;
+        will-change: width;
+
+        .aplayer-thumb {
+          position: absolute;
+          top: 0;
+          right: 5px;
+          margin-top: -5px;
+          margin-right: -10px;
+          width: 10px;
+          height: 10px;
+          border: 1px solid;
+          transform: scale(.8);
+          will-change: transform;
+          transition: transform 300ms, background-color .3s, border-color .3s;
+          border-radius: 50%;
+          background: #fff;
+          cursor: pointer !important;
+
+          &:hover {
+            transform: scale(1);
+          }
+        }
+      }
+    }
+  }
+</style>
