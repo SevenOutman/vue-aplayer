@@ -57,8 +57,9 @@
   .aplayer-list {
     transition: all 0.5s ease;
     will-change: height;
-    display: none;
     overflow: hidden;
+    // never useful in vue
+    /*display: none;*/
 
     &.aplayer-list-hide {
       height: 0 !important;

@@ -94,6 +94,8 @@
           background: #aaa;
           height: 2px;
           transition: all 0.5s ease;
+
+          will-change: width;
         }
 
         .aplayer-played {
@@ -103,6 +105,7 @@
           bottom: 0;
           height: 2px;
           transition: background-color .3s;
+          will-change: width;
 
           .aplayer-thumb {
             position: absolute;
@@ -209,6 +212,7 @@
             right: 0;
             width: 5px;
             transition: all 0.1s ease, background-color .3s;
+            will-change: height;
           }
         }
       }

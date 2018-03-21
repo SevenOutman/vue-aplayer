@@ -3,46 +3,47 @@
     class="aplayer"
     :class="{
       'aplayer-narrow': isMiniMode,
-      'aplayer-withlist' : musicList.length > 0,
-      'aplayer-withlrc': !!$slots.display || shouldShowLrc,
+      'aplayer-withlist' : !isMiniMode && musicList.length > 0,
+      'aplayer-withlrc': !isMiniMode && (!!$slots.display || shouldShowLrc),
       'aplayer-float': isFloatMode
     }"
     :style="floatStyleObj"
   >
-    <thumbnail
-      :pic="currentMusic.pic"
-      :playing="isPlaying"
-      :enable-drag="isFloatMode"
-      @toggleplay="toggle"
-      @dragbegin="onDragBegin"
-      @dragging="onDragAround"
-    />
-    <div class="aplayer-info" v-show="!isMiniMode">
-      <div class="aplayer-music">
-        <span class="aplayer-title">{{ currentMusic.title }}</span>
-        <span class="aplayer-author">{{ currentMusic.author }}</span>
-      </div>
-      <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
-      </slot>
-      <controls
-        :mode="playMode"
-        :stat="playStat"
-        :volume="volume"
-        :muted="muted"
-        :theme="currentTheme"
-        @togglelist="showList = !showList"
-        @togglemute="toggleMute"
-        @setvolume="setAudioVolume"
-        @setprogress="setProgress"
-        @dragbegin="onProgressDragBegin"
-        @dragend="onProgressDragEnd"
-        @dragging="onProgressDragging"
-        @nextmode="setNextMode"
+    <div class="aplayer-body">
+      <thumbnail
+        :pic="currentMusic.pic"
+        :playing="isPlaying"
+        :enable-drag="isFloatMode"
+        @toggleplay="toggle"
+        @dragbegin="onDragBegin"
+        @dragging="onDragAround"
       />
+      <div class="aplayer-info" v-show="!isMiniMode">
+        <div class="aplayer-music">
+          <span class="aplayer-title">{{ currentMusic.title }}</span>
+          <span class="aplayer-author">{{ currentMusic.author }}</span>
+        </div>
+        <slot name="display" :current-music="currentMusic" :play-stat="playStat">
+          <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
+        </slot>
+        <controls
+          :mode="playMode"
+          :stat="playStat"
+          :volume="volume"
+          :muted="muted"
+          :theme="currentTheme"
+          @togglelist="showList = !showList"
+          @togglemute="toggleMute"
+          @setvolume="setAudioVolume"
+          @setprogress="setProgress"
+          @dragbegin="onProgressDragBegin"
+          @dragend="onProgressDragEnd"
+          @dragging="onProgressDragging"
+          @nextmode="setNextMode"
+        />
+      </div>
     </div>
     <audio ref="audio"></audio>
-
     <music-list
       :show="showList && !isMiniMode"
       :current-music="currentMusic"
@@ -104,15 +105,16 @@
         },
         validator (value) {
           let songs = value
+          let valid = true
           for (let i = 0; i < songs.length; i++) {
             let song = songs[i]
             if (!song.url || !song.title || !song.author) {
               song.title = song.title || 'Untitled'
               song.author = song.author || 'Unknown'
-              return false
+              valid = false
             }
           }
-          return true
+          return valid
         },
       },
       mini: {
@@ -607,47 +609,6 @@
 <style lang="scss">
   @import "./scss/variables";
 
-  .aplayer-narrow {
-    width: $aplayer-height;
-  }
-
-  .aplayer-withlrc {
-    &.aplayer-narrow {
-      width: $aplayer-height-lrc;
-    }
-    &.aplayer {
-      .aplayer-pic {
-        height: $aplayer-height-lrc;
-        width: $aplayer-height-lrc;
-      }
-
-      .aplayer-info {
-        margin-left: $aplayer-height-lrc;
-        height: $aplayer-height-lrc;
-      }
-
-      .aplayer-info {
-        padding: 10px 7px 0 7px;
-      }
-    }
-  }
-
-  .aplayer-withlist {
-    &.aplayer {
-      .aplayer-info {
-        border-bottom: 1px solid #e9e9e9;
-      }
-
-      .aplayer-list {
-        display: block;
-      }
-
-      .aplayer-icon-menu {
-        display: inline !important;
-      }
-    }
-  }
-
   .aplayer {
     font-family: Arial, Helvetica, sans-serif;
     margin: 5px;
@@ -656,6 +617,53 @@
     overflow: hidden;
     user-select: none;
     line-height: initial;
+
+    // Mini mode
+    &.aplayer-narrow {
+      width: $aplayer-height;
+
+      // never this case
+      // &.aplayer-withlrc {
+      //  width: $aplayer-height-lrc;
+      // }
+    }
+
+
+    &.aplayer-withlrc {
+      .aplayer-body {
+        .aplayer-pic {
+          height: $aplayer-height-lrc;
+          width: $aplayer-height-lrc;
+        }
+
+        .aplayer-info {
+          margin-left: $aplayer-height-lrc;
+          height: $aplayer-height-lrc;
+        }
+
+        .aplayer-info {
+          padding: 10px 7px 0 7px;
+        }
+      }
+    }
+
+    &.aplayer-withlist {
+      .aplayer-body {
+        .aplayer-info {
+          border-bottom: 1px solid #e9e9e9;
+        }
+
+        .aplayer-icon-menu {
+          display: inline !important;
+        }
+      }
+
+      // never useful in vue
+      /*.aplayer-list {*/
+        /*display: block;*/
+      /*}*/
+    }
+
 
     /* floating player on top */
     position: relative;
@@ -670,33 +678,36 @@
     .aplayer-lrc-content {
       display: none;
     }
+    .aplayer-body {
+      position: relative;
+      .aplayer-info {
+        margin-left: $aplayer-height;
+        padding: 14px 7px 0 10px;
+        height: $aplayer-height;
+        box-sizing: border-box;
+        background: #fff;
 
-    .aplayer-info {
-      margin-left: $aplayer-height;
-      padding: 14px 7px 0 10px;
-      height: $aplayer-height;
-      box-sizing: border-box;
-      background: #fff;
+        .aplayer-music {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin: 0 0 13px 5px;
+          user-select: text;
+          cursor: default;
+          padding-bottom: 2px;
 
-      .aplayer-music {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        margin: 0 0 13px 5px;
-        user-select: text;
-        cursor: default;
-        padding-bottom: 2px;
+          .aplayer-title {
+            font-size: 14px;
+          }
 
-        .aplayer-title {
-          font-size: 14px;
-        }
-
-        .aplayer-author {
-          font-size: 12px;
-          color: #666;
+          .aplayer-author {
+            font-size: 12px;
+            color: #666;
+          }
         }
       }
     }
+
     audio[controls] {
       display: block;
       width: 100%;
