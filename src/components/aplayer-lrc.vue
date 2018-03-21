@@ -2,7 +2,8 @@
   <div class="aplayer-lrc">
     <div
       class="aplayer-lrc-contents"
-      :style="transformStyle">
+      :style="transformStyle"
+    >
       <p
         v-for="(line, index) of lrcLines"
         :key="index"
@@ -72,12 +73,15 @@
       },
     },
     watch: {
-      currentMusic (music) {
-        this.currentLineIndex = 0
-        if (music.lrc) {
-          this.applyLrc(music.lrc)
-        } else {
-          this.hideLrc()
+      currentMusic: {
+        immediate: true,
+        handler (music) {
+          this.currentLineIndex = 0
+          if (music.lrc) {
+            this.applyLrc(music.lrc)
+          } else {
+            this.hideLrc()
+          }
         }
       },
       'playStat.playedTime' (playedTime) {
@@ -89,14 +93,6 @@
           }
         }
       },
-    },
-    mounted () {
-      this.currentLineIndex = 0
-      if (this.currentMusic.lrc) {
-        this.applyLrc(this.currentMusic.lrc)
-      } else {
-        this.hideLrc()
-      }
     }
   }
 </script>

@@ -3,12 +3,11 @@
     <div class="aplayer-bar">
       <div
         class="aplayer-loaded"
-        :style="{width: `${Math.trunc(loadProgress * 100)}%`}">
-
+        :style="{width: `${loadProgress * 100}%`}">
       </div>
       <div
         class="aplayer-played"
-        :style="{width: `${Math.trunc(playProgress * 100)}%`, background: theme}"
+        :style="{width: `${playProgress * 100}%`, background: theme}"
       >
         <span
           ref="thumb"
@@ -26,8 +25,6 @@
 </template>
 
 <script>
-
-
   import {getElementViewLeft} from '../utils'
 
   export default {
@@ -55,9 +52,7 @@
         let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
-        // if (this.option.showlrc) {
-        //   this.updateLrc(parseFloat(bar.playedBar.style.width) / 100 * this.audio.duration);
-        // }
+
         this.$emit('dragging', percentage)
       },
       onDocumentMouseUp (e) {
@@ -81,9 +76,7 @@
         let percentage = (touch.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
-        // if (this.option.showlrc) {
-        //   this.updateLrc(parseFloat(bar.playedBar.style.width) / 100 * this.audio.duration);
-        // }
+
         this.$emit('dragging', percentage)
       },
       onDocumentTouchEnd (e) {

@@ -15,9 +15,10 @@
         <div
           class="aplayer-volume"
           :style="{
-                  height: muted ? 0 : `${Math.trunc(volume * 100)}%`,
-                  background: theme
-                }">
+            height: muted ? 0 : `${Math.trunc(volume * 100)}%`,
+            background: theme
+          }"
+        >
         </div>
       </div>
     </div>
@@ -44,7 +45,6 @@
     },
     methods: {
       adjustVolume (e) {
-
         let percentage = (barHeight - e.clientY + getElementViewTop(this.$refs.bar)) / barHeight
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1

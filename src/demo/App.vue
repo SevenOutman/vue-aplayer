@@ -25,7 +25,6 @@
           src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
       <hr>
-      <p>Thank <a href="https://github.com/DIYgod" target="_blank">@DIYgod</a> and <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a> for serving demo resources</p>
       <h3>Normal</h3>
       <aplayer
         theme="#42b983"
@@ -75,6 +74,9 @@
           pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
         }"
       />
+      <footer align="center">
+        <p>Thank <a href="https://github.com/DIYgod" target="_blank">@DIYgod</a> and <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a> for serving demo resources</p>
+      </footer>
     </div>
   </div>
 </template>

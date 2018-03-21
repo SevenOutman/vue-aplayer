@@ -64,9 +64,6 @@
         const minAdjust = Math.trunc((second / 60) - (60 * Math.trunc((second / 60) / 60)))
         return second >= 3600 ? pad0(hours) + ':' + pad0(minAdjust) + ':' + pad0(sec) : pad0(min) + ':' + pad0(sec)
       },
-      jump () {
-
-      },
     },
   }
 </script>

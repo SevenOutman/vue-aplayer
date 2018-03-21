@@ -27,11 +27,10 @@ Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman
 ```HTML
 <aplayer autoplay
   :music="{
-    title: 'Preparation',
-    author: 'Hans Zimmer/Richard Harvey',
-    url: 'http://devtest.qiniudn.com/Preparation.mp3',
-    pic: 'http://devtest.qiniudn.com/Preparation.jpg',
-    lrc: '[00:00.00]lrc here\n[00:01.00]aplayer'
+    title: 'secret base~君がくれたもの~',
+    author: 'Silent Siren',
+    url: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
+    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
   }"
 />
 ```
@@ -45,7 +44,9 @@ Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) 
 
 ## Thanks
 [APlayer](https://github.com/MoePlayer/APlayer), for appearance&api design inspiration and prototyping.
+
 [@DIYgod](https://github.com/DIYgod), for creating APlayer and sharing cloud storage for hosting my demo page media resources.
+
 ## License
 
 [MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). Copyright (c) 2016-present Shenghao "Doma" Lei
