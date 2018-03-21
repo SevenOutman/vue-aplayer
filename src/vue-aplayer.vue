@@ -218,6 +218,8 @@
         internalMusic: this.music,
         internalMode: this.mode,
         isPlaying: false,
+        isSeeking: false,
+        wasPlayingBeforeSeeking: false,
         isMobile: /mobile/i.test(window.navigator.userAgent),
         playStat: {
           duration: 0,
@@ -406,8 +408,12 @@
           this.audio.currentTime = this.audio.duration * val
         }
       },
-      onProgressDragBegin () {
+      onProgressDragBegin (val) {
+        this.wasPlayingBeforeSeeking = this.isPlaying
         this.pause()
+        this.isSeeking = true
+
+        this.audio.currentTime = this.audio.duration * val
       },
       onProgressDragging (val) {
         if (isNaN(this.audio.duration)) {
@@ -417,7 +423,11 @@
         }
       },
       onProgressDragEnd (val) {
-        this.thenPlay()
+        this.isSeeking = false
+
+        if (this.wasPlayingBeforeSeeking) {
+          this.thenPlay()
+        }
       },
 
       setNextMode () {
@@ -460,6 +470,12 @@
         }
       },
       onAudioTimeUpdate () {
+        this.playStat.playedTime = this.audio.currentTime
+      },
+      onAudioSeeking () {
+        this.playStat.playedTime = this.audio.currentTime
+      },
+      onAudioSeeked () {
         this.playStat.playedTime = this.audio.currentTime
       },
       onAudioVolumeChange () {
@@ -519,6 +535,10 @@
         this.audio.addEventListener('durationchange', this.onAudioDurationChange)
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
         this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
+
+        this.audio.addEventListener('seeking', this.onAudioSeeking)
+
+        this.audio.addEventListener('seeked', this.onAudioSeeked)
 
         this.audio.addEventListener('ended', this.onAudioEnded)
 
@@ -628,7 +648,6 @@
       // }
     }
 
-
     &.aplayer-withlrc {
       .aplayer-body {
         .aplayer-pic {
@@ -660,10 +679,9 @@
 
       // never useful in vue
       /*.aplayer-list {*/
-        /*display: block;*/
+      /*display: block;*/
       /*}*/
     }
-
 
     /* floating player on top */
     position: relative;

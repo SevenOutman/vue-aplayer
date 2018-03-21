@@ -43,6 +43,7 @@
         float
         theme="rgb(173, 122, 134)"
         show-lrc
+        controls
         mode="circulation"
         :music="{
           title: '回レ！雪月花',

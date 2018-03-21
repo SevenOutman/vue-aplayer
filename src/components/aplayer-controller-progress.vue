@@ -1,5 +1,10 @@
 <template>
-  <div class="aplayer-bar-wrap" @click="seekProgress" ref="barWrap">
+  <div
+    class="aplayer-bar-wrap"
+    @mousedown="onThumbMouseDown"
+    @touchstart="onThumbTouchStart"
+    ref="barWrap"
+  >
     <div class="aplayer-bar">
       <div
         class="aplayer-loaded"
@@ -13,8 +18,6 @@
           ref="thumb"
           @mouseover="thumbHovered = true"
           @mouseout="thumbHovered = false"
-          @mousedown="onThumbMouseDown"
-          @touchstart="onThumbTouchStart"
           class="aplayer-thumb"
           :style="{border: '1px solid', borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
         >
@@ -35,15 +38,13 @@
       }
     },
     methods: {
-      seekProgress (e) {
+      onThumbMouseDown (e) {
         const barWidth = this.$refs.barWrap.clientWidth
         let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
-        this.$emit('setprogress', percentage)
-      },
-      onThumbMouseDown () {
-        this.$emit('dragbegin')
+
+        this.$emit('dragbegin', percentage)
         document.addEventListener('mousemove', this.onDocumentMouseMove)
         document.addEventListener('mouseup', this.onDocumentMouseUp)
       },
@@ -65,8 +66,13 @@
         percentage = percentage < 1 ? percentage : 1
         this.$emit('dragend', percentage)
       },
-      onThumbTouchStart () {
-        this.$emit('dragbegin')
+      onThumbTouchStart (e) {
+        const barWidth = this.$refs.barWrap.clientWidth
+        let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+
+        this.$emit('dragbegin', percentage)
         document.addEventListener('touchmove', this.onDocumentTouchMove)
         document.addEventListener('touchend', this.onDocumentTouchEnd)
       },

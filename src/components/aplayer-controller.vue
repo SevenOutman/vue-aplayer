@@ -4,8 +4,7 @@
       :loadProgress="loadProgress"
       :playProgress="playProgress"
       :theme="theme"
-      @setprogress="val => $emit('setprogress', val)"
-      @dragbegin="$emit('dragbegin')"
+      @dragbegin="val => $emit('dragbegin', val)"
       @dragend="val => $emit('dragend', val)"
       @dragging="val => $emit('dragging', val)"
     />
