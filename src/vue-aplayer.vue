@@ -41,6 +41,7 @@
         @nextmode="setNextMode"
       />
     </div>
+    <audio ref="audio"></audio>
 
     <music-list
       :show="showList && !isMiniMode"
@@ -51,7 +52,6 @@
       :theme="currentTheme"
       @selectsong="onSelectSong"
     />
-    <audio ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
@@ -149,15 +149,27 @@
         type: Boolean,
         default: false
       },
+
+      // Audio attributes as props
+      // autoplay controls muted preload volume
+      // muted and volume are observable
+
       /**
-       * @since 1.4.0 Audio attributes as props
-       * autoplay muted preload volume
-       *
-       * muted and volume are observable
+       * @since 1.4.0
        */
       autoplay: {
         type: Boolean,
         default: false,
+      },
+
+      /**
+       * @since 1.4.0
+       * whether to show native audio controls below Vue-APlayer
+       * only work in development environment and not mini mode
+       */
+      controls: {
+        type: Boolean,
+        default: false
       },
 
       /**
@@ -198,7 +210,6 @@
           return true
         }
       },
-
     },
     data () {
       return {
@@ -243,6 +254,7 @@
       shouldShowLrc () {
         return this.showLrc || this.showlrc
       },
+      // prop wrappers
       currentTheme () {
         return this.selfAdaptingTheme || this.currentMusic.theme || this.theme
       },
@@ -266,6 +278,14 @@
       musicList () {
         return this.list
       },
+
+      shouldShowNativeControls () {
+        return process.env.NODE_ENV !== 'production' &&
+          this.controls &&
+          !this.isMiniMode
+      },
+
+      // useful
       currentPicStyleObj () {
         if (this.currentMusic && this.currentMusic.pic) {
           return {
@@ -385,18 +405,17 @@
         }
       },
       onProgressDragBegin () {
-        this.audio.removeEventListener('timeupdate', this.onAudioTimeUpdate)
+        this.pause()
       },
       onProgressDragging (val) {
-        this.playStat.playedTime = this.audio.duration * val
-      },
-      onProgressDragEnd (val) {
         if (isNaN(this.audio.duration)) {
           this.playStat.playedTime = 0
         } else {
           this.audio.currentTime = this.audio.duration * val
         }
-        this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
+      },
+      onProgressDragEnd (val) {
+        this.thenPlay()
       },
 
       setNextMode () {
@@ -443,6 +462,7 @@
       },
       onAudioVolumeChange () {
         this.volume = this.audio.volume
+        this.muted = this.audio.muted
       },
       onAudioEnded () {
         // if (!this.musicList.includes(this.currentMusic)) {
@@ -483,6 +503,7 @@
       },
 
       setupAudio () {
+        this.audio.controls = this.shouldShowNativeControls
         this.muted = this.audio.muted
 
         // there's no point making preload configurable
@@ -529,6 +550,9 @@
     watch: {
       music (music) {
         this.internalMusic = music
+      },
+      shouldShowNativeControls (val) {
+        this.audio.controls = val
       },
       currentMusic: {
         handler (music) {
@@ -672,6 +696,10 @@
           color: #666;
         }
       }
+    }
+    audio[controls] {
+      display: block;
+      width: 100%;
     }
   }
 

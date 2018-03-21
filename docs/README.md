@@ -51,6 +51,7 @@ Props are mostly the same as [APlayer's options](https://aplayer.js.org/#/home?i
 | mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | preload | String | `'auto'` | The way to load music, can be 'none' 'metadata' or 'auto' |
 | listMaxHeight | String | *none* | Max height of play list |
+| controls | Boolean | `false` | Whether to show native audio controls below Vue-APlayer, only works in development environment, not working in mini mode |
 | narrow |  | | DEPRECATED, use `mini` instead |
 | listmaxheight |  |  | DEPRECATED, use `listMaxHeight` instead |
 | showlrc |  |  | DEPRECATED, use `showLrc` instead |
