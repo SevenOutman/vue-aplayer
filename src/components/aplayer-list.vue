@@ -84,6 +84,18 @@
       &::-webkit-scrollbar-thumb:hover {
         background-color: #ccc;
       }
+      &:hover {
+        li.aplayer-list-light:not(:hover) {
+          background-color: inherit;
+          transition: inherit;
+        }
+      }
+
+      &:not(:hover) {
+        li.aplayer-list-light {
+          transition: background-color .6s ease;
+        }
+      }
       li {
         position: relative;
         height: 32px;
@@ -105,7 +117,8 @@
         }
 
         &.aplayer-list-light {
-          background: #e9e9e9;
+          /*background: #e9e9e9;*/
+          background: #efefef;
 
           .aplayer-list-cur {
             display: inline-block;
