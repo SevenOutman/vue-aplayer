@@ -29,8 +29,8 @@
         <controls
           :mode="playMode"
           :stat="playStat"
-          :volume="volume"
-          :muted="muted"
+          :volume="audioVolume"
+          :muted="isAudioMuted"
           :theme="currentTheme"
           @togglelist="showList = !showList"
           @togglemute="toggleMute"
@@ -137,10 +137,6 @@
         type: String,
         default: 'circulation',
       },
-      preload: {
-        type: String,
-        default: 'auto',
-      },
       listMaxHeight: String,
 
 
@@ -154,10 +150,11 @@
 
       // Audio attributes as props
       // autoplay controls muted preload volume
-      // muted and volume are observable
+      // autoplay is not observable
 
       /**
        * @since 1.4.0
+       * not observable
        */
       autoplay: {
         type: Boolean,
@@ -168,10 +165,38 @@
        * @since 1.4.0
        * whether to show native audio controls below Vue-APlayer
        * only work in development environment and not mini mode
+       *
+       * observable
        */
       controls: {
         type: Boolean,
         default: false
+      },
+
+      /**
+       * @since 1.4.0
+       * observable, sync
+       */
+      muted: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @since 1.4.0
+       * observable
+       */
+      preload: String,
+
+      /**
+       * @since 1.4.0
+       * observable, sync
+       */
+      volume: {
+        type: Number,
+        default: 0.8,
+        validator (value) {
+          return value >= 0 && value <= 1
+        }
       },
 
       /**
@@ -226,8 +251,6 @@
           loadedTime: 0,
           playedTime: 0,
         },
-        volume: 0.8,
-        muted: false,
         showList: true,
 
         // handle Promise returned from audio.play()
@@ -239,7 +262,12 @@
         floatOffsetLeft: 0,
         floatOffsetTop: 0,
 
-        selfAdaptingTheme: null
+        selfAdaptingTheme: null,
+
+        // since 1.4.0
+        // sync muted, volume
+        internalMuted: this.muted,
+        internalVolume: this.volume
       }
     },
     computed: {
@@ -312,6 +340,28 @@
         },
         set (val) {
           this.setCurrentMusic(this.musicList[val])
+        }
+      },
+
+      // since 1.4.0
+      // sync muted, volume
+
+      isAudioMuted: {
+        get () {
+          return this.internalMuted
+        },
+        set (val) {
+          canUseSync && this.$emit('update:muted', val)
+          this.internalMuted = val
+        }
+      },
+      audioVolume: {
+        get () {
+          return this.internalVolume
+        },
+        set (val) {
+          canUseSync && this.$emit('update:volume', val)
+          this.internalVolume = val
         }
       }
     },
@@ -393,7 +443,6 @@
       },
       setAudioMuted (val) {
         this.audio.muted = val
-        this.muted = this.audio.muted
       },
       setAudioVolume (val) {
         this.audio.volume = val
@@ -479,8 +528,8 @@
         this.playStat.playedTime = this.audio.currentTime
       },
       onAudioVolumeChange () {
-        this.volume = this.audio.volume
-        this.muted = this.audio.muted
+        this.audioVolume = this.audio.volume
+        this.isAudioMuted = this.audio.muted
       },
       onAudioEnded () {
         // if (!this.musicList.includes(this.currentMusic)) {
@@ -521,11 +570,13 @@
       },
 
       setupAudio () {
-        this.audio.controls = this.shouldShowNativeControls
-        this.muted = this.audio.muted
 
-        // there's no point making preload configurable
-        this.audio.preload = true // this.preload
+        // since 1.4.0 Audio attributes as props
+
+        this.audio.controls = this.shouldShowNativeControls
+        this.audio.muted = this.muted
+        this.audio.preload = this.preload
+        this.audio.volume = this.volume
 
         this.audio.addEventListener('play', this.onAudioPlay)
         this.audio.addEventListener('pause', this.onAudioPause)
@@ -573,9 +624,8 @@
       music (music) {
         this.internalMusic = music
       },
-      shouldShowNativeControls (val) {
-        this.audio.controls = val
-      },
+
+
       currentMusic: {
         handler (music) {
           // HLS support
@@ -606,6 +656,31 @@
           // self-adapting theme color
           this.setSelfAdaptingTheme()
         },
+      },
+
+      // since 1.4.0
+      // observe controls, muted, preload, volume
+
+      shouldShowNativeControls (val) {
+        this.audio.controls = val
+      },
+      isAudioMuted (val) {
+        this.audio.muted = val
+      },
+      preload (val) {
+        this.audio.preload = val
+      },
+      audioVolume (val) {
+        this.audio.volume = val
+      },
+
+      // sync muted, volume
+
+      muted (val) {
+        this.internalMuted = val
+      },
+      volume (val) {
+        this.internalVolume = val
       }
     },
     mounted () {

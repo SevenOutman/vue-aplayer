@@ -58,6 +58,8 @@
         theme="pic"
         mode="random"
         show-lrc
+        :muted.sync="muted"
+        :volume.sync="volume"
         :music.sync='music3'
         :list='list3'
       />
@@ -90,6 +92,8 @@
     },
     data () {
       return {
+        volume: 1,
+        muted: false,
         music3: null,
         list3: [
           {
