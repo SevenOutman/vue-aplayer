@@ -35,7 +35,6 @@
           @togglelist="showList = !showList"
           @togglemute="toggleMute"
           @setvolume="setAudioVolume"
-          @setprogress="setProgress"
           @dragbegin="onProgressDragBegin"
           @dragend="onProgressDragEnd"
           @dragging="onProgressDragging"
@@ -238,15 +237,22 @@
         // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
         audioPlayPromise: Promise.resolve(),
 
+
+        // @since 1.2.0 float mode
+
         floatOriginX: 0,
         floatOriginY: 0,
         floatOffsetLeft: 0,
         floatOffsetTop: 0,
 
+
+        // @since 1.3.0 self adapting theme
         selfAdaptingTheme: null,
 
-        // since 1.4.0
+
+        // @since 1.4.0
         // sync muted, volume
+
         internalMuted: this.muted,
         internalVolume: this.volume
       }
@@ -267,19 +273,14 @@
       shouldShowLrc () {
         return this.showLrc || this.showlrc
       },
-      // prop wrappers
+
+      // props wrappers
+
       currentTheme () {
         return this.selfAdaptingTheme || this.currentMusic.theme || this.theme
       },
       isFloatMode () {
         return this.float && !this.isMobile
-      },
-      floatStyleObj () {
-        // transform: translate(floatOffsetLeft, floatOffsetY)
-        return {
-          transform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
-          webkitTransform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
-        }
       },
       shouldAutoplay () {
         if (this.isMobile) return false
@@ -291,7 +292,6 @@
       musicList () {
         return this.list
       },
-
       shouldShowNativeControls () {
         return process.env.NODE_ENV !== 'production' &&
           this.controls &&
@@ -299,6 +299,14 @@
       },
 
       // useful
+
+      floatStyleObj () {
+        // transform: translate(floatOffsetLeft, floatOffsetY)
+        return {
+          transform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
+          webkitTransform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
+        }
+      },
       currentPicStyleObj () {
         if (this.currentMusic && this.currentMusic.pic) {
           return {
@@ -347,6 +355,8 @@
       }
     },
     methods: {
+      // Float mode
+
       onDragBegin () {
         this.floatOriginX = this.floatOffsetLeft
         this.floatOriginY = this.floatOffsetTop
@@ -355,6 +365,9 @@
         this.floatOffsetLeft = this.floatOriginX + offsetLeft
         this.floatOffsetTop = this.floatOriginY + offsetTop
       },
+
+      // functions
+
       setCurrentMusic (music) {
         canUseSync && this.$emit('update:music', music)
         this.internalMusic = music
@@ -363,6 +376,16 @@
         canUseSync && this.$emit('update:mode', mode)
         this.internalMode = mode
       },
+      thenPlay () {
+        this.$nextTick(() => {
+          this.play()
+        })
+      },
+
+      // controls
+
+      // play/pause
+
       toggle () {
         if (!this.audio.paused) {
           this.pause()
@@ -406,38 +429,9 @@
           this.rejectPlayPromise = null
         }
       },
-      thenPlay () {
-        this.$nextTick(() => {
-          this.play()
-        })
-      },
-      onSelectSong (song) {
-        if (this.currentMusic === song) {
-          this.toggle()
-        } else {
-          this.setCurrentMusic(song)
-          this.thenPlay()
-        }
-      },
-      toggleMute () {
-        this.setAudioMuted(!this.audio.muted)
-      },
-      setAudioMuted (val) {
-        this.audio.muted = val
-      },
-      setAudioVolume (val) {
-        this.audio.volume = val
-        if (val > 0) {
-          this.setAudioMuted(false)
-        }
-      },
-      setProgress (val) {
-        if (isNaN(this.audio.duration)) {
-          this.playStat.playedTime = 0
-        } else {
-          this.audio.currentTime = this.audio.duration * val
-        }
-      },
+
+      // progress bar
+
       onProgressDragBegin (val) {
         this.wasPlayingBeforeSeeking = this.isPlaying
         this.pause()
@@ -456,6 +450,32 @@
         this.isSeeking = false
 
         if (this.wasPlayingBeforeSeeking) {
+          this.thenPlay()
+        }
+      },
+
+      // volume
+
+      toggleMute () {
+        this.setAudioMuted(!this.audio.muted)
+      },
+      setAudioMuted (val) {
+        this.audio.muted = val
+      },
+      setAudioVolume (val) {
+        this.audio.volume = val
+        if (val > 0) {
+          this.setAudioMuted(false)
+        }
+      },
+
+      // playlist
+
+      onSelectSong (song) {
+        if (this.currentMusic === song) {
+          this.toggle()
+        } else {
+          this.setCurrentMusic(song)
           this.thenPlay()
         }
       },
@@ -479,13 +499,15 @@
           }
         }
       },
+
+      // event handlers
+      // for keeping up with audio states
+
       onAudioPlay () {
         this.isPlaying = true
-        this.$emit('play')
       },
       onAudioPause () {
         this.isPlaying = false
-        this.$emit('pause')
       },
       onAudioDurationChange () {
         if (this.audio.duration !== 1) {
@@ -546,11 +568,9 @@
             this.thenPlay()
           }
         }
-
-        this.$emit('ended')
       },
 
-      setupAudio () {
+      initAudio () {
 
         // since 1.4.0 Audio attributes as props
 
@@ -559,19 +579,42 @@
         this.audio.preload = this.preload
         this.audio.volume = this.volume
 
+
+        // since 1.4.0 Emit as many native audio events
+        // @see https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+
+        const mediaEvents = [
+          'abort',
+          'canplay', 'canplaythrough',
+          'durationchange',
+          'emptied', 'encrypted', 'ended', 'error',
+          'interruptbegin', 'interruptend',
+          'loadeddata', 'loadedmetadata', 'loadstart',
+          'mozaudioavailable',
+          'pause', 'play', 'playing', 'progress',
+          'ratechange',
+          'seeked', 'seeking', 'stalled', 'suspend',
+          'timeupdate', 'volumechange', 'waiting'
+        ]
+        mediaEvents.forEach(event => {
+          this.audio.addEventListener(event, e => this.$emit(event, e))
+        })
+
+
+        // event handlers
+        // they don't emit native media events
+
         this.audio.addEventListener('play', this.onAudioPlay)
         this.audio.addEventListener('pause', this.onAudioPause)
         this.audio.addEventListener('abort', this.onAudioPause)
         this.audio.addEventListener('progress', this.onAudioProgress)
         this.audio.addEventListener('durationchange', this.onAudioDurationChange)
-
         this.audio.addEventListener('seeking', this.onAudioSeeking)
         this.audio.addEventListener('seeked', this.onAudioSeeked)
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
-
         this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
-
         this.audio.addEventListener('ended', this.onAudioEnded)
+
 
         if (this.currentMusic) {
           this.audio.src = this.currentMusic.src || this.currentMusic.url
@@ -664,7 +707,7 @@
       }
     },
     mounted () {
-      this.setupAudio()
+      this.initAudio()
       this.setSelfAdaptingTheme()
       if (this.autoplay) this.play()
     },
