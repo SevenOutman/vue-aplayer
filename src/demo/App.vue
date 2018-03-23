@@ -2,7 +2,7 @@
   <div id="app">
     <a href="https://github.com/SevenOutman/vue-aplayer" target="_blank" class="github-corner">
       <svg width="80" height="80" viewBox="0 0 250 250"
-           style="fill:#39AF78; color:#2F4053; position: absolute; top: 0; border: 0; right: 0;">
+           style="fill:#41b883; color:#35495e; position: absolute; top: 0; border: 0; right: 0;">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
         <path
           d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
@@ -25,7 +25,6 @@
           src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
       <hr>
-      <p>Thank <a href="https://github.com/DIYgod" target="_blank">@DIYgod</a> and <a href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a> for serving demo resources</p>
       <h3>Normal</h3>
       <aplayer
         theme="#42b983"
@@ -59,6 +58,8 @@
         theme="pic"
         mode="random"
         show-lrc
+        :muted.sync="muted"
+        :volume.sync="volume"
         :music.sync='music3'
         :list='list3'
       />
@@ -66,7 +67,6 @@
       <aplayer
         mini
         float
-        theme="#e6d0b2"
         mode="circulation"
         :music="{
           title: 'secret base~君がくれたもの~',
@@ -75,6 +75,10 @@
           pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
         }"
       />
+      <footer align="center">
+        <p>Thank <a href="https://github.com/DIYgod" target="_blank">@DIYgod</a> and <a
+          href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a> for serving demo resources</p>
+      </footer>
     </div>
   </div>
 </template>
@@ -88,6 +92,8 @@
     },
     data () {
       return {
+        volume: 1,
+        muted: false,
         music3: null,
         list3: [
           {
@@ -111,6 +117,13 @@
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.lrc',
           },
+          {
+            title: 'あっちゅ～ま青春!',
+            author: '七森中☆ごらく部',
+            url: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
+            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
+            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.lrc',
+          },
         ]
       }
     },
@@ -133,7 +146,7 @@
 
   h1 {
     font-size: 54px;
-    color: #42b983;
+    color: #41b883;
     margin: 30px 0 10px;
   }
 
@@ -157,7 +170,7 @@
   }
 
   a {
-    color: #42b983;
+    color: #41b883;
     text-decoration: none;
   }
 

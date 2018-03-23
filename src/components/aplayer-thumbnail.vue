@@ -86,8 +86,9 @@
   }
 
   .aplayer-pic {
+    flex-shrink: 0;
+
     position: relative;
-    float: left;
     height: $aplayer-height;
     width: $aplayer-height;
     background-image: url(../default.jpg);

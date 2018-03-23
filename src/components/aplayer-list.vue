@@ -17,8 +17,8 @@
       >
         <span class="aplayer-list-cur" :style="{background: theme}"></span>
         <span class="aplayer-list-index">{{ index + 1}}</span>
-        <span class="aplayer-list-title">{{ aMusic.title }}</span>
-        <span class="aplayer-list-author">{{ aMusic.author }}</span>
+        <span class="aplayer-list-title">{{ aMusic.title || 'Untitled' }}</span>
+        <span class="aplayer-list-author">{{ aMusic.author || 'Unknown' }}</span>
       </li>
     </ol>
   </div>
@@ -57,8 +57,9 @@
   .aplayer-list {
     transition: all 0.5s ease;
     will-change: height;
-    display: none;
     overflow: hidden;
+    // never useful in vue
+    /*display: none;*/
 
     &.aplayer-list-hide {
       height: 0 !important;
@@ -83,6 +84,18 @@
       &::-webkit-scrollbar-thumb:hover {
         background-color: #ccc;
       }
+      &:hover {
+        li.aplayer-list-light:not(:hover) {
+          background-color: inherit;
+          transition: inherit;
+        }
+      }
+
+      &:not(:hover) {
+        li.aplayer-list-light {
+          transition: background-color .6s ease;
+        }
+      }
       li {
         position: relative;
         height: 32px;
@@ -104,7 +117,8 @@
         }
 
         &.aplayer-list-light {
-          background: #e9e9e9;
+          /*background: #e9e9e9;*/
+          background: #efefef;
 
           .aplayer-list-cur {
             display: inline-block;
@@ -120,7 +134,6 @@
           top: 5px;
           cursor: pointer;
           transition: background-color .3s;
-
         }
         .aplayer-list-index {
           color: #666;

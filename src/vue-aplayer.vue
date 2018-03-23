@@ -3,45 +3,46 @@
     class="aplayer"
     :class="{
       'aplayer-narrow': isMiniMode,
-      'aplayer-withlist' : musicList.length > 0,
-      'aplayer-withlrc': !!$slots.display || (showlrc || showLrc),
-      'aplayer-float': enableFloat
+      'aplayer-withlist' : !isMiniMode && musicList.length > 0,
+      'aplayer-withlrc': !isMiniMode && (!!$slots.display || shouldShowLrc),
+      'aplayer-float': isFloatMode
     }"
     :style="floatStyleObj"
   >
-    <thumbnail
-      :pic="currentMusic.pic"
-      :playing="isPlaying"
-      :enable-drag="enableFloat"
-      @toggleplay="toggle"
-      @dragbegin="onDragBegin"
-      @dragging="onDragAround"
-    />
-    <div class="aplayer-info" v-show="!narrow && !mini">
-      <div class="aplayer-music">
-        <span class="aplayer-title">{{ currentMusic.title }}</span>
-        <span class="aplayer-author">{{ currentMusic.author }}</span>
-      </div>
-      <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-        <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="showlrc || showLrc"/>
-      </slot>
-      <controls
-        :mode="playMode"
-        :stat="playStat"
-        :volume="volume"
-        :muted="muted"
-        :theme="currentTheme"
-        @togglelist="showList = !showList"
-        @togglemute="toggleMute"
-        @setvolume="setVolume"
-        @setprogress="setProgress"
-        @dragbegin="onProgressDragBegin"
-        @dragend="onProgressDragEnd"
-        @dragging="onProgressDragging"
-        @nextmode="setNextMode"
+    <div class="aplayer-body">
+      <thumbnail
+        :pic="currentMusic.pic"
+        :playing="isPlaying"
+        :enable-drag="isFloatMode"
+        @toggleplay="toggle"
+        @dragbegin="onDragBegin"
+        @dragging="onDragAround"
       />
+      <div class="aplayer-info" v-show="!isMiniMode">
+        <div class="aplayer-music">
+          <span class="aplayer-title">{{ currentMusic.title || 'Untitled' }}</span>
+          <span class="aplayer-author">{{ currentMusic.author || 'Unknown' }}</span>
+        </div>
+        <slot name="display" :current-music="currentMusic" :play-stat="playStat">
+          <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
+        </slot>
+        <controls
+          :mode="playMode"
+          :stat="playStat"
+          :volume="audioVolume"
+          :muted="isAudioMuted"
+          :theme="currentTheme"
+          @togglelist="showList = !showList"
+          @togglemute="toggleMute"
+          @setvolume="setAudioVolume"
+          @dragbegin="onProgressDragBegin"
+          @dragend="onProgressDragEnd"
+          @dragging="onProgressDragging"
+          @nextmode="setNextMode"
+        />
+      </div>
     </div>
-
+    <audio ref="audio"></audio>
     <music-list
       :show="showList && !isMiniMode"
       :current-music="currentMusic"
@@ -51,7 +52,6 @@
       :theme="currentTheme"
       @selectsong="onSelectSong"
     />
-    <audio ref="audio"></audio>
   </div>
 </template>
 <script type="text/babel">
@@ -67,27 +67,14 @@
 
   const canUseSync = versionCompare(Vue.version, '2.3.0') >= 0
 
-  /** polyfill for browsers without Promise */
-  /** btw does vue2 still support them? */
-  function resolved () {
-    // only used as initial VueAplayer.audioPlayPromise
-    // no need to handle resolve value or catch
-    return Promise ? Promise.resolve() : {
-      then (func) {
-        func()
-        return this
-      }
-    }
-  }
-
   /**
    * memorize self-adapting theme for cover image urls
    * @type {Object.<url, rgb()>}
    */
   const picThemeCache = {}
 
+  // mutex playing instance
   let activeMutex = null
-  let instanceId = 1
   export default {
     name: 'APlayer',
     components: {
@@ -97,35 +84,25 @@
       Lyrics,
     },
     props: {
-      // @deprecated, use mini instead
-      narrow: {
-        type: Boolean,
-        default: false,
-        validator (value) {
-          if (value) {
-            deprecatedProp('narrow', '1.1.2', 'mini')
+      music: {
+        type: Object,
+        required: true,
+        validator (song) {
+          if (song.url) {
+            deprecatedProp('music.url', '1.4.0', 'music.src')
           }
-          return true
+          return song.src || song.url
+        },
+      },
+      list: {
+        type: Array,
+        default () {
+          return []
         }
       },
       mini: {
         type: Boolean,
         default: false
-      },
-      autoplay: {
-        type: Boolean,
-        default: false,
-      },
-      // @deprecated since 1.2.2
-      showlrc: {
-        type: Boolean,
-        default: false,
-        validator (value) {
-          if (value) {
-            deprecatedProp('showlrc', '1.2.2', 'showLrc')
-          }
-          return true
-        }
       },
       showLrc: {
         type: Boolean,
@@ -137,16 +114,77 @@
       },
       theme: {
         type: String,
-        default: '#b7daff',
+        default: '#41b883',
       },
       mode: {
         type: String,
         default: 'circulation',
       },
-      preload: {
-        type: String,
-        default: 'auto',
+      listMaxHeight: String,
+
+
+      /**
+       * @since 1.2.0 Float mode
+       */
+      float: {
+        type: Boolean,
+        default: false
       },
+
+      // Audio attributes as props
+      // autoplay controls muted preload volume
+      // autoplay is not observable
+
+      /**
+       * @since 1.4.0
+       * not observable
+       */
+      autoplay: {
+        type: Boolean,
+        default: false,
+      },
+
+      /**
+       * @since 1.4.0
+       * whether to show native audio controls below Vue-APlayer
+       * only work in development environment and not mini mode
+       *
+       * observable
+       */
+      controls: {
+        type: Boolean,
+        default: false
+      },
+
+      /**
+       * @since 1.4.0
+       * observable, sync
+       */
+      muted: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @since 1.4.0
+       * observable
+       */
+      preload: String,
+
+      /**
+       * @since 1.4.0
+       * observable, sync
+       */
+      volume: {
+        type: Number,
+        default: 0.8,
+        validator (value) {
+          return value >= 0 && value <= 1
+        }
+      },
+
+      /**
+       * @deprecated since 1.1.2, use listMaxHeight instead
+       */
       listmaxheight: {
         type: String,
         validator (value) {
@@ -156,104 +194,121 @@
           return true
         }
       },
-      listMaxHeight: String,
-      music: {
-        type: Object,
-        required: true,
-        validator (value) {
-          let song = value
-          if (!song.url || !song.title || !song.author) {
-            song.title = song.title || 'Untitled'
-            song.author = song.author || 'Unknown'
-            return false
-          }
-          return true
-        },
-      },
-      list: {
-        type: Array,
-        default () {
-          return []
-        },
-        validator (value) {
-          let songs = value
-          for (let i = 0; i < songs.length; i++) {
-            let song = songs[i]
-            if (!song.url || !song.title || !song.author) {
-              song.title = song.title || 'Untitled'
-              song.author = song.author || 'Unknown'
-              return false
-            }
-          }
-          return true
-        },
-      },
-      float: {
+      /**
+       * @deprecated since 1.1.2, use mini instead
+       */
+      narrow: {
         type: Boolean,
-        default: false
-      }
+        default: false,
+        validator (value) {
+          if (value) {
+            deprecatedProp('narrow', '1.1.2', 'mini')
+          }
+          return true
+        }
+      },
+      /**
+       * @deprecated since 1.2.2
+       */
+      showlrc: {
+        type: Boolean,
+        default: false,
+        validator (value) {
+          if (value) {
+            deprecatedProp('showlrc', '1.2.2', 'showLrc')
+          }
+          return true
+        }
+      },
     },
     data () {
       return {
-        id: instanceId++,
         internalMusic: this.music,
         internalMode: this.mode,
         isPlaying: false,
+        isSeeking: false,
+        wasPlayingBeforeSeeking: false,
         isMobile: /mobile/i.test(window.navigator.userAgent),
         playStat: {
           duration: 0,
           loadedTime: 0,
           playedTime: 0,
         },
-        volume: 0.8,
-        muted: false,
         showList: true,
 
         // handle Promise returned from audio.play()
         // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
-        audioPlayPromise: resolved(),
+        audioPlayPromise: Promise.resolve(),
+
+
+        // @since 1.2.0 float mode
 
         floatOriginX: 0,
         floatOriginY: 0,
         floatOffsetLeft: 0,
         floatOffsetTop: 0,
 
-        selfAdaptingTheme: null
+
+        // @since 1.3.0 self adapting theme
+        selfAdaptingTheme: null,
+
+
+        // @since 1.4.0
+        // sync muted, volume
+
+        internalMuted: this.muted,
+        internalVolume: this.volume
       }
     },
     computed: {
-      currentTheme () {
-        return this.selfAdaptingTheme || this.currentMusic.theme || this.theme
+      // alias for $refs.audio
+      audio () {
+        return this.$refs.audio
       },
-      enableFloat () {
-        return this.float && !this.isMobile
+
+      currentMusic () {
+        return this.internalMusic
       },
-      floatStyleObj () {
-        // transform: translate(floatOffsetLeft, floatOffsetY)
-        return {
-          transform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
-          webkitTransform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
-        }
-      },
-      // for deprecated `narrow`
+      // compatible for deprecated props
       isMiniMode () {
         return this.mini || this.narrow
       },
-      audio () {
-        return this.$refs.audio
+      shouldShowLrc () {
+        return this.showLrc || this.showlrc
+      },
+
+      // props wrappers
+
+      currentTheme () {
+        return this.selfAdaptingTheme || this.currentMusic.theme || this.theme
+      },
+      isFloatMode () {
+        return this.float && !this.isMobile
       },
       shouldAutoplay () {
         if (this.isMobile) return false
         return this.autoplay
-      },
-      currentMusic () {
-        return this.internalMusic
       },
       playMode () {
         return this.internalMode
       },
       musicList () {
         return this.list
+      },
+      shouldShowNativeControls () {
+        return process.env.NODE_ENV !== 'production' &&
+          this.controls &&
+          !this.isMiniMode
+      },
+
+      // useful
+
+      floatStyleObj () {
+        // transform: translate(floatOffsetLeft, floatOffsetY)
+        return {
+          transform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
+          webkitTransform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
+        }
       },
       currentPicStyleObj () {
         if (this.currentMusic && this.currentMusic.pic) {
@@ -278,9 +333,33 @@
         set (val) {
           this.setCurrentMusic(this.musicList[val])
         }
+      },
+
+      // since 1.4.0
+      // sync muted, volume
+
+      isAudioMuted: {
+        get () {
+          return this.internalMuted
+        },
+        set (val) {
+          canUseSync && this.$emit('update:muted', val)
+          this.internalMuted = val
+        }
+      },
+      audioVolume: {
+        get () {
+          return this.internalVolume
+        },
+        set (val) {
+          canUseSync && this.$emit('update:volume', val)
+          this.internalVolume = val
+        }
       }
     },
     methods: {
+      // Float mode
+
       onDragBegin () {
         this.floatOriginX = this.floatOffsetLeft
         this.floatOriginY = this.floatOffsetTop
@@ -289,6 +368,9 @@
         this.floatOffsetLeft = this.floatOriginX + offsetLeft
         this.floatOffsetTop = this.floatOriginY + offsetTop
       },
+
+      // functions
+
       setCurrentMusic (music) {
         canUseSync && this.$emit('update:music', music)
         this.internalMusic = music
@@ -297,6 +379,16 @@
         canUseSync && this.$emit('update:mode', mode)
         this.internalMode = mode
       },
+      thenPlay () {
+        this.$nextTick(() => {
+          this.play()
+        })
+      },
+
+      // controls
+
+      // play/pause
+
       toggle () {
         if (!this.audio.paused) {
           this.pause()
@@ -340,11 +432,48 @@
           this.rejectPlayPromise = null
         }
       },
-      thenPlay () {
-        this.$nextTick(() => {
-          this.play()
-        })
+
+      // progress bar
+
+      onProgressDragBegin (val) {
+        this.wasPlayingBeforeSeeking = this.isPlaying
+        this.pause()
+        this.isSeeking = true
+
+        this.audio.currentTime = this.audio.duration * val
       },
+      onProgressDragging (val) {
+        if (isNaN(this.audio.duration)) {
+          this.playStat.playedTime = 0
+        } else {
+          this.audio.currentTime = this.audio.duration * val
+        }
+      },
+      onProgressDragEnd (val) {
+        this.isSeeking = false
+
+        if (this.wasPlayingBeforeSeeking) {
+          this.thenPlay()
+        }
+      },
+
+      // volume
+
+      toggleMute () {
+        this.setAudioMuted(!this.audio.muted)
+      },
+      setAudioMuted (val) {
+        this.audio.muted = val
+      },
+      setAudioVolume (val) {
+        this.audio.volume = val
+        if (val > 0) {
+          this.setAudioMuted(false)
+        }
+      },
+
+      // playlist
+
       onSelectSong (song) {
         if (this.currentMusic === song) {
           this.toggle()
@@ -352,44 +481,6 @@
           this.setCurrentMusic(song)
           this.thenPlay()
         }
-      },
-      jumpToTime (time) {
-        this.audio.currentTime = time
-      },
-      toggleMute () {
-        this.setMuted(!this.audio.muted)
-      },
-      setMuted (val) {
-        this.audio.muted = val
-        this.muted = this.audio.muted
-      },
-      setVolume (val) {
-        this.audio.volume = val
-        if (val > 0) {
-          this.setMuted(false)
-        }
-      },
-      setProgress (val) {
-        if (isNaN(this.audio.duration)) {
-          this.playStat.playedTime = 0
-        } else {
-          this.audio.currentTime = this.audio.duration * val
-          this.playStat.playedTime = this.audio.currentTime
-        }
-      },
-      onProgressDragBegin () {
-        this.audio.removeEventListener('timeupdate', this.onAudioTimeUpdate)
-      },
-      onProgressDragging (val) {
-        this.playStat.playedTime = this.audio.duration * val
-      },
-      onProgressDragEnd (val) {
-        if (isNaN(this.audio.duration)) {
-          this.playStat.playedTime = 0
-        } else {
-          this.audio.currentTime = this.audio.duration * val
-        }
-        this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
       },
 
       setNextMode () {
@@ -411,13 +502,15 @@
           }
         }
       },
+
+      // event handlers
+      // for keeping up with audio states
+
       onAudioPlay () {
         this.isPlaying = true
-        this.$emit('play')
       },
       onAudioPause () {
         this.isPlaying = false
-        this.$emit('pause')
       },
       onAudioDurationChange () {
         if (this.audio.duration !== 1) {
@@ -434,8 +527,15 @@
       onAudioTimeUpdate () {
         this.playStat.playedTime = this.audio.currentTime
       },
+      onAudioSeeking () {
+        this.playStat.playedTime = this.audio.currentTime
+      },
+      onAudioSeeked () {
+        this.playStat.playedTime = this.audio.currentTime
+      },
       onAudioVolumeChange () {
-        this.volume = this.audio.volume
+        this.audioVolume = this.audio.volume
+        this.isAudioMuted = this.audio.muted
       },
       onAudioEnded () {
         // if (!this.musicList.includes(this.currentMusic)) {
@@ -471,29 +571,56 @@
             this.thenPlay()
           }
         }
-
-        this.$emit('ended')
       },
 
-      setupAudio () {
-        this.muted = this.audio.muted
+      initAudio () {
 
-        // there's no point making preload configurable
-        this.audio.preload = true // this.preload
+        // since 1.4.0 Audio attributes as props
+
+        this.audio.controls = this.shouldShowNativeControls
+        this.audio.muted = this.muted
+        this.audio.preload = this.preload
+        this.audio.volume = this.volume
+
+
+        // since 1.4.0 Emit as many native audio events
+        // @see https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+
+        const mediaEvents = [
+          'abort',
+          'canplay', 'canplaythrough',
+          'durationchange',
+          'emptied', 'encrypted', 'ended', 'error',
+          'interruptbegin', 'interruptend',
+          'loadeddata', 'loadedmetadata', 'loadstart',
+          'mozaudioavailable',
+          'pause', 'play', 'playing', 'progress',
+          'ratechange',
+          'seeked', 'seeking', 'stalled', 'suspend',
+          'timeupdate', 'volumechange', 'waiting'
+        ]
+        mediaEvents.forEach(event => {
+          this.audio.addEventListener(event, e => this.$emit(event, e))
+        })
+
+
+        // event handlers
+        // they don't emit native media events
 
         this.audio.addEventListener('play', this.onAudioPlay)
         this.audio.addEventListener('pause', this.onAudioPause)
         this.audio.addEventListener('abort', this.onAudioPause)
         this.audio.addEventListener('progress', this.onAudioProgress)
-
         this.audio.addEventListener('durationchange', this.onAudioDurationChange)
+        this.audio.addEventListener('seeking', this.onAudioSeeking)
+        this.audio.addEventListener('seeked', this.onAudioSeeked)
         this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
         this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
-
         this.audio.addEventListener('ended', this.onAudioEnded)
 
+
         if (this.currentMusic) {
-          this.audio.src = this.currentMusic.url
+          this.audio.src = this.currentMusic.src || this.currentMusic.url
         }
       },
 
@@ -523,12 +650,14 @@
       music (music) {
         this.internalMusic = music
       },
+
       currentMusic: {
         handler (music) {
+          const src = music.src || music.url
           // HLS support
-          if (/\.m3u8(?=(#|\?|$))/.test(music.url)) {
+          if (/\.m3u8(?=(#|\?|$))/.test(src)) {
             if (this.audio.canPlayType('application/x-mpegURL') || this.audio.canPlayType('application/vnd.apple.mpegURL')) {
-              this.audio.src = music.url
+              this.audio.src = src
             } else {
               try {
                 const Hls = require('hls.js')
@@ -536,27 +665,52 @@
                   if (!this.hls) {
                     this.hls = new Hls()
                   }
-                  this.hls.loadSource(music.url)
+                  this.hls.loadSource(src)
                   this.hls.attachMedia(this.audio)
                 } else {
                   warn('HLS is not supported on your browser')
-                  this.audio.src = music.url
+                  this.audio.src = src
                 }
               } catch (e) {
                 warn('hls.js is required to support m3u8')
-                this.audio.src = music.url
+                this.audio.src = src
               }
             }
           } else {
-            this.audio.src = music.url
+            this.audio.src = src
           }
           // self-adapting theme color
           this.setSelfAdaptingTheme()
         },
+      },
+
+      // since 1.4.0
+      // observe controls, muted, preload, volume
+
+      shouldShowNativeControls (val) {
+        this.audio.controls = val
+      },
+      isAudioMuted (val) {
+        this.audio.muted = val
+      },
+      preload (val) {
+        this.audio.preload = val
+      },
+      audioVolume (val) {
+        this.audio.volume = val
+      },
+
+      // sync muted, volume
+
+      muted (val) {
+        this.internalMuted = val
+      },
+      volume (val) {
+        this.internalVolume = val
       }
     },
     mounted () {
-      this.setupAudio()
+      this.initAudio()
       this.setSelfAdaptingTheme()
       if (this.autoplay) this.play()
     },
@@ -576,48 +730,8 @@
 <style lang="scss">
   @import "./scss/variables";
 
-  .aplayer-narrow {
-    width: $aplayer-height;
-  }
-
-  .aplayer-withlrc {
-    &.aplayer-narrow {
-      width: $aplayer-height-lrc;
-    }
-    &.aplayer {
-      .aplayer-pic {
-        height: $aplayer-height-lrc;
-        width: $aplayer-height-lrc;
-      }
-
-      .aplayer-info {
-        margin-left: $aplayer-height-lrc;
-        height: $aplayer-height-lrc;
-      }
-
-      .aplayer-info {
-        padding: 10px 7px 0 7px;
-      }
-    }
-  }
-
-  .aplayer-withlist {
-    &.aplayer {
-      .aplayer-info {
-        border-bottom: 1px solid #e9e9e9;
-      }
-
-      .aplayer-list {
-        display: block;
-      }
-
-      .aplayer-icon-menu {
-        display: inline !important;
-      }
-    }
-  }
-
   .aplayer {
+
     font-family: Arial, Helvetica, sans-serif;
     margin: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
@@ -626,12 +740,6 @@
     user-select: none;
     line-height: initial;
 
-    /* floating player on top */
-    position: relative;
-    &.aplayer-float {
-      z-index: 1;
-    }
-
     * {
       box-sizing: content-box;
     }
@@ -639,32 +747,96 @@
     .aplayer-lrc-content {
       display: none;
     }
+    .aplayer-body {
+      display: flex;
 
-    .aplayer-info {
-      margin-left: $aplayer-height;
-      padding: 14px 7px 0 10px;
-      height: $aplayer-height;
-      box-sizing: border-box;
-      background: #fff;
+      position: relative;
+      .aplayer-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
 
-      .aplayer-music {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        margin: 0 0 13px 5px;
-        user-select: text;
-        cursor: default;
-        padding-bottom: 2px;
+        padding: 14px 7px 0 10px;
+        height: $aplayer-height;
+        box-sizing: border-box;
+        background: #fff;
 
-        .aplayer-title {
-          font-size: 14px;
-        }
+        .aplayer-music {
+          flex-grow: 1;
 
-        .aplayer-author {
-          font-size: 12px;
-          color: #666;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-left: 5px;
+          user-select: text;
+          cursor: default;
+          padding-bottom: 2px;
+
+          .aplayer-title {
+            font-size: 14px;
+          }
+
+          .aplayer-author {
+            font-size: 12px;
+            color: #666;
+          }
         }
       }
+    }
+
+    audio[controls] {
+      display: block;
+      width: 100%;
+    }
+
+    // Mini mode
+    &.aplayer-narrow {
+      width: $aplayer-height;
+
+      // never this case
+      // &.aplayer-withlrc {
+      //  width: $aplayer-height-lrc;
+      // }
+    }
+
+    &.aplayer-withlrc {
+      .aplayer-body {
+        .aplayer-pic {
+          height: $aplayer-height-lrc;
+          width: $aplayer-height-lrc;
+        }
+
+        .aplayer-info {
+          height: $aplayer-height-lrc;
+        }
+
+        .aplayer-info {
+          padding: 10px 7px 0 7px;
+        }
+      }
+    }
+
+    &.aplayer-withlist {
+      .aplayer-body {
+        .aplayer-info {
+          border-bottom: 1px solid #e9e9e9;
+        }
+
+        .aplayer-icon-menu {
+          display: block !important;
+        }
+      }
+
+      // never useful in vue
+      /*.aplayer-list {*/
+      /*display: block;*/
+      /*}*/
+    }
+
+    /* floating player on top */
+    position: relative;
+    &.aplayer-float {
+      z-index: 1;
     }
   }
 

@@ -1,7 +1,7 @@
 <template>
   <button
-          type="button"
-          class="aplayer-icon"
+    type="button"
+    class="aplayer-icon"
   >
     <icon :type="icon"/>
   </button>

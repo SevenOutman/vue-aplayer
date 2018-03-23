@@ -1,23 +1,25 @@
 <template>
-  <div class="aplayer-bar-wrap" @click="seekProgress" ref="barWrap">
+  <div
+    class="aplayer-bar-wrap"
+    @mousedown="onThumbMouseDown"
+    @touchstart="onThumbTouchStart"
+    ref="barWrap"
+  >
     <div class="aplayer-bar">
       <div
         class="aplayer-loaded"
-        :style="{width: `${Math.trunc(loadProgress * 100)}%`}">
-
+        :style="{width: `${loadProgress * 100}%`}">
       </div>
       <div
         class="aplayer-played"
-        :style="{width: `${Math.trunc(playProgress * 100)}%`, background: theme}"
+        :style="{width: `${playProgress * 100}%`, background: theme}"
       >
         <span
           ref="thumb"
           @mouseover="thumbHovered = true"
           @mouseout="thumbHovered = false"
-          @mousedown="onThumbMouseDown"
-          @touchstart="onThumbTouchStart"
           class="aplayer-thumb"
-          :style="{border: '1px solid', borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
+          :style="{borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
         >
         </span>
       </div>
@@ -26,8 +28,6 @@
 </template>
 
 <script>
-
-
   import {getElementViewLeft} from '../utils'
 
   export default {
@@ -38,15 +38,13 @@
       }
     },
     methods: {
-      seekProgress (e) {
+      onThumbMouseDown (e) {
         const barWidth = this.$refs.barWrap.clientWidth
         let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
-        this.$emit('setprogress', percentage)
-      },
-      onThumbMouseDown () {
-        this.$emit('dragbegin')
+
+        this.$emit('dragbegin', percentage)
         document.addEventListener('mousemove', this.onDocumentMouseMove)
         document.addEventListener('mouseup', this.onDocumentMouseUp)
       },
@@ -55,9 +53,7 @@
         let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
-        // if (this.option.showlrc) {
-        //   this.updateLrc(parseFloat(bar.playedBar.style.width) / 100 * this.audio.duration);
-        // }
+
         this.$emit('dragging', percentage)
       },
       onDocumentMouseUp (e) {
@@ -70,8 +66,13 @@
         percentage = percentage < 1 ? percentage : 1
         this.$emit('dragend', percentage)
       },
-      onThumbTouchStart () {
-        this.$emit('dragbegin')
+      onThumbTouchStart (e) {
+        const barWidth = this.$refs.barWrap.clientWidth
+        let percentage = (e.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
+        percentage = percentage > 0 ? percentage : 0
+        percentage = percentage < 1 ? percentage : 1
+
+        this.$emit('dragbegin', percentage)
         document.addEventListener('touchmove', this.onDocumentTouchMove)
         document.addEventListener('touchend', this.onDocumentTouchEnd)
       },
@@ -81,9 +82,7 @@
         let percentage = (touch.clientX - getElementViewLeft(this.$refs.barWrap)) / barWidth
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
-        // if (this.option.showlrc) {
-        //   this.updateLrc(parseFloat(bar.playedBar.style.width) / 100 * this.audio.duration);
-        // }
+
         this.$emit('dragging', percentage)
       },
       onDocumentTouchEnd (e) {
@@ -100,3 +99,62 @@
     },
   }
 </script>
+<style lang="scss">
+
+  .aplayer-bar-wrap {
+    margin: 0 0 0 5px;
+    padding: 4px 0;
+    cursor: pointer !important;
+    flex: 1;
+
+    .aplayer-bar {
+      position: relative;
+      height: 2px;
+      width: 100%;
+      background: #cdcdcd;
+
+      .aplayer-loaded {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background: #aaa;
+        height: 2px;
+        transition: all 0.5s ease;
+
+        will-change: width;
+      }
+
+      .aplayer-played {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 2px;
+        transition: background-color .3s;
+        will-change: width;
+
+        .aplayer-thumb {
+          position: absolute;
+          top: 0;
+          right: 5px;
+          margin-top: -5px;
+          margin-right: -10px;
+          width: 10px;
+          height: 10px;
+          border: 1px solid;
+          transform: scale(.8);
+          will-change: transform;
+          transition: transform 300ms, background-color .3s, border-color .3s;
+          border-radius: 50%;
+          background: #fff;
+          cursor: pointer !important;
+
+          &:hover {
+            transform: scale(1);
+          }
+        }
+      }
+    }
+  }
+</style>

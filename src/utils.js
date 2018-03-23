@@ -71,7 +71,7 @@ export function versionCompare (semantic1, semantic2) {
 }
 
 export function warn (message) {
-  return console.warn(`[vue-aplayer] ${message}`)
+  return console.warn(`[Vue-APlayer] ${message}`)
 }
 
 export function deprecatedProp (name, sinceVersion, alternative) {
