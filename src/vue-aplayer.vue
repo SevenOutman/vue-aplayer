@@ -88,6 +88,9 @@
         type: Object,
         required: true,
         validator (song) {
+          if (song.url) {
+            deprecatedProp('music.url', '1.4.0', 'music.src')
+          }
           return song.src || song.url
         },
       },
