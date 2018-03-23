@@ -20,8 +20,8 @@
       />
       <div class="aplayer-info" v-show="!isMiniMode">
         <div class="aplayer-music">
-          <span class="aplayer-title">{{ currentMusic.title }}</span>
-          <span class="aplayer-author">{{ currentMusic.author }}</span>
+          <span class="aplayer-title">{{ currentMusic.title || 'Untitled' }}</span>
+          <span class="aplayer-author">{{ currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
           <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
@@ -88,34 +88,15 @@
       music: {
         type: Object,
         required: true,
-        validator (value) {
-          let song = value
-          if (!song.url || !song.title || !song.author) {
-            song.title = song.title || 'Untitled'
-            song.author = song.author || 'Unknown'
-            return false
-          }
-          return true
+        validator (song) {
+          return song.src || song.url
         },
       },
       list: {
         type: Array,
         default () {
           return []
-        },
-        validator (value) {
-          let songs = value
-          let valid = true
-          for (let i = 0; i < songs.length; i++) {
-            let song = songs[i]
-            if (!song.url || !song.title || !song.author) {
-              song.title = song.title || 'Untitled'
-              song.author = song.author || 'Unknown'
-              valid = false
-            }
-          }
-          return valid
-        },
+        }
       },
       mini: {
         type: Boolean,
@@ -582,19 +563,18 @@
         this.audio.addEventListener('pause', this.onAudioPause)
         this.audio.addEventListener('abort', this.onAudioPause)
         this.audio.addEventListener('progress', this.onAudioProgress)
-
         this.audio.addEventListener('durationchange', this.onAudioDurationChange)
-        this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
-        this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
 
         this.audio.addEventListener('seeking', this.onAudioSeeking)
-
         this.audio.addEventListener('seeked', this.onAudioSeeked)
+        this.audio.addEventListener('timeupdate', this.onAudioTimeUpdate)
+
+        this.audio.addEventListener('volumechange', this.onAudioVolumeChange)
 
         this.audio.addEventListener('ended', this.onAudioEnded)
 
         if (this.currentMusic) {
-          this.audio.src = this.currentMusic.url
+          this.audio.src = this.currentMusic.src || this.currentMusic.url
         }
       },
 
@@ -625,13 +605,13 @@
         this.internalMusic = music
       },
 
-
       currentMusic: {
         handler (music) {
+          const src = music.src || music.url
           // HLS support
-          if (/\.m3u8(?=(#|\?|$))/.test(music.url)) {
+          if (/\.m3u8(?=(#|\?|$))/.test(src)) {
             if (this.audio.canPlayType('application/x-mpegURL') || this.audio.canPlayType('application/vnd.apple.mpegURL')) {
-              this.audio.src = music.url
+              this.audio.src = src
             } else {
               try {
                 const Hls = require('hls.js')
@@ -639,19 +619,19 @@
                   if (!this.hls) {
                     this.hls = new Hls()
                   }
-                  this.hls.loadSource(music.url)
+                  this.hls.loadSource(src)
                   this.hls.attachMedia(this.audio)
                 } else {
                   warn('HLS is not supported on your browser')
-                  this.audio.src = music.url
+                  this.audio.src = src
                 }
               } catch (e) {
                 warn('hls.js is required to support m3u8')
-                this.audio.src = music.url
+                this.audio.src = src
               }
             }
           } else {
-            this.audio.src = music.url
+            this.audio.src = src
           }
           // self-adapting theme color
           this.setSelfAdaptingTheme()
