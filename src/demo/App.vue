@@ -24,55 +24,59 @@
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
           src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
-      <hr>
-      <h3>Normal</h3>
+      <h3>Basic (zero config)</h3>
       <aplayer
-        theme="#42b983"
-        preload="metadata"
-        mode="circulation"
         :music="{
-          title: 'Preparation',
-          author: 'Hans Zimmer/Richard Harvey',
-          url: 'https://moeplayer.b0.upaiyun.com/aplayer/preparation.mp3',
-          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/preparation.jpg'
+          title: 'secret base~君がくれたもの~',
+          author: 'Silent Siren',
+          src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
+          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
         }"
       />
 
-      <h3>Lyrics scroll</h3>
-      <aplayer
-        float
-        theme="rgb(173, 122, 134)"
-        show-lrc
-        mode="circulation"
-        :music="{
-          title: '回レ！雪月花',
-          author: '小倉唯',
-          url: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
-          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
-          lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc'
-        }"
-      />
-      <h3>Playlist / HLS support / Per-song theme (self-adapting theme)</h3>
+      <h3>Featured</h3>
       <aplayer
         autoplay
         theme="pic"
         mode="random"
         show-lrc
+        :controls="controls"
         :muted.sync="muted"
-        :volume.sync="volume"
+        :volume.sync="volumeVal"
         :music.sync='music3'
         :list='list3'
       />
+      <ul>
+        <li>Playlist</li>
+        <li>Lyrics scroll</li>
+        <li>Per-song theme & self-adapting theme</li>
+        <li>HLS support</li>
+        <li>External controls</li>
+        <ul>
+          <li>
+            <a role="button" tabindex="-1" @click="controls = !controls">
+              {{ controls ? 'Hide': 'Show'}} native controls (develop only)
+            </a>
+            <span v-if="controls">Drag on either Vue-APlayer or native controls to see how they synchronize</span>
+          </li>
+          <li>
+            <a role="button" tabindex="-1" @click="muted = !muted">
+              {{ muted ? 'Unmute' : 'Mute' }} player
+            </a>
+          </li>
+          <li>Volume: <input type="number" step="0.1" min="0" max="1" v-model="volume"></li>
+        </ul>
+      </ul>
       <h3>Mini mode / Float mode (try dragging it around)</h3>
       <aplayer
         mini
         float
         mode="circulation"
         :music="{
-          title: 'secret base~君がくれたもの~',
-          author: 'Silent Siren',
-          url: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
-          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+          title: 'トリカゴ',
+          author: 'XX:me',
+          src: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
+          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
         }"
       />
       <footer align="center">
@@ -90,8 +94,19 @@
     components: {
       Aplayer,
     },
+    computed: {
+      volumeVal: {
+        get () {
+          return +this.volume
+        },
+        set (val) {
+          this.volume = val
+        }
+      }
+    },
     data () {
       return {
+        controls: false,
         volume: 1,
         muted: false,
         music3: null,
@@ -99,31 +114,31 @@
           {
             title: '前前前世',
             author: 'RADWIMPS',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
+            src: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.lrc',
           },
           {
             title: '光るなら.m3u8',
             author: 'Goose house',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
+            src: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.lrc',
           },
           {
-            title: 'トリカゴ',
-            author: 'XX:me',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.lrc',
+            title: '回レ！雪月花',
+            author: '小倉唯',
+            src: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
+            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
+            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc'
           },
           {
             title: 'あっちゅ～ま青春!',
             author: '七森中☆ごらく部',
-            url: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
+            src: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.lrc',
-          },
+          }
         ]
       }
     },
@@ -142,6 +157,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 50px;
+    padding: 0 15px;
   }
 
   h1 {
