@@ -29,7 +29,7 @@ Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman
   :music="{
     title: 'secret base~君がくれたもの~',
     author: 'Silent Siren',
-    url: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
+    src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
     pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
   }"
 />
