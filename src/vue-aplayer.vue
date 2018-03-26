@@ -124,7 +124,14 @@
         default: 'circulation',
       },
       listMaxHeight: String,
-
+      /**
+       * @since 1.4.1
+       * Fold playlist initially
+       */
+      listFolded: {
+        type: Boolean,
+        default: false
+      },
 
       /**
        * @since 1.2.0 Float mode
@@ -237,7 +244,7 @@
           loadedTime: 0,
           playedTime: 0,
         },
-        showList: true,
+        showList: !this.listFolded,
 
         // handle Promise returned from audio.play()
         // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play

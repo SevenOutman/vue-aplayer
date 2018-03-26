@@ -46,8 +46,9 @@
       listmaxheight: String,
     },
     mounted () {
-      this.$el.style.height = `${this.$el.offsetHeight}px`
-      this.$refs.ol.style.height = `${this.$el.offsetHeight}px`
+      const listHeight = 33 * this.musicList.length - 1
+      this.$el.style.height = `${listHeight}px`
+      this.$refs.ol.style.height = `${listHeight}px`
     },
   }
 </script>
