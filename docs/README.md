@@ -19,7 +19,7 @@ $ npm install vue-aplayer --save
 <aplayer autoplay
   :music="{
     title: 'secret base~君がくれたもの~',
-    author: 'Silent Siren',
+    artist: 'Silent Siren',
     src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
     pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
   }"

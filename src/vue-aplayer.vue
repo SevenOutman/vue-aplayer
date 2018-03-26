@@ -21,7 +21,7 @@
       <div class="aplayer-info" v-show="!isMiniMode">
         <div class="aplayer-music">
           <span class="aplayer-title">{{ currentMusic.title || 'Untitled' }}</span>
-          <span class="aplayer-author">{{ currentMusic.author || 'Unknown' }}</span>
+          <span class="aplayer-author">{{ currentMusic.artist || currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
           <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
@@ -90,6 +90,9 @@
         validator (song) {
           if (song.url) {
             deprecatedProp('music.url', '1.4.0', 'music.src')
+          }
+          if (song.author) {
+            deprecatedProp('music.author', '1.4.1', 'music.artist')
           }
           return song.src || song.url
         },

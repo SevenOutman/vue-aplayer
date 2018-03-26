@@ -28,7 +28,7 @@
       <aplayer
         :music="{
           title: 'secret base~君がくれたもの~',
-          author: 'Silent Siren',
+          artist: 'Silent Siren',
           src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
           pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
         }"
@@ -113,28 +113,28 @@
         list3: [
           {
             title: '前前前世',
-            author: 'RADWIMPS',
+            artist: 'RADWIMPS',
             src: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.lrc',
           },
           {
             title: '光るなら.m3u8',
-            author: 'Goose house',
+            artist: 'Goose house',
             src: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.lrc',
           },
           {
             title: '回レ！雪月花',
-            author: '小倉唯',
+            artist: '小倉唯',
             src: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc'
           },
           {
             title: 'あっちゅ～ま青春!',
-            author: '七森中☆ごらく部',
+            artist: '七森中☆ごらく部',
             src: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.lrc',
