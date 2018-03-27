@@ -21,6 +21,11 @@
           class="aplayer-thumb"
           :style="{borderColor:　theme, backgroundColor: thumbHovered ? theme : '#fff'}"
         >
+          <span class="aplayer-loading-icon"
+                :style="{backgroundColor: theme }"
+          >
+            <icon type="loading"/>
+          </span>
         </span>
       </div>
     </div>
@@ -29,8 +34,12 @@
 
 <script>
   import {getElementViewLeft} from '../utils'
+  import Icon from './aplayer-icon.vue'
 
   export default {
+    components: {
+      Icon
+    },
     props: ['loadProgress', 'playProgress', 'theme'],
     data () {
       return {
@@ -153,8 +162,40 @@
           &:hover {
             transform: scale(1);
           }
+
+          overflow: hidden;
+          .aplayer-loading-icon {
+            display: none;
+            width: 100%;
+            height: 100%;
+
+            svg {
+              position: absolute;
+              animation: spin 1s linear infinite;
+              fill: #ffffff;
+            }
+          }
         }
       }
+    }
+  }
+
+  .aplayer-loading {
+    .aplayer-bar-wrap .aplayer-bar .aplayer-thumb .aplayer-loading-icon {
+      display: block;
+    }
+
+    .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0)
+    }
+    100% {
+      transform: rotate(360deg)
     }
   }
 </style>
