@@ -9,7 +9,7 @@
 [![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 
-![vue-aplayer](https://i.loli.net/2018/03/16/5aab3da0746e7.png)
+![Vue-APlayer](https://i.loli.net/2018/03/16/5aab3da0746e7.png)
 
 ### Features
 - Clean and simple UI

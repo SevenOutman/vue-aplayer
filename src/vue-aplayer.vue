@@ -5,7 +5,8 @@
       'aplayer-narrow': isMiniMode,
       'aplayer-withlist' : !isMiniMode && musicList.length > 0,
       'aplayer-withlrc': !isMiniMode && (!!$slots.display || shouldShowLrc),
-      'aplayer-float': isFloatMode
+      'aplayer-float': isFloatMode,
+      'aplayer-loading': isPlaying && isLoading
     }"
     :style="floatStyleObj"
   >
@@ -268,7 +269,11 @@
         // sync muted, volume
 
         internalMuted: this.muted,
-        internalVolume: this.volume
+        internalVolume: this.volume,
+
+        // @since 1.4.1
+        // Loading indicator
+        isLoading: false
       }
     },
     computed: {
@@ -523,6 +528,12 @@
       onAudioPause () {
         this.isPlaying = false
       },
+      onAudioWaiting () {
+        this.isLoading = true
+      },
+      onAudioCanplay () {
+        this.isLoading = false
+      },
       onAudioDurationChange () {
         if (this.audio.duration !== 1) {
           this.playStat.duration = this.audio.duration
@@ -608,7 +619,9 @@
           'pause', 'play', 'playing', 'progress',
           'ratechange',
           'seeked', 'seeking', 'stalled', 'suspend',
-          'timeupdate', 'volumechange', 'waiting'
+          'timeupdate',
+          'volumechange',
+          'waiting'
         ]
         mediaEvents.forEach(event => {
           this.audio.addEventListener(event, e => this.$emit(event, e))
@@ -621,6 +634,8 @@
         this.audio.addEventListener('play', this.onAudioPlay)
         this.audio.addEventListener('pause', this.onAudioPause)
         this.audio.addEventListener('abort', this.onAudioPause)
+        this.audio.addEventListener('waiting', this.onAudioWaiting)
+        this.audio.addEventListener('canplay', this.onAudioCanplay)
         this.audio.addEventListener('progress', this.onAudioProgress)
         this.audio.addEventListener('durationchange', this.onAudioDurationChange)
         this.audio.addEventListener('seeking', this.onAudioSeeking)
