@@ -14,6 +14,7 @@
         :pic="currentMusic.pic"
         :playing="isPlaying"
         :enable-drag="isFloatMode"
+        :theme="currentTheme"
         @toggleplay="toggle"
         @dragbegin="onDragBegin"
         @dragging="onDragAround"
@@ -663,6 +664,9 @@
 
       currentMusic: {
         handler (music) {
+          // async
+          this.setSelfAdaptingTheme()
+
           const src = music.src || music.url
           // HLS support
           if (/\.m3u8(?=(#|\?|$))/.test(src)) {
@@ -690,7 +694,6 @@
             this.audio.src = src
           }
           // self-adapting theme color
-          this.setSelfAdaptingTheme()
         },
       },
 

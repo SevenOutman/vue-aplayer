@@ -22,6 +22,7 @@
     },
     props: {
       pic: String,
+      theme: String,
       playing: {
         type: Boolean,
         default: false,
@@ -43,6 +44,7 @@
         if (!this.pic) return {}
         return {
           backgroundImage: `url(${this.pic})`,
+          backgroundColor: this.theme
         }
       },
     },
