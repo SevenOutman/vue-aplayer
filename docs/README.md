@@ -19,7 +19,7 @@ $ npm install vue-aplayer --save
 <aplayer autoplay
   :music="{
     title: 'secret base~君がくれたもの~',
-    author: 'Silent Siren',
+    artist: 'Silent Siren',
     src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
     pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
   }"
@@ -52,6 +52,7 @@ new Vue({
 | theme | String | `'#41b883'` | Theme color, will be overridden by current `music`'s theme if set |
 | mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
 | listMaxHeight | String | *none* | Max height of play list |
+| listFolded | Boolean | `false` | Fold playlist initially |
 | narrow |  | | DEPRECATED, use `mini` instead |
 | listmaxheight |  |  | DEPRECATED, use `listMaxHeight` instead |
 | showlrc |  |  | DEPRECATED, use `showLrc` instead |
@@ -84,11 +85,12 @@ The `music` props contains info of the song to play.
 | -------- | ------- | ----------- |
 | src | *required* | Music source url |
 | title | `'Untitled'` | Music title |
-| author | `'Unknown'` | Music author |
+| artist | `'Unknown'` | Music artist |
 | pic | *none* | Music cover picture |
 | lrc | *none* | lrc or url to a .lrc file, see: [LRC](https://aplayer.js.org/#/home?id=lrc) |
 | theme | *none* | Song-specific theme color |
-| url || DEPRECATED, use `src` instead |
+| url | | DEPRECATED, use `src` instead |
+| author |  | DEPRECATED, use `artist` instead |
 
 
 

@@ -18,7 +18,7 @@
         <span class="aplayer-list-cur" :style="{background: theme}"></span>
         <span class="aplayer-list-index">{{ index + 1}}</span>
         <span class="aplayer-list-title">{{ aMusic.title || 'Untitled' }}</span>
-        <span class="aplayer-list-author">{{ aMusic.author || 'Unknown' }}</span>
+        <span class="aplayer-list-author">{{ aMusic.artist || aMusic.author || 'Unknown' }}</span>
       </li>
     </ol>
   </div>
@@ -46,8 +46,9 @@
       listmaxheight: String,
     },
     mounted () {
-      this.$el.style.height = `${this.$el.offsetHeight}px`
-      this.$refs.ol.style.height = `${this.$el.offsetHeight}px`
+      const listHeight = 33 * this.musicList.length - 1
+      this.$el.style.height = `${listHeight}px`
+      this.$refs.ol.style.height = `${listHeight}px`
     },
   }
 </script>

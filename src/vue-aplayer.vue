@@ -5,7 +5,8 @@
       'aplayer-narrow': isMiniMode,
       'aplayer-withlist' : !isMiniMode && musicList.length > 0,
       'aplayer-withlrc': !isMiniMode && (!!$slots.display || shouldShowLrc),
-      'aplayer-float': isFloatMode
+      'aplayer-float': isFloatMode,
+      'aplayer-loading': isPlaying && isLoading
     }"
     :style="floatStyleObj"
   >
@@ -14,6 +15,7 @@
         :pic="currentMusic.pic"
         :playing="isPlaying"
         :enable-drag="isFloatMode"
+        :theme="currentTheme"
         @toggleplay="toggle"
         @dragbegin="onDragBegin"
         @dragging="onDragAround"
@@ -21,7 +23,7 @@
       <div class="aplayer-info" v-show="!isMiniMode">
         <div class="aplayer-music">
           <span class="aplayer-title">{{ currentMusic.title || 'Untitled' }}</span>
-          <span class="aplayer-author">{{ currentMusic.author || 'Unknown' }}</span>
+          <span class="aplayer-author">{{ currentMusic.artist || currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
           <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
@@ -91,6 +93,9 @@
           if (song.url) {
             deprecatedProp('music.url', '1.4.0', 'music.src')
           }
+          if (song.author) {
+            deprecatedProp('music.author', '1.4.1', 'music.artist')
+          }
           return song.src || song.url
         },
       },
@@ -121,7 +126,14 @@
         default: 'circulation',
       },
       listMaxHeight: String,
-
+      /**
+       * @since 1.4.1
+       * Fold playlist initially
+       */
+      listFolded: {
+        type: Boolean,
+        default: false
+      },
 
       /**
        * @since 1.2.0 Float mode
@@ -234,7 +246,7 @@
           loadedTime: 0,
           playedTime: 0,
         },
-        showList: true,
+        showList: !this.listFolded,
 
         // handle Promise returned from audio.play()
         // @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play
@@ -257,7 +269,11 @@
         // sync muted, volume
 
         internalMuted: this.muted,
-        internalVolume: this.volume
+        internalVolume: this.volume,
+
+        // @since 1.4.1
+        // Loading indicator
+        isLoading: false
       }
     },
     computed: {
@@ -512,6 +528,12 @@
       onAudioPause () {
         this.isPlaying = false
       },
+      onAudioWaiting () {
+        this.isLoading = true
+      },
+      onAudioCanplay () {
+        this.isLoading = false
+      },
       onAudioDurationChange () {
         if (this.audio.duration !== 1) {
           this.playStat.duration = this.audio.duration
@@ -597,7 +619,9 @@
           'pause', 'play', 'playing', 'progress',
           'ratechange',
           'seeked', 'seeking', 'stalled', 'suspend',
-          'timeupdate', 'volumechange', 'waiting'
+          'timeupdate',
+          'volumechange',
+          'waiting'
         ]
         mediaEvents.forEach(event => {
           this.audio.addEventListener(event, e => this.$emit(event, e))
@@ -610,6 +634,8 @@
         this.audio.addEventListener('play', this.onAudioPlay)
         this.audio.addEventListener('pause', this.onAudioPause)
         this.audio.addEventListener('abort', this.onAudioPause)
+        this.audio.addEventListener('waiting', this.onAudioWaiting)
+        this.audio.addEventListener('canplay', this.onAudioCanplay)
         this.audio.addEventListener('progress', this.onAudioProgress)
         this.audio.addEventListener('durationchange', this.onAudioDurationChange)
         this.audio.addEventListener('seeking', this.onAudioSeeking)
@@ -653,6 +679,9 @@
 
       currentMusic: {
         handler (music) {
+          // async
+          this.setSelfAdaptingTheme()
+
           const src = music.src || music.url
           // HLS support
           if (/\.m3u8(?=(#|\?|$))/.test(src)) {
@@ -680,7 +709,6 @@
             this.audio.src = src
           }
           // self-adapting theme color
-          this.setSelfAdaptingTheme()
         },
       },
 
