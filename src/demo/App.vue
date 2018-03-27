@@ -13,8 +13,8 @@
       </svg>
     </a>
     <div class="container">
-      <h1>Vue-APlayer</h1>
-      <p>
+      <h1 align="center">Vue-APlayer</h1>
+      <p align="center">
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
         <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img
@@ -74,7 +74,7 @@
         mode="circulation"
         :music="{
           title: 'トリカゴ',
-          author: 'XX:me',
+          artist: 'XX:me',
           src: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
           pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
         }"
@@ -161,7 +161,7 @@
   }
 
   h1 {
-    font-size: 54px;
+    font-size: 48px;
     color: #41b883;
     margin: 30px 0 10px;
   }
