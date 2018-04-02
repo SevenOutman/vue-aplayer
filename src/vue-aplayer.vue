@@ -434,10 +434,11 @@
       },
       pause () {
         this.audioPlayPromise
-        // Avoid force rejection throws Uncaught
-          .catch(() => {
+          .then(() => {
+            this.audio.pause()
           })
-          .finally(() => {
+          // Avoid force rejection throws Uncaught
+          .catch(() => {
             this.audio.pause()
           })
 
