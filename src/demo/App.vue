@@ -39,6 +39,7 @@
         autoplay
         theme="pic"
         shuffle
+        repeat="list"
         show-lrc
         :controls="controls"
         :muted.sync="muted"

@@ -224,7 +224,7 @@
        */
       repeat: {
         type: String,
-        default: REPEAT.REPEAT_ALL
+        default: REPEAT.NO_REPEAT
       },
 
 
