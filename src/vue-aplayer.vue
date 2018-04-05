@@ -29,11 +29,13 @@
           <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
         </slot>
         <controls
-          :mode="playMode"
+          :shuffle="shouldShuffle"
+          :repeat="repeatMode"
           :stat="playStat"
           :volume="audioVolume"
           :muted="isAudioMuted"
           :theme="currentTheme"
+          @toggleshuffle="shouldShuffle = !shouldShuffle"
           @togglelist="showList = !showList"
           @togglemute="toggleMute"
           @setvolume="setAudioVolume"
@@ -77,6 +79,17 @@
 
   // mutex playing instance
   let activeMutex = null
+
+
+  const REPEAT = {
+    NONE: 'none',
+    MUSIC: 'music',
+    LIST: 'list',
+    NO_REPEAT: 'noRepeat',
+    REPEAT_ONE: 'repeatOne',
+    REPEAT_ALL: 'repeatAll'
+  };
+
   export default {
     name: 'APlayer',
     components: {
@@ -121,10 +134,7 @@
         type: String,
         default: '#41b883',
       },
-      mode: {
-        type: String,
-        default: 'circulation',
-      },
+
       listMaxHeight: String,
       /**
        * @since 1.4.1
@@ -144,6 +154,7 @@
       },
 
       // Audio attributes as props
+      // since 1.4.0
       // autoplay controls muted preload volume
       // autoplay is not observable
 
@@ -194,6 +205,31 @@
         }
       },
 
+      // play order control
+      // since 1.5.0
+
+      /**
+       * @since 1.5.0
+       * @see https://support.apple.com/en-us/HT207230
+       * twoWay
+       */
+      shuffle: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @since 1.5.0
+       * @see https://support.apple.com/en-us/HT207230
+       * twoWay
+       */
+      repeat: {
+        type: String,
+        default: REPEAT.REPEAT_ALL
+      },
+
+
+      // deprecated props
+
       /**
        * @deprecated since 1.1.2, use listMaxHeight instead
        */
@@ -228,6 +264,19 @@
         validator (value) {
           if (value) {
             deprecatedProp('showlrc', '1.2.2', 'showLrc')
+          }
+          return true
+        }
+      },
+      /**
+       * @deprecated since 1.5.0
+       */
+      mode: {
+        type: String,
+        default: 'circulation',
+        validator (value) {
+          if (value) {
+            deprecatedProp('mode', '1.5.0', 'shuffle and repeat')
           }
           return true
         }
@@ -273,7 +322,15 @@
 
         // @since 1.4.1
         // Loading indicator
-        isLoading: false
+        isLoading: false,
+
+
+        // @since 1.5.1
+        // sync shuffle, repeat
+        internalShuffle: this.shuffle,
+        internalRepeat: this.repeat,
+        // for shuffling
+        shuffledList: []
       }
     },
     computed: {
@@ -344,11 +401,14 @@
       },
       playIndex: {
         get () {
-          return this.musicList.indexOf(this.currentMusic)
+          return this.shuffledList.indexOf(this.currentMusic)
         },
         set (val) {
-          this.setCurrentMusic(this.musicList[val])
+          this.setCurrentMusic(this.shuffledList[val % this.shuffledList.length])
         }
+      },
+      shouldRepeat () {
+        return this.repeatMode !== REPEAT.NO_REPEAT
       },
 
       // since 1.4.0
@@ -370,6 +430,37 @@
         set (val) {
           canUseSync && this.$emit('update:volume', val)
           this.internalVolume = val
+        }
+      },
+
+
+      // since 1.5.0
+      // sync shuffle, repeat
+      shouldShuffle: {
+        get () {
+          return this.internalShuffle
+        },
+        set (val) {
+          canUseSync && this.$emit('update:shuffle', val)
+          this.internalShuffle = val
+        }
+      },
+      repeatMode: {
+        get () {
+          switch (this.internalRepeat) {
+            case REPEAT.NONE:
+            case REPEAT.NO_REPEAT:
+              return REPEAT.NO_REPEAT
+            case REPEAT.MUSIC:
+            case REPEAT.REPEAT_ONE:
+              return REPEAT.REPEAT_ONE
+            default:
+              return REPEAT.REPEAT_ALL
+          }
+        },
+        set (val) {
+          canUseSync && this.$emit('update:repeat', val)
+          this.internalRepeat = val
         }
       }
     },
@@ -491,6 +582,43 @@
 
       // playlist
 
+      getShuffledList () {
+        if (!this.list.length) {
+          return [this.internalMusic]
+        }
+        let unshuffled = [...this.list]
+        if (!this.internalShuffle || unshuffled.length <= 1) {
+          return unshuffled
+        }
+
+        let indexOfCurrentMusic = unshuffled.indexOf(this.internalMusic)
+        if (unshuffled.length === 2 && indexOfCurrentMusic !== -1) {
+          if (indexOfCurrentMusic === 0) {
+            return unshuffled
+          } else {
+            return [this.internalMusic, unshuffled[0]]
+          }
+        }
+        // shuffle list
+        // @see https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+        for (let i = unshuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1))
+          const tmp = unshuffled[i]
+          unshuffled[i] = unshuffled[j]
+          unshuffled[j] = tmp
+        }
+
+        // take currentMusic to first
+        if (indexOfCurrentMusic !== -1) {
+          indexOfCurrentMusic = unshuffled.indexOf(this.internalMusic)
+          if (indexOfCurrentMusic !== 0) {
+            [unshuffled[0], unshuffled[indexOfCurrentMusic]] = [unshuffled[indexOfCurrentMusic], unshuffled[0]]
+          }
+        }
+
+        return unshuffled
+      },
+
       onSelectSong (song) {
         if (this.currentMusic === song) {
           this.toggle()
@@ -501,22 +629,12 @@
       },
 
       setNextMode () {
-        if (this.musicList.length) {
-          if (this.playMode === 'random') {
-            this.setPlayMode('single')
-          } else if (this.playMode === 'single') {
-            this.setPlayMode('order')
-          } else if (this.playMode === 'order') {
-            this.setPlayMode('circulation')
-          } else if (this.playMode === 'circulation') {
-            this.setPlayMode('random')
-          }
+        if (this.repeatMode === REPEAT.REPEAT_ALL) {
+          this.repeatMode = REPEAT.REPEAT_ONE
+        } else if (this.repeatMode === REPEAT.REPEAT_ONE ) {
+          this.repeatMode = REPEAT.NO_REPEAT
         } else {
-          if (this.playMode === 'circulation') {
-            this.setPlayMode('order')
-          } else {
-            this.setPlayMode('circulation')
-          }
+          this.repeatMode = REPEAT.REPEAT_ALL
         }
       },
 
@@ -561,37 +679,21 @@
         this.isAudioMuted = this.audio.muted
       },
       onAudioEnded () {
-        // if (!this.musicList.includes(this.currentMusic)) {
-        if (this.playIndex === -1) {
-          // if music list doesn't contain current music
-          // and should play next song according to `mode`
-          // set playIndex 0
-          // switch (this.mode) {
-          //   case 'order':
-          //   case 'circulation':
-          //   case 'random':
-          //     this.playIndex = 0
-          //     this.thenPlay()
-          //     break;
-          //   default:
-          //     break;
-          // }
+        // determine next song according to shuffle and repeat
+        if (this.repeatMode === REPEAT.REPEAT_ALL) {
+          if (this.shouldShuffle && this.playIndex === this.shuffledList.length - 1) {
+            this.shuffledList = this.getShuffledList()
+          }
+          this.playIndex++
+          this.thenPlay()
+        } else if (this.repeatMode === REPEAT.REPEAT_ONE) {
+          this.thenPlay()
         } else {
-          if (this.mode === 'order') {
-            if (this.playIndex === this.musicList.length - 1) {
-              // do nothing
-            } else if (this.playIndex < this.musicList.length - 1) {
-              this.playIndex++
-              this.thenPlay()
-            }
-          } else if (this.mode === 'single') {
+          this.playIndex++
+          if (this.playIndex !== 0) {
             this.thenPlay()
-          } else if (this.mode === 'circulation') {
-            this.playIndex = (this.playIndex + 1) % this.musicList.length
-            this.thenPlay()
-          } else if (this.mode === 'random') {
-            this.playIndex = Math.trunc(Math.random() * this.musicList.length)
-            this.thenPlay()
+          } else if (this.shuffledList.length === 1) {
+            this.audio.currentTime = 0
           }
         }
       },
@@ -736,7 +838,19 @@
       },
       volume (val) {
         this.internalVolume = val
+      },
+
+
+      // sync shuffle, repeat
+      shuffle (val) {
+        this.internalShuffle = val
+      },
+      repeat (val) {
+        this.internalRepeat = val
       }
+    },
+    created() {
+      this.shuffledList = this.getShuffledList()
     },
     mounted () {
       this.initAudio()

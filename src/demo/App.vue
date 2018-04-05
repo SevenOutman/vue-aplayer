@@ -38,7 +38,7 @@
       <aplayer
         autoplay
         theme="pic"
-        mode="random"
+        shuffle
         show-lrc
         :controls="controls"
         :muted.sync="muted"
