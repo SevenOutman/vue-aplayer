@@ -269,23 +269,22 @@
         }
       },
       /**
-       * @deprecated since 1.5.0
+       * @deprecated and REMOVED since 1.5.0
        */
-      mode: {
-        type: String,
-        default: 'circulation',
-        validator (value) {
-          if (value) {
-            deprecatedProp('mode', '1.5.0', 'shuffle and repeat')
-          }
-          return true
-        }
-      },
+      // mode: {
+      //   type: String,
+      //   default: 'circulation',
+      //   validator (value) {
+      //     if (value) {
+      //       deprecatedProp('mode', '1.5.0', 'shuffle and repeat')
+      //     }
+      //     return true
+      //   }
+      // },
     },
     data () {
       return {
         internalMusic: this.music,
-        internalMode: this.mode,
         isPlaying: false,
         isSeeking: false,
         wasPlayingBeforeSeeking: false,
@@ -339,8 +338,15 @@
         return this.$refs.audio
       },
 
-      currentMusic () {
-        return this.internalMusic
+      // sync music
+      currentMusic: {
+        get () {
+          return this.internalMusic
+        },
+        set (val) {
+          canUseSync && this.$emit('update:music', val)
+          this.internalMusic = val
+        }
       },
       // compatible for deprecated props
       isMiniMode () {
@@ -361,9 +367,6 @@
       shouldAutoplay () {
         if (this.isMobile) return false
         return this.autoplay
-      },
-      playMode () {
-        return this.internalMode
       },
       musicList () {
         return this.list
@@ -404,7 +407,7 @@
           return this.shuffledList.indexOf(this.currentMusic)
         },
         set (val) {
-          this.setCurrentMusic(this.shuffledList[val % this.shuffledList.length])
+          this.currentMusic = this.shuffledList[val % this.shuffledList.length]
         }
       },
       shouldRepeat () {
@@ -478,13 +481,14 @@
 
       // functions
 
-      setCurrentMusic (music) {
-        canUseSync && this.$emit('update:music', music)
-        this.internalMusic = music
-      },
-      setPlayMode (mode) {
-        canUseSync && this.$emit('update:mode', mode)
-        this.internalMode = mode
+      setNextMode () {
+        if (this.repeatMode === REPEAT.REPEAT_ALL) {
+          this.repeatMode = REPEAT.REPEAT_ONE
+        } else if (this.repeatMode === REPEAT.REPEAT_ONE) {
+          this.repeatMode = REPEAT.NO_REPEAT
+        } else {
+          this.repeatMode = REPEAT.REPEAT_ALL
+        }
       },
       thenPlay () {
         this.$nextTick(() => {
@@ -623,18 +627,8 @@
         if (this.currentMusic === song) {
           this.toggle()
         } else {
-          this.setCurrentMusic(song)
+          this.currentMusic = song
           this.thenPlay()
-        }
-      },
-
-      setNextMode () {
-        if (this.repeatMode === REPEAT.REPEAT_ALL) {
-          this.repeatMode = REPEAT.REPEAT_ONE
-        } else if (this.repeatMode === REPEAT.REPEAT_ONE ) {
-          this.repeatMode = REPEAT.NO_REPEAT
-        } else {
-          this.repeatMode = REPEAT.REPEAT_ALL
         }
       },
 
@@ -849,7 +843,7 @@
         this.internalRepeat = val
       }
     },
-    created() {
+    created () {
       this.shuffledList = this.getShuffledList()
     },
     mounted () {

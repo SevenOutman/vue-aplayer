@@ -57,7 +57,6 @@ new Vue({
 | narrow |  | | DEPRECATED, use `mini` instead |
 | listmaxheight |  |  | DEPRECATED, use `listMaxHeight` instead |
 | showlrc |  |  | DEPRECATED, use `showLrc` instead |
-| mode |  |  | DEPRECATED, use `shuffle` and `repeat` instead |
 
 > If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music`, `shuffle` and `repeat` props.
 
