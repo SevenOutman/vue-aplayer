@@ -43,6 +43,10 @@ module.exports = {
         loader: 'url-loader?limit=40000'
       },
       {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+      },
+      {
         test: /\.html$/,
         loader: 'vue-html-loader'
       }
