@@ -51,7 +51,7 @@ new Vue({
 | mutex | Boolean | `true` | Pause other players when this player is playing |
 | theme | String | `'#41b883'` | Theme color, will be overridden by current `music`'s theme if set |
 | shuffle | Boolean | `false` | Shuffle the playlist |
-| repeat | String | `'noRepeat'` | How to repeat play. Either to `'repeatOne'` `'repeatAll'` or `'noRepeat'`. You can also use accordingly `'none'` `'music'` `'list'` for easier remembering |
+| repeat | String | `'no-repeat'` | How to repeat play. Either to `'repeat-one'` `'repeat-all'` or `'no-repeat'`. You can also use accordingly `'none'` `'music'` `'list'` for easier remembering |
 | listMaxHeight | String | *none* | Max height of play list |
 | listFolded | Boolean | `false` | Fold playlist initially |
 | narrow |  | | DEPRECATED, use `mini` instead |

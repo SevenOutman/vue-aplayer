@@ -85,9 +85,9 @@
     NONE: 'none',
     MUSIC: 'music',
     LIST: 'list',
-    NO_REPEAT: 'noRepeat',
-    REPEAT_ONE: 'repeatOne',
-    REPEAT_ALL: 'repeatAll'
+    NO_REPEAT: 'no-repeat',
+    REPEAT_ONE: 'repeat-one',
+    REPEAT_ALL: 'repeat-all'
   };
 
   export default {

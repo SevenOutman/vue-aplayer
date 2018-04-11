@@ -21,7 +21,7 @@
         @setvolume="v => $emit('setvolume', v)"
       />
       <icon-button class="aplayer-icon-mode" icon="shuffle" @click.native="$emit('toggleshuffle')" :class="{ 'inactive': !shuffle }"/>
-      <icon-button class="aplayer-icon-mode" :icon="repeat === 'repeatOne' ? 'repeat-one' : 'repeat-all'" :class="{ 'inactive': repeat === 'noRepeat'}" @click.native="$emit('nextmode')"/>
+      <icon-button class="aplayer-icon-mode" :icon="repeat === 'repeat-one' ? 'repeat-one' : 'repeat-all'" :class="{ 'inactive': repeat === 'no-repeat'}" @click.native="$emit('nextmode')"/>
       <icon-button class="aplayer-icon-menu" icon="menu" @click.native="$emit('togglelist')"/>
     </div>
   </div>
