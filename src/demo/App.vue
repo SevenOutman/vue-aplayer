@@ -15,10 +15,9 @@
     <div class="container">
       <h1 align="center">Vue-APlayer</h1>
       <p align="center">
+        <img :src="`https://img.shields.io/badge/DEMO-v${version}-41b883.svg?style=flat-square`"/>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
-        <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img
-          src="https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square"/></a>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square"/></a>
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
@@ -107,6 +106,7 @@
     },
     data () {
       return {
+        version: VERSION,
         controls: false,
         volume: 1,
         muted: false,
