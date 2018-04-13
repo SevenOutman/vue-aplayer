@@ -1,14 +1,28 @@
 var path = require('path')
 var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/vue-aplayer.vue',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'vue-aplayer.min.js',
-    library: 'VueAplayer',
+    library: 'VueAPlayer',
     libraryTarget: 'umd'
+  },
+
+  externals: {
+    'hls.js': {
+      amd: 'hls.js',
+      commonjs: 'hls.js',
+      commonjs2: 'hls.js',
+      root: 'Hls'
+    },
+    'vue':  {
+      amd: 'vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      root: 'Vue'
+    },
   },
 
   module: {
@@ -28,9 +42,8 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            js: 'babel-loader',
-            scss: 'style-loader!css-loader!postcss-loader!sass-loader'
-          }
+            scss: 'vue-style-loader!css-loader?minimize=true!postcss-loader!sass-loader'
+          },
         }
       },
       {
@@ -48,7 +61,7 @@ module.exports = {
       }
     ]
   },
-  devtool: '#eval-source-map',
+  devtool: '#source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
