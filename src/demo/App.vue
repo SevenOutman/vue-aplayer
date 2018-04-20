@@ -15,10 +15,9 @@
     <div class="container">
       <h1 align="center">Vue-APlayer</h1>
       <p align="center">
+        <img :src="`https://img.shields.io/badge/DEMO-v${version}-41b883.svg?style=flat-square`"/>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
-        <a href="https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies"><img
-          src="https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square"/></a>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
           src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square"/></a>
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
@@ -38,7 +37,8 @@
       <aplayer
         autoplay
         theme="pic"
-        mode="random"
+        shuffle
+        repeat="list"
         show-lrc
         :controls="controls"
         :muted.sync="muted"
@@ -53,12 +53,6 @@
         <li>HLS support</li>
         <li>External controls</li>
         <ul>
-          <li>
-            <a role="button" tabindex="-1" @click="controls = !controls">
-              {{ controls ? 'Hide': 'Show'}} native controls (develop only)
-            </a>
-            <span v-if="controls">Drag on either Vue-APlayer or native controls to see how they synchronize</span>
-          </li>
           <li>
             <a role="button" tabindex="-1" @click="muted = !muted">
               {{ muted ? 'Unmute' : 'Mute' }} player
@@ -106,6 +100,7 @@
     },
     data () {
       return {
+        version: VERSION,
         controls: false,
         volume: 1,
         muted: false,

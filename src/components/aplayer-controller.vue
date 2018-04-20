@@ -20,7 +20,8 @@
         @togglemute="$emit('togglemute')"
         @setvolume="v => $emit('setvolume', v)"
       />
-      <icon-button class="aplayer-icon-mode" :icon="mode" @click.native="$emit('nextmode')"/>
+      <icon-button class="aplayer-icon-mode" icon="shuffle" @click.native="$emit('toggleshuffle')" :class="{ 'inactive': !shuffle }"/>
+      <icon-button class="aplayer-icon-mode" :icon="repeat === 'repeat-one' ? 'repeat-one' : 'repeat-all'" :class="{ 'inactive': repeat === 'no-repeat'}" @click.native="$emit('nextmode')"/>
       <icon-button class="aplayer-icon-menu" icon="menu" @click.native="$emit('togglelist')"/>
     </div>
   </div>
@@ -37,7 +38,7 @@
       VProgress,
       Volume,
     },
-    props: ['mode', 'stat', 'theme', 'volume', 'muted'],
+    props: ['shuffle', 'repeat', 'stat', 'theme', 'volume', 'muted'],
     computed: {
       loadProgress () {
         if (this.stat.duration === 0) return 0

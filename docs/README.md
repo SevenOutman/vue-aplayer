@@ -50,14 +50,15 @@ new Vue({
 | showLrc | Boolean | `false` | Whether to show lyrics or not |
 | mutex | Boolean | `true` | Pause other players when this player is playing |
 | theme | String | `'#41b883'` | Theme color, will be overridden by current `music`'s theme if set |
-| mode | String | `'circulation'` | Play mode, can be 'random' 'single 'circulation'(loop) or 'order'(no loop) |
+| shuffle | Boolean | `false` | Shuffle the playlist |
+| repeat | String | `'no-repeat'` | How to repeat play. Either to `'repeat-one'` `'repeat-all'` or `'no-repeat'`. You can also use accordingly `'none'` `'music'` `'list'` for easier remembering |
 | listMaxHeight | String | *none* | Max height of play list |
 | listFolded | Boolean | `false` | Fold playlist initially |
 | narrow |  | | DEPRECATED, use `mini` instead |
 | listmaxheight |  |  | DEPRECATED, use `listMaxHeight` instead |
 | showlrc |  |  | DEPRECATED, use `showLrc` instead |
 
-> If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music` and `mode` props.
+> If you are using Vue@2.3.0+, you can use [`.sync` Modifier](https://vuejs.org/v2/guide/components.html#sync-Modifier) on `music`, `shuffle` and `repeat` props.
 
 
 

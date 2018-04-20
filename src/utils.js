@@ -53,8 +53,8 @@ export function versionCompare (semantic1, semantic2) {
   if (semantic1 === semantic2) {
     return 0
   }
-  const [major1, minor1, patch1] = semantic1.split('.')
-  const [major2, minor2, patch2] = semantic2.split('.')
+  const [major1, minor1, patch1] = semantic1.split('.').map(Number)
+  const [major2, minor2, patch2] = semantic2.split('.').map(Number)
 
   if (major1 > major2) {
     return 1
