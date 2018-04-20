@@ -34,7 +34,9 @@ Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman
   }"
 />
 ```
- [**Full documentation**](https://github.com/SevenOutman/vue-aplayer/blob/master/docs)
+ [**Full documentation**](https://github.com/SevenOutman/vue-aplayer/blob/develop/docs/README.md)
+ 
+ [**中文文档**](https://github.com/SevenOutman/vue-aplayer/blob/develop/docs/README.zh-CN.md)
 
 ## Contribute
 

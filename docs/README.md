@@ -1,9 +1,13 @@
 ## Installation
 
 ```
+$ yarn add vue-aplayer
+```
+or if you prefer `npm`
+
+```
 $ npm install vue-aplayer --save
 ```
-
 
 
 ## Requirements
@@ -43,7 +47,7 @@ new Vue({
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| music| Object | *required* | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer#music-info) |
+| music| Object | *required* | Music info for current playing music, see [Music info](https://github.com/SevenOutman/vue-aplayer/blob/develop/docs/README.md#music-info) |
 | list | Array | `[]` | Music list to play and display. If list is not empty, music list panel will be shown, even if the only song in the list is identical to music prop. |
 | mini | Boolean | `false` | Mini mode |
 | float | Boolean | `false` | Float mode, in which you can drag the player around and leave it anywhere on your page |
@@ -51,7 +55,7 @@ new Vue({
 | mutex | Boolean | `true` | Pause other players when this player is playing |
 | theme | String | `'#41b883'` | Theme color, will be overridden by current `music`'s theme if set |
 | shuffle | Boolean | `false` | Shuffle the playlist |
-| repeat | String | `'no-repeat'` | How to repeat play. Either to `'repeat-one'` `'repeat-all'` or `'no-repeat'`. You can also use accordingly `'none'` `'music'` `'list'` for easier remembering |
+| repeat | String | `'no-repeat'` | How to repeat play. Either to `'repeat-one'` `'repeat-all'` or `'no-repeat'`. You can also use accordingly `'music'` `'list'` `'none'` for easier remembering |
 | listMaxHeight | String | *none* | Max height of play list |
 | listFolded | Boolean | `false` | Fold playlist initially |
 | narrow |  | | DEPRECATED, use `mini` instead |
