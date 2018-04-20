@@ -1,6 +1,6 @@
 {
   "name": "vue-aplayer",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "Easy-to-config music player for Vue 2.x",
   "main": "dist/vue-aplayer.min.js",
   "files": [
@@ -59,6 +59,7 @@
     "postcss-loader": "^2.1.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
+    "svg-inline-loader": "^0.8.0",
     "url-loader": "^1.0.1",
     "vue": "^2.5.16",
     "vue-html-loader": "^1.2.4",
