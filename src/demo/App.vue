@@ -54,12 +54,6 @@
         <li>External controls</li>
         <ul>
           <li>
-            <a role="button" tabindex="-1" @click="controls = !controls">
-              {{ controls ? 'Hide': 'Show'}} native controls (develop only)
-            </a>
-            <span v-if="controls">Drag on either Vue-APlayer or native controls to see how they synchronize</span>
-          </li>
-          <li>
             <a role="button" tabindex="-1" @click="muted = !muted">
               {{ muted ? 'Unmute' : 'Mute' }} player
             </a>
