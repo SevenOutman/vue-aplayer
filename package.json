@@ -1,7 +1,7 @@
 {
   "name": "vue-aplayer",
-  "version": "1.5.0",
-  "description": "Easy-to-config music player for Vue 2.x",
+  "version": "1.5.1",
+  "description": "Easy-to-use music player for Vue 2.x",
   "main": "dist/vue-aplayer.min.js",
   "files": [
     "src",
@@ -37,7 +37,6 @@
     "url": "https://github.com/SevenOutman/vue-aplayer/issues"
   },
   "homepage": "https://github.com/SevenOutman/vue-aplayer#readme",
-  "dependencies": {},
   "peerDependencies": {
     "vue": "^2.5.16"
   },
@@ -54,6 +53,7 @@
     "eslint-loader": "^2.0.0",
     "eslint-plugin-vue": "^4.3.0",
     "file-loader": "^1.1.11",
+    "hls.js": "^0.9.1",
     "html-webpack-plugin": "^3.0.6",
     "node-sass": "^4.5.0",
     "postcss-loader": "^2.1.1",
@@ -72,8 +72,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "optionalDependencies": {
-    "hls.js": "^0.8.9"
-  }
+  ]
 }
