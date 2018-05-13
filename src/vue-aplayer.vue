@@ -552,7 +552,10 @@
         this.pause()
         this.isSeeking = true
 
-        this.audio.currentTime = this.audio.duration * val
+        // handle load failures
+        if (!isNaN(this.audio.duration)) {
+          this.audio.currentTime = this.audio.duration * val
+        }
       },
       onProgressDragging (val) {
         if (isNaN(this.audio.duration)) {
