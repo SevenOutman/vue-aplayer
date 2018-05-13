@@ -1,27 +1,29 @@
 <template>
-  <div
-    class="aplayer-list"
-    :class="{'aplayer-list-hide': !show}"
-    :style="{maxHeight: listmaxheight || ''}"
-    ref="list"
-  >
-    <ol
-      ref="ol"
+  <transition name="slide-v">
+    <div
+      class="aplayer-list"
       :style="{maxHeight: listmaxheight || ''}"
+      ref="list"
+      v-show="show"
     >
-      <li
-        v-for="(aMusic, index) of musicList"
-        :key="index"
-        :class="{'aplayer-list-light': aMusic === currentMusic}"
-        @click="$emit('selectsong', aMusic)"
+      <ol
+        ref="ol"
+        :style="{maxHeight: listmaxheight || ''}"
       >
-        <span class="aplayer-list-cur" :style="{background: theme}"></span>
-        <span class="aplayer-list-index">{{ index + 1}}</span>
-        <span class="aplayer-list-title">{{ aMusic.title || 'Untitled' }}</span>
-        <span class="aplayer-list-author">{{ aMusic.artist || aMusic.author || 'Unknown' }}</span>
-      </li>
-    </ol>
-  </div>
+        <li
+          v-for="(aMusic, index) of musicList"
+          :key="index"
+          :class="{'aplayer-list-light': aMusic === currentMusic}"
+          @click="$emit('selectsong', aMusic)"
+        >
+          <span class="aplayer-list-cur" :style="{background: theme}"></span>
+          <span class="aplayer-list-index">{{ index + 1}}</span>
+          <span class="aplayer-list-title">{{ aMusic.title || 'Untitled' }}</span>
+          <span class="aplayer-list-author">{{ aMusic.artist || aMusic.author || 'Unknown' }}</span>
+        </li>
+      </ol>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -56,13 +58,15 @@
 <style lang="scss">
 
   .aplayer-list {
-    transition: all 0.5s ease;
-    will-change: height;
     overflow: hidden;
-    // never useful in vue
-    /*display: none;*/
 
-    &.aplayer-list-hide {
+    &.slide-v-enter-active,
+    &.slide-v-leave-active {
+      transition: height 500ms ease;
+      will-change: height;
+    }
+    &.slide-v-enter,
+    &.slide-v-leave-to {
       height: 0 !important;
     }
 
