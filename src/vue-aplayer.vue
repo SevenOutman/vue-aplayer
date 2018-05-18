@@ -922,6 +922,10 @@
             color: #666;
           }
         }
+
+        .aplayer-lrc {
+          z-index: 0;
+        }
       }
     }
 

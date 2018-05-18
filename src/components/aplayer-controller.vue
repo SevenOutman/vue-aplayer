@@ -91,6 +91,7 @@
       }
 
       .aplayer-volume-wrap {
+        margin-left: 4px;
         margin-right: 4px;
       }
       .aplayer-icon {
@@ -127,46 +128,6 @@
       }
     }
 
-    .aplayer-volume-wrap {
-      position: relative;
-      margin-left: 3px;
-      cursor: pointer !important;
-
-      &:hover .aplayer-volume-bar-wrap {
-        height: 40px;
-      }
-
-      .aplayer-volume-bar-wrap {
-        position: absolute;
-        bottom: 15px;
-        right: -3px;
-        width: 25px;
-        height: 0;
-        z-index: 99;
-        overflow: hidden;
-        transition: all .2s ease;
-
-        .aplayer-volume-bar {
-          position: absolute;
-          bottom: 0;
-          right: 10px;
-          width: 5px;
-          height: 40px;
-          background: #aaa;
-          border-radius: 2.5px;
-          overflow: hidden;
-
-          .aplayer-volume {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 5px;
-            transition: all 0.1s ease, background-color .3s;
-            will-change: height;
-          }
-        }
-      }
-    }
   }
 
 </style>
