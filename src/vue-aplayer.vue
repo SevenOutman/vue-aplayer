@@ -896,6 +896,7 @@
         display: flex;
         flex-direction: column;
 
+        text-align: start;
         padding: 14px 7px 0 10px;
         height: $aplayer-height;
         box-sizing: border-box;

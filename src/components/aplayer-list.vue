@@ -112,6 +112,7 @@
         transition: all 0.2s ease;
         overflow: hidden;
         margin: 0;
+        text-align: start;
 
         &:first-child {
           border-top: none;
