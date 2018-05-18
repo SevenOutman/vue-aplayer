@@ -9,7 +9,6 @@
     <div
       class="aplayer-volume-bar-wrap"
       @mousedown="onBarMouseDown"
-      @touchstart="onBarTouchStart"
     >
       <div class="aplayer-volume-bar" ref="bar">
         <div
@@ -68,30 +67,7 @@
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
         this.$emit('setvolume', percentage)
-      },
-      onBarTouchStart () {
-        this.$emit('dragbegin')
-        document.addEventListener('touchmove', this.onDocumentTouchMove)
-        document.addEventListener('touchend', this.onDocumentTouchEnd)
-      },
-      onDocumentTouchMove (e) {
-        const touch = e.changedTouches[0]
-
-        let percentage = (barHeight - touch.clientY + getElementViewTop(this.$refs.bar)) / barHeight
-        percentage = percentage > 0 ? percentage : 0
-        percentage = percentage < 1 ? percentage : 1
-        this.$emit('setvolume', percentage)
-      },
-      onDocumentTouchEnd (e) {
-        document.removeEventListener('touchend', this.onDocumentTouchEnd)
-        document.removeEventListener('touchmove', this.onDocumentTouchMove)
-
-        const touch = e.changedTouches[0]
-        let percentage = (barHeight - touch.clientY + getElementViewTop(this.$refs.bar)) / barHeight
-        percentage = percentage > 0 ? percentage : 0
-        percentage = percentage < 1 ? percentage : 1
-        this.$emit('setvolume', percentage)
-      },
+      }
     }
   }
 </script>
