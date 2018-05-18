@@ -901,6 +901,7 @@
         height: $aplayer-height;
         box-sizing: border-box;
         background: #fff;
+        overflow: hidden;
 
         .aplayer-music {
           flex-grow: 1;

@@ -14,6 +14,7 @@
         class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
       </div>
       <volume
+        v-if="!$parent.isMobile"
         :volume="volume"
         :theme="theme"
         :muted="muted"
@@ -87,9 +88,6 @@
       font-size: 11px;
       padding-left: 7px;
 
-      .aplayer-time-inner {
-      }
-
       .aplayer-volume-wrap {
         margin-left: 4px;
         margin-right: 4px;
@@ -98,12 +96,10 @@
         cursor: pointer;
         transition: all 0.2s ease;
 
+        margin-left: 4px;
+
         .aplayer-fill {
           fill: #666;
-        }
-
-        &.aplayer-icon-mode {
-          margin-right: 4px;
         }
 
         &:hover {
@@ -115,6 +111,9 @@
         &.aplayer-icon-menu {
           display: none;
         }
+      }
+      .aplayer-volume-wrap + .aplayer-icon {
+        margin-left: 0;
       }
 
       &.aplayer-time-narrow {

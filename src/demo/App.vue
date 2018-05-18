@@ -46,7 +46,7 @@
         :music.sync='music3'
         :list='list3'
       />
-      <ul>
+      <ul style="text-align: start">
         <li>Playlist</li>
         <li>Lyrics scroll</li>
         <li>Per-song theme & self-adapting theme</li>
@@ -145,6 +145,9 @@
 <style>
   body {
     font-family: Source Sans Pro, 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  #app {
+    text-align: center;
   }
 
   .container {

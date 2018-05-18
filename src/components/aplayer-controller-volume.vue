@@ -1,7 +1,6 @@
 <template>
   <div class="aplayer-volume-wrap">
     <icon-button
-      v-if="!$parent.$parent.isMobile"
       :class="`aplayer-icon-${volumeIcon}`"
       :icon="volumeIcon"
       @click.native="$emit('togglemute')"
