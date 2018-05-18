@@ -2,13 +2,13 @@
   <transition name="slide-v">
     <div
       class="aplayer-list"
-      :style="{maxHeight: listmaxheight || ''}"
+      :style="listHeightStyle"
       ref="list"
       v-show="show"
     >
       <ol
         ref="ol"
-        :style="{maxHeight: listmaxheight || ''}"
+        :style="listHeightStyle"
       >
         <li
           v-for="(aMusic, index) of musicList"
@@ -47,10 +47,18 @@
       theme: String,
       listmaxheight: String,
     },
+    computed: {
+      listHeight () {
+        return `${33 * this.musicList.length - 1}px`
+      },
+      listHeightStyle () {
+        return {
+          height: this.listHeight,
+          maxHeight: this.listmaxheight || ''
+        }
+      }
+    },
     mounted () {
-      const listHeight = 33 * this.musicList.length - 1
-      this.$el.style.height = `${listHeight}px`
-      this.$refs.ol.style.height = `${listHeight}px`
     },
   }
 </script>
@@ -113,6 +121,7 @@
         overflow: hidden;
         margin: 0;
         text-align: start;
+        display: flex;
 
         &:first-child {
           border-top: none;
@@ -146,7 +155,11 @@
           margin-right: 12px;
           cursor: pointer;
         }
+        .aplayer-list-title {
+          flex-grow: 1;
+        }
         .aplayer-list-author {
+          flex-shrink: 0;
           color: #666;
           float: right;
           cursor: pointer;

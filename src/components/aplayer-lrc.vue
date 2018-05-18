@@ -104,7 +104,7 @@
     height: $lrc-height;
     text-align: center;
     overflow: hidden;
-    margin: -10px 0 7px;
+    margin-bottom: 7px;
 
     &:before {
       position: absolute;

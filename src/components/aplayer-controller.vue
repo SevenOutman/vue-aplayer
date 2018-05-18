@@ -90,6 +90,9 @@
       .aplayer-time-inner {
       }
 
+      .aplayer-volume-wrap {
+        margin-right: 4px;
+      }
       .aplayer-icon {
         cursor: pointer;
         transition: all 0.2s ease;

@@ -26,7 +26,7 @@
           <span class="aplayer-author">{{ currentMusic.artist || currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-          <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
+          <lyrics :current-music="currentMusic" :play-stat="playStat" v-if="shouldShowLrc"/>
         </slot>
         <controls
           :shuffle="shouldShuffle"
