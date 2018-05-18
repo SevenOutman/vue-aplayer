@@ -106,7 +106,7 @@
       .aplayer-volume-bar {
         position: absolute;
         bottom: 0;
-        left: 7px;
+        left: 9px;
         width: 9px;
         height: 40px;
         background: #aaa;
