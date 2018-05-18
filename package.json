@@ -16,7 +16,7 @@
     "prepublishOnly": "yarn run build",
     "predeploy": "yarn add hls.js && yarn run build:demo && echo 'vue-aplayer.js.org' > demo/CNAME",
     "lint": "eslint --ext .js,.vue src",
-    "test": "yarn run test"
+    "test": "yarn run lint"
   },
   "repository": {
     "type": "git",
