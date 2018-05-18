@@ -26,7 +26,7 @@
           <span class="aplayer-author">{{ currentMusic.artist || currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-          <lyrics :current-music="currentMusic" :play-stat="playStat" v-show="shouldShowLrc"/>
+          <lyrics :current-music="currentMusic" :play-stat="playStat" v-if="shouldShowLrc"/>
         </slot>
         <controls
           :shuffle="shouldShuffle"
@@ -552,7 +552,10 @@
         this.pause()
         this.isSeeking = true
 
-        this.audio.currentTime = this.audio.duration * val
+        // handle load failures
+        if (!isNaN(this.audio.duration)) {
+          this.audio.currentTime = this.audio.duration * val
+        }
       },
       onProgressDragging (val) {
         if (isNaN(this.audio.duration)) {
@@ -893,10 +896,12 @@
         display: flex;
         flex-direction: column;
 
+        text-align: start;
         padding: 14px 7px 0 10px;
         height: $aplayer-height;
         box-sizing: border-box;
         background: #fff;
+        overflow: hidden;
 
         .aplayer-music {
           flex-grow: 1;
@@ -917,6 +922,10 @@
             font-size: 12px;
             color: #666;
           }
+        }
+
+        .aplayer-lrc {
+          z-index: 0;
         }
       }
     }

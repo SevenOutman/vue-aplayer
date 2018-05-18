@@ -1,3 +1,6 @@
+<p align="center">
+<img src="https://github.com/SevenOutman/vue-aplayer/blob/develop/src/assets/vue-aplayer-round.png" alt="Vue-APlayer" width="100">
+</p>
 <h1 align="center">Vue-APlayer</h1>
 
 > Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
@@ -8,6 +11,7 @@
 [![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
+[![Discord](https://img.shields.io/badge/Discord-Join%20chat%20%E2%86%92-738bd7.svg)](https://discord.gg/e3SeMJE)
 
 ![Vue-APlayer](https://i.loli.net/2018/03/16/5aab3da0746e7.png)
 
@@ -35,10 +39,14 @@ Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman
 />
 ```
  [**Full documentation**](https://github.com/SevenOutman/vue-aplayer/blob/develop/docs/README.md)
- 
+
  [**中文文档**](https://github.com/SevenOutman/vue-aplayer/blob/develop/docs/README.zh-CN.md)
 
-## Contribute
+## Changelog
+
+Detailed changes fro each release are documented in the [release notes](https://github.com/SevenOutman/vue-aplayer/releases).
+
+## Contribution
 
 Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) if you find a bug or have a nice idea.
 

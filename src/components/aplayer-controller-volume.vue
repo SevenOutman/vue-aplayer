@@ -1,7 +1,6 @@
 <template>
   <div class="aplayer-volume-wrap">
     <icon-button
-      v-if="!$parent.$parent.isMobile"
       :class="`aplayer-icon-${volumeIcon}`"
       :icon="volumeIcon"
       @click.native="$emit('togglemute')"
@@ -9,7 +8,6 @@
     <div
       class="aplayer-volume-bar-wrap"
       @mousedown="onBarMouseDown"
-      @touchstart="onBarTouchStart"
     >
       <div class="aplayer-volume-bar" ref="bar">
         <div
@@ -68,30 +66,63 @@
         percentage = percentage > 0 ? percentage : 0
         percentage = percentage < 1 ? percentage : 1
         this.$emit('setvolume', percentage)
-      },
-      onBarTouchStart () {
-        this.$emit('dragbegin')
-        document.addEventListener('touchmove', this.onDocumentTouchMove)
-        document.addEventListener('touchend', this.onDocumentTouchEnd)
-      },
-      onDocumentTouchMove (e) {
-        const touch = e.changedTouches[0]
-
-        let percentage = (barHeight - touch.clientY + getElementViewTop(this.$refs.bar)) / barHeight
-        percentage = percentage > 0 ? percentage : 0
-        percentage = percentage < 1 ? percentage : 1
-        this.$emit('setvolume', percentage)
-      },
-      onDocumentTouchEnd (e) {
-        document.removeEventListener('touchend', this.onDocumentTouchEnd)
-        document.removeEventListener('touchmove', this.onDocumentTouchMove)
-
-        const touch = e.changedTouches[0]
-        let percentage = (barHeight - touch.clientY + getElementViewTop(this.$refs.bar)) / barHeight
-        percentage = percentage > 0 ? percentage : 0
-        percentage = percentage < 1 ? percentage : 1
-        this.$emit('setvolume', percentage)
-      },
+      }
     }
   }
 </script>
+
+<style lang="scss">
+
+  .aplayer-volume-wrap {
+    position: relative;
+    cursor: pointer !important;
+    z-index: 0;
+
+    &:hover .aplayer-volume-bar-wrap {
+      display: block;
+    }
+
+    .aplayer-volume-bar-wrap {
+      display: none;
+      position: absolute;
+      bottom: 15px;
+      left: -4px;
+      right: -4px;
+      height: 40px;
+      z-index: -1;
+      /*overflow: hidden;*/
+      transition: all .2s ease;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background-color: #fff;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.07), 0 0 5px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .aplayer-volume-bar {
+        position: absolute;
+        bottom: 0;
+        left: 9px;
+        width: 9px;
+        height: 40px;
+        background: #aaa;
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 1;
+
+        .aplayer-volume {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          transition: height 0.1s ease, background-color .3s;
+          will-change: height;
+        }
+      }
+    }
+  }
+</style>

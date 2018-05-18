@@ -116,10 +116,6 @@
       }
     }
 
-    .aplayer-hide {
-      display: none;
-    }
-
     .aplayer-play {
       width: 26px;
       height: 26px;

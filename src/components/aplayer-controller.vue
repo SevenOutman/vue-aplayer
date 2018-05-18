@@ -14,6 +14,7 @@
         class="aplayer-dtime">{{secondToTime(stat.duration)}}</span>
       </div>
       <volume
+        v-if="!$parent.isMobile"
         :volume="volume"
         :theme="theme"
         :muted="muted"
@@ -87,19 +88,18 @@
       font-size: 11px;
       padding-left: 7px;
 
-      .aplayer-time-inner {
+      .aplayer-volume-wrap {
+        margin-left: 4px;
+        margin-right: 4px;
       }
-
       .aplayer-icon {
         cursor: pointer;
         transition: all 0.2s ease;
 
+        margin-left: 4px;
+
         .aplayer-fill {
           fill: #666;
-        }
-
-        &.aplayer-icon-mode {
-          margin-right: 4px;
         }
 
         &:hover {
@@ -111,6 +111,9 @@
         &.aplayer-icon-menu {
           display: none;
         }
+      }
+      .aplayer-volume-wrap + .aplayer-icon {
+        margin-left: 0;
       }
 
       &.aplayer-time-narrow {
@@ -124,46 +127,6 @@
       }
     }
 
-    .aplayer-volume-wrap {
-      position: relative;
-      margin-left: 3px;
-      cursor: pointer !important;
-
-      &:hover .aplayer-volume-bar-wrap {
-        height: 40px;
-      }
-
-      .aplayer-volume-bar-wrap {
-        position: absolute;
-        bottom: 15px;
-        right: -3px;
-        width: 25px;
-        height: 0;
-        z-index: 99;
-        overflow: hidden;
-        transition: all .2s ease;
-
-        .aplayer-volume-bar {
-          position: absolute;
-          bottom: 0;
-          right: 10px;
-          width: 5px;
-          height: 40px;
-          background: #aaa;
-          border-radius: 2.5px;
-          overflow: hidden;
-
-          .aplayer-volume {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 5px;
-            transition: all 0.1s ease, background-color .3s;
-            will-change: height;
-          }
-        }
-      }
-    }
   }
 
 </style>
