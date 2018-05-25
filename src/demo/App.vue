@@ -15,13 +15,13 @@
     <div class="container">
       <h1 align="center">Vue-APlayer</h1>
       <p align="center">
-        <img :src="`https://img.shields.io/badge/DEMO-v${version}-41b883.svg?style=flat-square`"/>
+        <img :src="`https://img.shields.io/badge/DEMO-v${version}-41b883.svg?style=flat-square`" />
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
-          src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
+          src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square" /></a>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
-          src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square"/></a>
+          src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square" /></a>
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
-          src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
+          src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square" /></a>
       </p>
       <h3>Basic (zero config)</h3>
       <aplayer
@@ -75,7 +75,7 @@
       />
       <footer align="center">
         <p>Thank <a href="https://github.com/DIYgod" target="_blank">@DIYgod</a> and <a
-          href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a> for serving demo resources</p>
+          href="https://github.com/MoePlayer/APlayer" target="_blank">APlayer</a> for hosting demo resources</p>
       </footer>
     </div>
   </div>
@@ -95,8 +95,8 @@
         },
         set (val) {
           this.volume = val
-        }
-      }
+        },
+      },
     },
     data () {
       return {
@@ -125,7 +125,7 @@
             artist: '小倉唯',
             src: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc'
+            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc',
           },
           {
             title: 'あっちゅ～ま青春!',
@@ -133,19 +133,22 @@
             src: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
             pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
             lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.lrc',
-          }
-        ]
+          },
+        ],
       }
     },
     created () {
       this.music3 = this.list3[0]
-    }
+    },
   }
 </script>
 <style>
   body {
     font-family: Source Sans Pro, 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, rgb(65, 184, 131), rgb(74, 156, 238));
+    color: #fff;
   }
+
   #app {
     text-align: center;
   }
@@ -160,18 +163,18 @@
 
   h1 {
     font-size: 48px;
-    color: #41b883;
+    /*color: #41b883;*/
     margin: 30px 0 10px;
   }
 
   h2 {
     font-size: 22px;
-    color: #555;
+    /*color: #555;*/
   }
 
   h3 {
     font-size: 24px;
-    color: #555;
+    /*color: #555;*/
   }
 
   hr {
@@ -183,8 +186,18 @@
     border: 0;
   }
 
+  input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+  }
+
   a {
-    color: #41b883;
+    color: #35495e;
     text-decoration: none;
   }
 
