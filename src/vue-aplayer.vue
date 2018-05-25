@@ -26,7 +26,7 @@
           <span class="aplayer-author">{{ currentMusic.artist || currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-          <lyrics :current-music="currentMusic" :play-stat="playStat" v-if="shouldShowLrc"/>
+          <lyrics :current-music="currentMusic" :play-stat="playStat" v-if="shouldShowLrc" />
         </slot>
         <controls
           :shuffle="shouldShuffle"
@@ -64,7 +64,7 @@
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
-  import {deprecatedProp, versionCompare, warn} from './utils'
+  import { deprecatedProp, versionCompare, warn } from './utils'
 
   // version badge
   console.log(`\n\n %c Vue-APlayer ${VERSION} %c vue-aplayer.js.org \n`, 'color: #fff; background:#41b883; padding:5px 0;', 'color: #fff; background: #35495e; padding:5px 0;')
@@ -87,7 +87,7 @@
     LIST: 'list',
     NO_REPEAT: 'no-repeat',
     REPEAT_ONE: 'repeat-one',
-    REPEAT_ALL: 'repeat-all'
+    REPEAT_ALL: 'repeat-all',
   };
 
   export default {
@@ -116,11 +116,11 @@
         type: Array,
         default () {
           return []
-        }
+        },
       },
       mini: {
         type: Boolean,
-        default: false
+        default: false,
       },
       showLrc: {
         type: Boolean,
@@ -142,7 +142,7 @@
        */
       listFolded: {
         type: Boolean,
-        default: false
+        default: false,
       },
 
       /**
@@ -150,7 +150,7 @@
        */
       float: {
         type: Boolean,
-        default: false
+        default: false,
       },
 
       // Audio attributes as props
@@ -176,7 +176,7 @@
        */
       controls: {
         type: Boolean,
-        default: false
+        default: false,
       },
 
       /**
@@ -185,7 +185,7 @@
        */
       muted: {
         type: Boolean,
-        default: false
+        default: false,
       },
       /**
        * @since 1.4.0
@@ -202,7 +202,7 @@
         default: 0.8,
         validator (value) {
           return value >= 0 && value <= 1
-        }
+        },
       },
 
       // play order control
@@ -215,7 +215,7 @@
        */
       shuffle: {
         type: Boolean,
-        default: false
+        default: false,
       },
       /**
        * @since 1.5.0
@@ -224,7 +224,7 @@
        */
       repeat: {
         type: String,
-        default: REPEAT.NO_REPEAT
+        default: REPEAT.NO_REPEAT,
       },
 
 
@@ -240,7 +240,7 @@
             deprecatedProp('listmaxheight', '1.1.2', 'listMaxHeight')
           }
           return true
-        }
+        },
       },
       /**
        * @deprecated since 1.1.2, use mini instead
@@ -253,7 +253,7 @@
             deprecatedProp('narrow', '1.1.2', 'mini')
           }
           return true
-        }
+        },
       },
       /**
        * @deprecated since 1.2.2
@@ -266,7 +266,7 @@
             deprecatedProp('showlrc', '1.2.2', 'showLrc')
           }
           return true
-        }
+        },
       },
       /**
        * @deprecated and REMOVED since 1.5.0
@@ -329,7 +329,7 @@
         internalShuffle: this.shuffle,
         internalRepeat: this.repeat,
         // for shuffling
-        shuffledList: []
+        shuffledList: [],
       }
     },
     computed: {
@@ -346,7 +346,7 @@
         set (val) {
           canUseSync && this.$emit('update:music', val)
           this.internalMusic = val
-        }
+        },
       },
       // compatible for deprecated props
       isMiniMode () {
@@ -408,7 +408,7 @@
         },
         set (val) {
           this.currentMusic = this.shuffledList[val % this.shuffledList.length]
-        }
+        },
       },
       shouldRepeat () {
         return this.repeatMode !== REPEAT.NO_REPEAT
@@ -424,7 +424,7 @@
         set (val) {
           canUseSync && this.$emit('update:muted', val)
           this.internalMuted = val
-        }
+        },
       },
       audioVolume: {
         get () {
@@ -433,7 +433,7 @@
         set (val) {
           canUseSync && this.$emit('update:volume', val)
           this.internalVolume = val
-        }
+        },
       },
 
 
@@ -446,7 +446,7 @@
         set (val) {
           canUseSync && this.$emit('update:shuffle', val)
           this.internalShuffle = val
-        }
+        },
       },
       repeatMode: {
         get () {
@@ -464,8 +464,8 @@
         set (val) {
           canUseSync && this.$emit('update:repeat', val)
           this.internalRepeat = val
-        }
-      }
+        },
+      },
     },
     methods: {
       // Float mode
@@ -474,7 +474,7 @@
         this.floatOriginX = this.floatOffsetLeft
         this.floatOriginY = this.floatOffsetTop
       },
-      onDragAround ({offsetLeft, offsetTop}) {
+      onDragAround ({ offsetLeft, offsetTop }) {
         this.floatOffsetLeft = this.floatOriginX + offsetLeft
         this.floatOffsetTop = this.floatOriginY + offsetTop
       },
@@ -721,7 +721,7 @@
           'seeked', 'seeking', 'stalled', 'suspend',
           'timeupdate',
           'volumechange',
-          'waiting'
+          'waiting',
         ]
         mediaEvents.forEach(event => {
           this.audio.addEventListener(event, e => this.$emit(event, e))
@@ -770,7 +770,7 @@
         } else {
           this.selfAdaptingTheme = null
         }
-      }
+      },
     },
     watch: {
       music (music) {
@@ -844,7 +844,7 @@
       },
       repeat (val) {
         this.internalRepeat = val
-      }
+      },
     },
     created () {
       this.shuffledList = this.getShuffledList()
@@ -873,6 +873,8 @@
   .aplayer {
 
     font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+    background-color: #fff;
     margin: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px;
@@ -900,7 +902,6 @@
         padding: 14px 7px 0 10px;
         height: $aplayer-height;
         box-sizing: border-box;
-        background: #fff;
         overflow: hidden;
 
         .aplayer-music {
@@ -938,11 +939,6 @@
     // Mini mode
     &.aplayer-narrow {
       width: $aplayer-height;
-
-      // never this case
-      // &.aplayer-withlrc {
-      //  width: $aplayer-height-lrc;
-      // }
     }
 
     &.aplayer-withlrc {
