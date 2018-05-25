@@ -873,6 +873,8 @@
   .aplayer {
 
     font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+    background-color: #fff;
     margin: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px;
@@ -900,7 +902,6 @@
         padding: 14px 7px 0 10px;
         height: $aplayer-height;
         box-sizing: border-box;
-        background: #fff;
         overflow: hidden;
 
         .aplayer-music {
@@ -938,11 +939,6 @@
     // Mini mode
     &.aplayer-narrow {
       width: $aplayer-height;
-
-      // never this case
-      // &.aplayer-withlrc {
-      //  width: $aplayer-height-lrc;
-      // }
     }
 
     &.aplayer-withlrc {
