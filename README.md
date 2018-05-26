@@ -10,13 +10,13 @@
 [![Travis](https://img.shields.io/travis/SevenOutman/vue-aplayer.svg?style=flat-square)](https://travis-ci.org/SevenOutman/vue-aplayer)
 [![npm](https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
+[![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 
 [![GitHub commit activity the past week, 4 weeks, year](https://img.shields.io/github/commit-activity/y/SevenOutman/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/commits/develop)
 [![GitHub last commit](https://img.shields.io/github/last-commit/SevenOutman/vue-aplayer/develop.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/commits/develop)
-[![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 [![Discord](https://img.shields.io/badge/Discord-Join%20chat%20%E2%86%92-738bd7.svg?style=flat-square)](https://discord.gg/e3SeMJE)
 
-![Screenshot](https://i.loli.net/2018/05/26/5b090f01033ca.png)
+![Screenshot](https://i.loli.net/2018/05/26/5b0912ce2e250.png)
 
 ### Features
 - Clean and simple UI
