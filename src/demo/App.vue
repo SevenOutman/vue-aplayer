@@ -15,13 +15,21 @@
     <div class="container">
       <h1 align="center">Vue-APlayer</h1>
       <p align="center">
-        <img :src="`https://img.shields.io/badge/DEMO-v${version}-41b883.svg?style=flat-square`" />
+        <img :src="`https://img.shields.io/badge/DEMO-v${version}-41b883.svg?style=flat-square`"/>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
-          src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square" /></a>
+          src="https://img.shields.io/npm/v/vue-aplayer.svg?style=flat-square"/></a>
         <a href="https://www.npmjs.com/package/vue-aplayer"><img
-          src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square" /></a>
+          src="https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square"/></a>
+      </p>
+      <p>
+        <a href="https://github.com/SevenOutman/vue-aplayer/commits/develop">
+          <img src="https://img.shields.io/github/commit-activity/y/SevenOutman/vue-aplayer.svg?style=flat-square">
+        </a>
+        <a href="https://github.com/SevenOutman/vue-aplayer/commits/develop">
+          <img src="https://img.shields.io/github/last-commit/SevenOutman/vue-aplayer/develop.svg?style=flat-square">
+        </a>
         <a href="https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE"><img
-          src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square" /></a>
+          src="https://img.shields.io/npm/l/vue-aplayer.svg?style=flat-square"/></a>
       </p>
       <h3>Basic (zero config)</h3>
       <aplayer
