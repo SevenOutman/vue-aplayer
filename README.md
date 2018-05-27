@@ -12,6 +12,7 @@
 [![npm](https://img.shields.io/npm/dt/vue-aplayer.svg?style=flat-square)](https://www.npmjs.com/package/vue-aplayer)
 [![devDependency Status](https://img.shields.io/david/dev/SevenOutman/vue-aplayer.svg?style=flat-square)](https://david-dm.org/SevenOutman/vue-aplayer#info=devDependencies)
 
+[![Hubble](https://img.shields.io/badge/since-2016-409eff.svg?style=flat-square)](https://hubble.js.org/#/?owner=SevenOutman&repo=vue-aplayer&start)
 [![GitHub commit activity the past year](https://img.shields.io/github/commit-activity/y/SevenOutman/vue-aplayer.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/commits/develop)
 [![GitHub last commit](https://img.shields.io/github/last-commit/SevenOutman/vue-aplayer/develop.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/commits/develop)
 [![Dependents on GitHub](https://img.shields.io/badge/Dependents-200+-FF53A1.svg?style=flat-square)](https://github.com/SevenOutman/vue-aplayer/network/dependents?dependent_type=REPOSITORY)
