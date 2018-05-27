@@ -38,10 +38,6 @@
       opacity: 1;
     }
 
-    &.inactive  {
-      opacity: .3;
-    }
-
     .aplayer-fill {
       transition: all .2s ease-in-out;
     }
