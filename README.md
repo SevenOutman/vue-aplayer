@@ -21,13 +21,14 @@
 
 
 ### Features
-- Clean and simple UI
-- Playlist
+- Beautiful clean UI
 - Lyrics scroll
+- Playlist with repeat & shuffle controls
 - Custom theme color / Self-adapting theme color
 - Drag and place anywhere
 - Mutex play
 - HLS support
+- **Easy props and API**
 - **Dependency free** and light-weight (gzipped 16KB)
 
 Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman/vue-aplayer/issues/26)
@@ -62,16 +63,21 @@ Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) 
 [PRs are welcome](https://github.com/SevenOutman/vue-aplayer/blob/master/docs/README.md#contribute).
 
 
-## The Name
+## The name
 
 - When referring to `Vue-APlayer`, the name should be written in exactly the same case.
 - When referring to its versions, either `Vue-APlayer@1.x` (GitHub) or `vue-aplayer@1.x` (npm) is fine.
 
 
-## Thanks
-[APlayer](https://github.com/MoePlayer/APlayer), for appearance&api design inspiration and prototyping.
+## Related projects
 
-[@DIYgod](https://github.com/DIYgod), for creating APlayer and sharing cloud storage for hosting my demo page media resources.
+- [APlayer](https://github.com/MoePlayer/APlayer): Prior art
+- [@moefe/vue-aplayer](https://github.com/MoePlayer/vue-aplayer): Another Vue implementation of APlayer by [@u3u](https://github.com/u3u)
+
+
+## Thanks
+
+[@DIYgod](https://github.com/DIYgod), for creating APlayer and sharing cloud storage for hosting Vue-APlayer's demo page media resources.
 
 
 ## License

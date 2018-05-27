@@ -36,10 +36,9 @@
         shuffle
         repeat="list"
         show-lrc
-        :controls="controls"
         :muted.sync="muted"
-        :volume.sync="volumeVal"
-        :music.sync='music3'
+        :volume.sync="volume"
+        :music='list3[0]'
         :list='list3'
       />
       <ul style="text-align: start">
@@ -54,14 +53,13 @@
               {{ muted ? 'Unmute' : 'Mute' }} player
             </a>
           </li>
-          <li>Volume: <input type="number" step="0.1" min="0" max="1" v-model="volume"></li>
+          <li>Volume: <input type="number" step="0.1" min="0" max="1" v-model.number="volume"></li>
         </ul>
       </ul>
       <h3>Mini mode / Float mode (try dragging it around)</h3>
       <aplayer
         mini
         float
-        mode="circulation"
         :music="{
           title: 'トリカゴ',
           artist: 'XX:me',
@@ -84,20 +82,9 @@
     components: {
       Aplayer,
     },
-    computed: {
-      volumeVal: {
-        get () {
-          return +this.volume
-        },
-        set (val) {
-          this.volume = val
-        },
-      },
-    },
     data () {
       return {
         version: VERSION,
-        controls: false,
         volume: 1,
         muted: false,
         music3: null,
@@ -132,10 +119,7 @@
           },
         ],
       }
-    },
-    created () {
-      this.music3 = this.list3[0]
-    },
+    }
   }
 </script>
 <style>
@@ -168,27 +152,11 @@
 
   h1 {
     font-size: 48px;
-    /*color: #41b883;*/
     margin: 30px 0 10px;
-  }
-
-  h2 {
-    font-size: 22px;
-    /*color: #555;*/
   }
 
   h3 {
     font-size: 24px;
-    /*color: #555;*/
-  }
-
-  hr {
-    display: block;
-    width: 7rem;
-    height: 1px;
-    margin: 2.5rem 0;
-    background-color: #eee;
-    border: 0;
   }
 
   input {
