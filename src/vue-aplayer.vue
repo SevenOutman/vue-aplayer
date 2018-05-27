@@ -26,7 +26,7 @@
           <span class="aplayer-author">{{ currentMusic.artist || currentMusic.author || 'Unknown' }}</span>
         </div>
         <slot name="display" :current-music="currentMusic" :play-stat="playStat">
-          <lyrics :current-music="currentMusic" :play-stat="playStat" v-if="shouldShowLrc" />
+          <lyrics :current-music="currentMusic" :play-stat="playStat" v-if="shouldShowLrc"/>
         </slot>
         <controls
           :shuffle="shouldShuffle"
@@ -64,7 +64,7 @@
   import MusicList from './components/aplayer-list.vue'
   import Controls from './components/aplayer-controller.vue'
   import Lyrics from './components/aplayer-lrc.vue'
-  import { deprecatedProp, versionCompare, warn } from './utils'
+  import {deprecatedProp, versionCompare, warn} from './utils'
 
   // version badge
   console.log(`\n\n %c Vue-APlayer ${VERSION} %c vue-aplayer.js.org \n`, 'color: #fff; background:#41b883; padding:5px 0;', 'color: #fff; background: #35495e; padding:5px 0;')
@@ -474,7 +474,7 @@
         this.floatOriginX = this.floatOffsetLeft
         this.floatOriginY = this.floatOffsetTop
       },
-      onDragAround ({ offsetLeft, offsetTop }) {
+      onDragAround ({offsetLeft, offsetTop}) {
         this.floatOffsetLeft = this.floatOriginX + offsetLeft
         this.floatOffsetTop = this.floatOriginY + offsetTop
       },
@@ -871,7 +871,6 @@
   @import "./scss/variables";
 
   .aplayer {
-
     font-family: Arial, Helvetica, sans-serif;
     color: #000;
     background-color: #fff;
@@ -889,6 +888,7 @@
     .aplayer-lrc-content {
       display: none;
     }
+
     .aplayer-body {
       display: flex;
 
@@ -964,15 +964,10 @@
           border-bottom: 1px solid #e9e9e9;
         }
 
-        .aplayer-icon-menu {
-          display: block !important;
+        .aplayer-controller .aplayer-time .aplayer-icon.aplayer-icon-menu {
+          display: block;
         }
       }
-
-      // never useful in vue
-      /*.aplayer-list {*/
-      /*display: block;*/
-      /*}*/
     }
 
     /* floating player on top */
