@@ -76,5 +76,7 @@ Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) 
 
 ## License
 
-[MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). Copyright (c) 2016-present Shenghao "Doma" Lei
+Vue-APlayer is [MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). 
+
+Copyright (c) 2016-present Shenghao "Doma" Lei
 
