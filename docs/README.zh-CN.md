@@ -1,5 +1,7 @@
 ## 安装
 
+### Node
+
 ```
 $ yarn add vue-aplayer
 ```
@@ -7,9 +9,17 @@ $ yarn add vue-aplayer
 或者如果你选择 `npm`
 
 ```
-$ npm install vue-aplayer --save
+$ npm i vue-aplayer
 ```
 
+### CDN
+
+```html
+<script src="//cdn.jsdelivr.net/npm/vue-aplayer"></script>
+<script>
+  Vue.component('aplayer', VueAPlayer)
+</script>
+```
 
 
 ## 运行时要求
