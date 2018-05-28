@@ -48,18 +48,13 @@
       listmaxheight: String,
     },
     computed: {
-      listHeight () {
-        return `${33 * this.musicList.length - 1}px`
-      },
       listHeightStyle () {
         return {
-          height: this.listHeight,
+          height: `${33 * this.musicList.length - 1}px`,
           maxHeight: this.listmaxheight || ''
         }
       }
-    },
-    mounted () {
-    },
+    }
   }
 </script>
 
@@ -73,6 +68,7 @@
       transition: height 500ms ease;
       will-change: height;
     }
+
     &.slide-v-enter,
     &.slide-v-leave-to {
       height: 0 !important;
@@ -87,16 +83,20 @@
       &::-webkit-scrollbar {
         width: 5px;
       }
+
       &::-webkit-scrollbar-track {
         background-color: #f9f9f9;
       }
+
       &::-webkit-scrollbar-thumb {
         border-radius: 3px;
         background-color: #eee;
       }
+
       &::-webkit-scrollbar-thumb:hover {
         background-color: #ccc;
       }
+
       &:hover {
         li.aplayer-list-light:not(:hover) {
           background-color: inherit;
@@ -132,7 +132,6 @@
         }
 
         &.aplayer-list-light {
-          /*background: #e9e9e9;*/
           background: #efefef;
 
           .aplayer-list-cur {
@@ -147,13 +146,11 @@
           position: absolute;
           left: 0;
           top: 5px;
-          cursor: pointer;
           transition: background-color .3s;
         }
         .aplayer-list-index {
           color: #666;
           margin-right: 12px;
-          cursor: pointer;
         }
         .aplayer-list-title {
           flex-grow: 1;
@@ -162,7 +159,6 @@
           flex-shrink: 0;
           color: #666;
           float: right;
-          cursor: pointer;
         }
       }
     }

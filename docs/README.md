@@ -1,12 +1,23 @@
 ## Installation
 
+### Node
+
 ```
 $ yarn add vue-aplayer
 ```
 or if you prefer `npm`
 
 ```
-$ npm install vue-aplayer --save
+$ npm i vue-aplayer
+```
+
+### CDN
+
+```html
+<script src="//cdn.jsdelivr.net/npm/vue-aplayer"></script>
+<script>
+  Vue.component('aplayer', VueAPlayer)
+</script>
 ```
 
 
@@ -128,6 +139,15 @@ All you need to do is adding [color-thief](https://github.com/lokesh/color-thief
 
 Since `v1.3.0`, Vue-APlayer supports `*.m3u8` media as an optional functionality. Simply install [hls.js](https://github.com/video-dev/hls.js) into your project, and Vue-APlayer handles the rest.
 
+
+### `disableVersionBadge`
+
+By default Vue-APlayer prints a version badge in console. If you want to silent it, you can set `disableVersionBadge` to `true` before you first create a Vue-APlayer instance.
+
+```js
+import VueAPlayer from 'vue-aplayer'
+VueAPlayer.disableVersionBadge = true
+```
 
 
 ### Slots

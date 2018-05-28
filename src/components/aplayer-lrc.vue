@@ -139,10 +139,10 @@
     p {
       font-size: 12px;
       color: #666;
-      line-height: 16px !important;
-      height: 16px !important;
-      padding: 0 !important;
-      margin: 0 !important;
+      line-height: 16px;
+      height: 16px;
+      padding: 0;
+      margin: 0;
       transition: all 0.5s ease-out;
       opacity: 0.4;
       overflow: hidden;
@@ -150,7 +150,7 @@
       &.aplayer-lrc-current {
         opacity: 1;
         overflow: visible;
-        height: initial !important;
+        height: initial;
       }
     }
 

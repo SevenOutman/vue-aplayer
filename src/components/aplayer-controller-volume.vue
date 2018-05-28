@@ -75,7 +75,7 @@
 
   .aplayer-volume-wrap {
     position: relative;
-    cursor: pointer !important;
+    cursor: pointer;
     z-index: 0;
 
     &:hover .aplayer-volume-bar-wrap {
@@ -90,12 +90,12 @@
       right: -4px;
       height: 40px;
       z-index: -1;
-      /*overflow: hidden;*/
       transition: all .2s ease;
+
       &::after {
         content: '';
         position: absolute;
-        bottom: -15px;
+        bottom: -16px;
         left: 0;
         right: 0;
         height: 62px;
@@ -106,11 +106,11 @@
       .aplayer-volume-bar {
         position: absolute;
         bottom: 0;
-        left: 9px;
-        width: 9px;
+        left: 11px;
+        width: 5px;
         height: 40px;
         background: #aaa;
-        border-radius: 5px;
+        border-radius: 2.5px;
         overflow: hidden;
         z-index: 1;
 

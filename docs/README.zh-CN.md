@@ -1,5 +1,7 @@
 ## 安装
 
+### Node
+
 ```
 $ yarn add vue-aplayer
 ```
@@ -7,9 +9,17 @@ $ yarn add vue-aplayer
 或者如果你选择 `npm`
 
 ```
-$ npm install vue-aplayer --save
+$ npm i vue-aplayer
 ```
 
+### CDN
+
+```html
+<script src="//cdn.jsdelivr.net/npm/vue-aplayer"></script>
+<script>
+  Vue.component('aplayer', VueAPlayer)
+</script>
+```
 
 
 ## 运行时要求
@@ -130,6 +140,15 @@ new Vue({
 
 从 `v1.3.0` 开始, Vue-APlayer 可选支持 `*.m3u8` 音频. 你需要做的就是在项目中安装 [hls.js](https://github.com/video-dev/hls.js) 包即可.
 
+
+### `disableVersionBadge`
+
+Vue-APlayer 默认会在控制台打印出当前的版本标识，如果你想要禁用它，可以将 `disableVersionBadge` 设为 `true`。
+
+```js
+import VueAPlayer from 'vue-aplayer'
+VueAPlayer.disableVersionBadge = true
+```
 
 
 ### Slots

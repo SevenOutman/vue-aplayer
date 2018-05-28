@@ -21,9 +21,24 @@
         @togglemute="$emit('togglemute')"
         @setvolume="v => $emit('setvolume', v)"
       />
-      <icon-button class="aplayer-icon-mode" icon="shuffle" @click.native="$emit('toggleshuffle')" :class="{ 'inactive': !shuffle }"/>
-      <icon-button class="aplayer-icon-mode" :icon="repeat === 'repeat-one' ? 'repeat-one' : 'repeat-all'" :class="{ 'inactive': repeat === 'no-repeat'}" @click.native="$emit('nextmode')"/>
-      <icon-button class="aplayer-icon-menu" icon="menu" @click.native="$emit('togglelist')"/>
+      <icon-button
+        class="aplayer-icon-mode"
+        icon="shuffle"
+        :class="{ 'inactive': !shuffle }"
+        @click.native="$emit('toggleshuffle')"
+      />
+      <icon-button
+        class="aplayer-icon-mode"
+        :icon="repeat === 'repeat-one' ? 'repeat-one' : 'repeat-all'"
+        :class="{ 'inactive': repeat === 'no-repeat'}"
+        @click.native="$emit('nextmode')"
+      />
+      <icon-button
+        class="aplayer-icon-menu"
+        icon="menu"
+        :class="{ 'inactive': !$parent.showList }"
+        @click.native="$emit('togglelist')"
+      />
     </div>
   </div>
 </template>
@@ -74,14 +89,11 @@
   .aplayer-controller {
     display: flex;
     align-items: center;
-
     position: relative;
-
 
     .aplayer-time {
       display: flex;
       align-items: center;
-
       position: relative;
       height: 17px;
       color: #999;
@@ -92,11 +104,15 @@
         margin-left: 4px;
         margin-right: 4px;
       }
+
       .aplayer-icon {
         cursor: pointer;
         transition: all 0.2s ease;
-
         margin-left: 4px;
+
+        &.inactive {
+          opacity: .3;
+        }
 
         .aplayer-fill {
           fill: #666;
@@ -126,7 +142,6 @@
         }
       }
     }
-
   }
 
 </style>

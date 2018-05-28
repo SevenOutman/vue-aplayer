@@ -113,7 +113,7 @@
   .aplayer-bar-wrap {
     margin: 0 0 0 5px;
     padding: 4px 0;
-    cursor: pointer !important;
+    cursor: pointer;
     flex: 1;
 
     .aplayer-bar {
@@ -157,7 +157,7 @@
           transition: transform 300ms, background-color .3s, border-color .3s;
           border-radius: 50%;
           background: #fff;
-          cursor: pointer !important;
+          cursor: pointer;
 
           &:hover {
             transform: scale(1);
