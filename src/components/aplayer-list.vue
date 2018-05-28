@@ -19,7 +19,7 @@
           <span class="aplayer-list-cur" :style="{background: theme}"></span>
           <span class="aplayer-list-index">{{ index + 1}}</span>
           <span class="aplayer-list-title">{{ aMusic.title || 'Untitled' }}</span>
-          <span class="aplayer-list-author">{{ aMusic.artist || aMusic.author || 'Unknown' }}</span>
+          <span class="aplayer-list-author">{{ aMusic.artist || 'Unknown' }}</span>
         </li>
       </ol>
     </div>
