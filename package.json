@@ -69,7 +69,7 @@
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^14.2.1",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^3.11.0",
+    "webpack": "^4.9.2",
     "webpack-dev-server": "^2.11.2"
   },
   "browserslist": [
