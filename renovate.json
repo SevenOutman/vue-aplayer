@@ -1,10 +1,9 @@
 {
   "extends": [
-    "config:base"
-  ],
-  "automerge": true,
-  "major": {
-    "automerge": false
-  },
-  "automergeType": "branch-push"
+    "config:js-lib",
+    ":autodetectPinVersions",
+    ":automergeMinor",
+    ":automergeBranchPush",
+    "schedule:daily"
+  ]
 }
