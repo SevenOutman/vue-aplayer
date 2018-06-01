@@ -47,7 +47,7 @@
   "devDependencies": {
     "autoprefixer": "8.5.2",
     "babel-core": "6.26.3",
-    "babel-eslint": "8.2.2",
+    "babel-eslint": "8.2.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-2": "6.24.1",
