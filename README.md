@@ -1,7 +1,5 @@
 <p align="center">
-<img src="https://github.com/SevenOutman/vue-aplayer/blob/develop/src/assets/vue-aplayer-round.png" alt="Vue-APlayer" width="100">
-</p>
-<h1 align="center">Vue-APlayer</h1>
+<img src="https://user-images.githubusercontent.com/34600369/41199820-c1d0f766-6c90-11e8-8785-a306e77dcfe5.png" alt="Vue-APlayer" width="500">
 
 > Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
 [**Demo**](https://sevenoutman.github.io/vue-aplayer)
