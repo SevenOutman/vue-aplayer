@@ -55,7 +55,18 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'demo'),
     compress: true,
     port: 3000,
-    disableHostCheck: true
+    disableHostCheck: true,
+    proxy: {
+      '/aplayer': {
+        target: 'https://moeplayer.b0.upaiyun.com',
+        secure: false,
+        changeOrigin: true,
+        headers: {
+          host: 'vue-aplayer.js.org',
+          Referer: 'https://vue-aplayer.js.org/'
+        }
+      }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
