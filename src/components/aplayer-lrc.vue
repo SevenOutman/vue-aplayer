@@ -8,8 +8,9 @@
         v-for="(line, index) of lrcLines"
         :key="index"
         :class="{ 'aplayer-lrc-current': index === currentLineIndex }"
+        v-html="line[1]"
       >
-        {{ line[1] }}
+        <!--{{ line[1] }}-->
       </p>
     </div>
   </div>
