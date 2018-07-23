@@ -53,7 +53,7 @@
     "babel-preset-stage-2": "6.24.1",
     "css-loader": "0.28.11",
     "cz-conventional-changelog": "2.1.0",
-    "eslint": "5.1.0",
+    "eslint": "5.2.0",
     "eslint-friendly-formatter": "4.0.1",
     "eslint-loader": "2.1.0",
     "eslint-plugin-vue": "4.7.0",
