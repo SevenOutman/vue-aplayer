@@ -6418,9 +6418,9 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue@2.5.17:
-  version "2.5.17"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
+vue@2.5.20:
+  version "2.5.20"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.20.tgz#79fff9ccaa10cc37e7a7239b4c7adfac94df81ba"
 
 watchpack@^1.4.0:
   version "1.5.0"
