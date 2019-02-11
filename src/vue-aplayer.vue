@@ -102,7 +102,7 @@
         type: Object,
         required: true,
         validator (song) {
-          return !song.src
+          return !!song.src
         },
       },
       list: {
