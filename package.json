@@ -55,7 +55,7 @@
     "cz-conventional-changelog": "2.1.0",
     "eslint": "5.13.0",
     "eslint-friendly-formatter": "4.0.1",
-    "eslint-loader": "2.1.1",
+    "eslint-loader": "2.1.2",
     "eslint-plugin-vue": "4.7.1",
     "file-loader": "1.1.11",
     "hls.js": "0.11.0",
