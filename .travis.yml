@@ -7,6 +7,14 @@ cache:
   directories:
     - "node_modules"
 
+# use latest yarn
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$PATH
+
+# fix upath incompatibility
+install: yarn --ignore-engines
+
 # GitHub Pages deploy
 before_deploy:
   - npm run predeploy
