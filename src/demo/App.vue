@@ -24,8 +24,8 @@
         :music="{
           title: 'secret base~君がくれたもの~',
           artist: 'Silent Siren',
-          src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
-          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+          src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/secretbase.mp3',
+          pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/secretbase.jpg'
         }"
       />
 
@@ -63,8 +63,8 @@
         :music="{
           title: 'トリカゴ',
           artist: 'XX:me',
-          src: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
-          pic: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
+          src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/darling.mp3',
+          pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/darling.jpg',
         }"
       />
       <footer align="center">
@@ -92,30 +92,30 @@
           {
             title: '前前前世',
             artist: 'RADWIMPS',
-            src: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.mp3',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yourname.lrc',
+            src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/yourname.mp3',
+            pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/yourname.jpg',
+            lrc: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/yourname.lrc',
           },
           {
             title: '光るなら.m3u8',
             artist: 'Goose house',
-            src: 'https://moeplayer.b0.upaiyun.com/aplayer/hls/hikarunara.m3u8',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.lrc',
+            src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/hls/hikarunara.m3u8',
+            pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/hikarunara.jpg',
+            lrc: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/hikarunara.lrc',
           },
           {
             title: '回レ！雪月花',
             artist: '小倉唯',
-            src: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.mp3',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/snowmoonflowers.lrc',
+            src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/snowmoonflowers.mp3',
+            pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/snowmoonflowers.jpg',
+            lrc: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/snowmoonflowers.lrc',
           },
           {
             title: 'あっちゅ～ま青春!',
             artist: '七森中☆ごらく部',
-            src: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.mp3',
-            pic: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.jpg',
-            lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/yuruyuri.lrc',
+            src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/yuruyuri.mp3',
+            pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/yuruyuri.jpg',
+            lrc: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/yuruyuri.lrc',
           },
         ],
       }

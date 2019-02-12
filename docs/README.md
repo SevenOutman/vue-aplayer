@@ -35,8 +35,8 @@ $ npm i vue-aplayer
   :music="{
     title: 'secret base~君がくれたもの~',
     artist: 'Silent Siren',
-    src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
-    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+    src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/secretbase.mp3',
+    pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/secretbase.jpg'
   }"
 />
 ```

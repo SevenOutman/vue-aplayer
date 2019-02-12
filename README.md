@@ -42,8 +42,8 @@ Using Vue-APlayer in your project? [Let me know!](https://github.com/SevenOutman
   :music="{
     title: 'secret base~君がくれたもの~',
     artist: 'Silent Siren',
-    src: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.mp3',
-    pic: 'https://moeplayer.b0.upaiyun.com/aplayer/secretbase.jpg'
+    src: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/secretbase.mp3',
+    pic: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/secretbase.jpg'
   }"
 />
 ```
@@ -83,7 +83,7 @@ Feel free to [open an issue](https://github.com/SevenOutman/vue-aplayer/issues) 
 
 ## License
 
-Vue-APlayer is [MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE). 
+Vue-APlayer is [MIT Licensed](https://github.com/SevenOutman/vue-aplayer/blob/master/LICENSE).
 
 Copyright (c) 2016-present Shenghao "Doma" Lei
 
