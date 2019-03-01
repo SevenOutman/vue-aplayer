@@ -68,7 +68,7 @@
     "url-loader": "1.1.2",
     "vue": "2.6.7",
     "vue-html-loader": "1.2.4",
-    "vue-loader": "15.6.4",
+    "vue-loader": "15.7.0",
     "vue-template-compiler": "2.6.7",
     "webpack": "4.29.5",
     "webpack-dev-server": "3.2.1"
