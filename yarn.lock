@@ -2274,9 +2274,9 @@ eslint-friendly-formatter@4.0.1:
     strip-ansi "^4.0.0"
     text-table "^0.2.0"
 
-eslint-loader@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-2.2.0.tgz#e2322b46fc5584ebbffd13c78089cd27d63565a9"
+eslint-loader@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-2.2.1.tgz#28b9c12da54057af0845e2a6112701a2f6bf8337"
   dependencies:
     loader-fs-cache "^1.0.0"
     loader-utils "^1.0.2"
