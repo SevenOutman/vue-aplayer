@@ -70,7 +70,7 @@
     "vue-html-loader": "1.2.4",
     "vue-loader": "15.7.0",
     "vue-template-compiler": "2.6.10",
-    "webpack": "4.35.3",
+    "webpack": "4.36.1",
     "webpack-dev-server": "3.7.2"
   },
   "browserslist": [
