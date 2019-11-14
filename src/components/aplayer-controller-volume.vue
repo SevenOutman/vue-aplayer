@@ -27,7 +27,7 @@
   import IconButton from './aplayer-iconbutton.vue'
   import {getElementViewTop} from '../utils'
 
-  const barHeight = 40
+  const barHeight = 100
 
   export default {
     components: {
