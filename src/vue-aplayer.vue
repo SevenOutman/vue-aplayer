@@ -708,6 +708,12 @@
         this.internalMusic = music
       },
 
+      musicList () {
+        this.shuffledList = this.getShuffledList()
+        this.currentMusic = this.shuffledList[0]
+        this.playIndex = 0
+      },
+
       currentMusic: {
         handler (music) {
           // async
