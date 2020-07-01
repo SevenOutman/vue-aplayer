@@ -707,6 +707,10 @@
       music (music) {
         this.internalMusic = music
       },
+      
+      list() {
+        this.shuffledList = this.getShuffledList();
+      },
 
       currentMusic: {
         handler (music) {
