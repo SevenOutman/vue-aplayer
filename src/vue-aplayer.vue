@@ -184,7 +184,10 @@
        * @since 1.4.0
        * observable
        */
-      preload: String,
+      preload: {
+        type: String,
+        default: "none",
+      },
 
       /**
        * @since 1.4.0
