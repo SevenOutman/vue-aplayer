@@ -45,7 +45,7 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
-    "autoprefixer": "9.6.1",
+    "autoprefixer": "9.8.6",
     "babel-core": "6.26.3",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.1.0",
