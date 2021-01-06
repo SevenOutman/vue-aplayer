@@ -48,7 +48,7 @@
     "autoprefixer": "9.6.1",
     "babel-core": "6.26.3",
     "babel-eslint": "10.1.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "8.2.2",
     "babel-preset-env": "1.7.0",
     "babel-preset-stage-2": "6.24.1",
     "css-loader": "2.1.1",
