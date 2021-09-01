@@ -3,7 +3,9 @@
 </p>
 <h1 align="center">Vue-APlayer</h1>
 
-> Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
+## Please refer to [**Future of vue-aplayer**](https://github.com/SevenOutman/vue-aplayer/discussions/236) before you continue.
+
+Vue implementation of [APlayer](https://github.com/MoePlayer/APlayer) prototype.
 [**Demo**](https://sevenoutman.github.io/vue-aplayer)
 
 
