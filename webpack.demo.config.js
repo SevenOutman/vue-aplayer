@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './src/demo/main.js',
   output: {
     path: path.resolve(__dirname, 'demo'),
@@ -52,10 +53,12 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname, 'demo'),
+    static: {
+      directory: path.join(__dirname, 'demo'),
+    },
     compress: true,
     port: 3000,
-    disableHostCheck: true,
+    host: '0.0.0.0',
     proxy: {
       '/aplayer': {
         target: 'https://cn-east-17-aplayer-35525609.oss.dogecdn.com/',
