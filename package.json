@@ -45,9 +45,9 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "@babel/preset-stage-2": "^7.8.3",
+    "@babel/core": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "@babel/preset-stage-2": "7.8.3",
     "autoprefixer": "9.6.1",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.1.0",
@@ -68,11 +68,11 @@
     "url-loader": "1.1.2",
     "vue": "2.6.10",
     "vue-html-loader": "1.2.4",
-    "vue-loader": "^14.2.2",
+    "vue-loader": "14.2.4",
     "vue-template-compiler": "2.6.10",
     "webpack": "4.39.2",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.1.0"
+    "webpack-cli": "4.8.0",
+    "webpack-dev-server": "4.1.0"
   },
   "browserslist": [
     "> 1%",
