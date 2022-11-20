@@ -45,12 +45,12 @@
     "vue": "^2.5.16"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
+    "@babel/core": "7.20.2",
+    "@babel/preset-env": "7.20.2",
     "@babel/preset-stage-2": "^7.8.3",
     "autoprefixer": "9.6.1",
     "babel-eslint": "10.1.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "8.3.0",
     "css-loader": "2.1.1",
     "cz-conventional-changelog": "2.1.0",
     "eslint": "5.16.0",
