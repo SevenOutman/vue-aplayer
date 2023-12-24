@@ -66,10 +66,10 @@
     "style-loader": "0.23.1",
     "svg-inline-loader": "0.8.0",
     "url-loader": "1.1.2",
-    "vue": "2.6.10",
+    "vue": "2.7.16",
     "vue-html-loader": "1.2.4",
     "vue-loader": "^14.2.2",
-    "vue-template-compiler": "2.6.10",
+    "vue-template-compiler": "2.7.16",
     "webpack": "4.39.2",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.1.0"
