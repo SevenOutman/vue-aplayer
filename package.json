@@ -72,7 +72,7 @@
     "vue-template-compiler": "2.6.10",
     "webpack": "4.39.2",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.1.0"
+    "webpack-dev-server": "^5.0.0"
   },
   "browserslist": [
     "> 1%",
